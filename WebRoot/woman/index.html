@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>女人圈</title>
+<meta name="baidu_union_verify" content="09b094ef5fc362c96d0987194aa1c086">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta name="keywords" content="女人圈，女性时尚网，潮流，美容，情感，星座，八卦">
+<meta charset="UTF-8">
+<meta name="description"
+	content="女人圈（woman.fuwu88.cn）是一家针对女性群体的女性时尚网站。内容主要包括时尚穿搭、美容保养，婚姻情感、星座运势、明星八卦等，立志成为女性的贴身闺蜜。">
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/base.css" rel="stylesheet">
+</head>
+
+<body ng-app="indexApp">
+	<div ng-controller="indexCtrl" class="comment-wrap">
+	<!-- 标志 -->
+		<div class="comment-top-fixed comment-title-top">
+		<i class="glyphicon glyphicon-fire"></i>
+		<span class="comment-title-center">女人圈</span>
+		</div>
+	<!-- 标志end -->
+	<!-- 导航 -->
+		<div class="row text-center comment-list-item comment-top-fixed" style="top:50px !important;" id="topNav">
+			
+			<a class="col-xs-2" href="#" ng-click="list('潮流')">
+				<div>潮流</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('丽人')">
+				<div>丽人</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('星座')">
+				<div>星座</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('情感')">
+				<div>情感</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('八卦')">
+				<div>八卦</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('微投')">
+				<div>微投</div>
+			</a>
+		</div>
+		<!-- 导航end -->
+		<!-- 新闻列表 -->
+		<div style="margin-top:105px !important;">
+		<!-- 第一列表 -->
+		<div class="listGroup list-group media comment-list-item" ng-repeat="news in newsList"  ng-if="!$index" ng-click="newsDetails(news.type,news.news_id)">
+			
+			 <div class="media-center">
+				<a href="#"> <img style="width:104%;height:200px;margin:-25px -2%;" class="media-object  comment-list-item-img "
+					ng-src="{{news.img_address||newsInit.img_address}}" >
+					<span class="comment-hot-radius-icon">热点</span>
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="media-heading" ></div>
+				<div class="pull-left">
+					<div class="comment-right-body-title" style="height:41px;overflow: hidden;"><span ng-bind="news.title||newsInit.title"></span></div>
+					<div class="text-muted" style="color:#bfbebe;font-size:12px;">
+					<span style="float: left;" class="newsType"  ng-bind="news.type||newsInit.type"></span>
+					<span style="float: left;line-height:14px;margin:0 5px;">|</span>
+					<span   ng-bind="news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div> 
+		</div>
+		<!-- 第一列表end -->
+		<!-- 第二列表 -->
+		<div class="listGroup list-group media comment-list-item" ng-repeat="news in newsList"  ng-if="$index" ng-click="newsDetails(news.type,news.news_id)">
+			<div class="media-left">
+				<a href="#" style="padding:5px 0 !important;"> <img class="media-object  comment-list-item-img "
+					ng-src="{{news.img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="media-heading" ></div>
+				<div class="pull-left">
+					<div class="comment-right-body-title" style="height:41px;overflow: hidden;"><span ng-bind="news.title||newsInit.title"></span></div>
+					<div class="text-muted" style="color:#bfbebe;font-size:12px;">
+					<span style="float: left;" class="newsType"  ng-bind="news.type||newsInit.type"></span>
+					<span style="float: left;line-height:14px;margin:0 5px;">|</span>
+					<span   ng-bind="news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 第二列表end -->
+		
+		</div>
+		<!-- 新闻列表end -->
+		<!-- 加载更多end -->
+		<!-- <a class="btn btn-default btn-block text-center" id="addMore" ng-click="addMore()">
+		<div>点击加载更多》</div>
+		</a> -->
+		<!--  加载更多end -->
+	</div>
+		<!-- 底部end -->
+		<div class="comment-bottom">Copyright 2015 itcast Inc,All rights reserved.</div>
+		<!--  底部end -->
+		<!-- cnzz -->
+		<div style="display:none;">
+		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260946323'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1260946323' type='text/javascript'%3E%3C/script%3E"));</script>
+				</div>
+	<script src="/resources/js/jquery2.1.js"></script>
+	<script src="/resources/js/bootstrap3.2.0.js"></script>
+	<script src="/resources/js/angularjs.min.1.5.7.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="/resources/js/base.js"></script>
+	<script>
+	$(function(){
+		//获取data-src
+		$("img").each(function(){
+			if($(this).attr("data-src")){
+				$(this).attr("src",$(this).attr("data-src"));
+			}
+		});
+		});
+    	var indexApp=angular.module('indexApp',[]);
+    	indexApp.filter("dateDiff",function(){
+                return function(dateTimeStamp){
+                    return myUtils.getDateDiff(dateTimeStamp);
+                }
+            });
+    	indexApp.controller('indexCtrl',function($scope){
+    		$("#topNav a").each(function(){
+    		//不存在，就展示首页
+        	if(myUtils.GetQueryString("type")==null){
+        	$("#topNav a:first-child").addClass("nav-active");
+        		}
+        	//存在哪个展示哪个
+        	if(myUtils.GetQueryString("type")==$(this).children().text()){
+        		$(this).addClass("nav-active");
+        	}
+    		$(this).on("click",function(){
+    			var type=$(this).text().trim();
+    				$("#topNav a").removeClass("nav-active")
+    				$(this).addClass("nav-active");
+    		//点击哪个，展示哪个,是历史记录的重要店
+    		location.href=location.protocol+"//"+location.host+"/woman/index?type="+type;
+    		});
+    			
+    		});
+    		function initData(a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "/news/list?pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&type="+a.type+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		        	  if(data==''){
+    		        		  $("#addMore").hide();
+    		        		  return ;
+    		        	  }else{
+    		        		  $("#addMore").show();
+    		        		  
+    		        	  }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope.newsList.push(data[int]); 
+							}
+    		        	  }else{
+    		        	  $scope.newsList=data; 
+    		        		  
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		$scope.pageNum=1;//第多少个
+    		$scope.pageSize=10;//每页个数
+    		$scope.type=myUtils.GetQueryString("type")||"潮流";//初始化类别
+    		initData({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			type:$scope.type,
+    			orderName:"time",
+    			orderWay:"desc"
+    			});
+    		//选择频道
+    		$scope.list=function(type){
+    		$scope.pageNum=1;
+    		$scope.pageSize=10;
+    		$scope.type=type;
+    			myUtils.myPrevToast("加载中...", function(){
+    			initData({
+        			pageNum:$scope.pageNum,
+        			pageSize:$scope.pageSize,
+        			type:$scope.type,
+        			orderName:"time",
+        			orderWay:"desc"
+        			});
+    			}, "add");
+    		};
+    		//滚动刷新
+    		function onReachBottom(){
+    			$scope.pageNum=$scope.pageNum+$scope.pageSize;
+    			$scope.pageSize=$scope.pageSize;
+    			myUtils.myFootLoadingToast(null,function(){
+    			$.ajax({  
+  		          type : "get",
+  		          async : false,
+  		          url : "/news/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&type="+$scope.type+"&orderName=time&orderWay=desc",  
+  		          success : function(data){
+  		      		     myUtils.myFootLoadingToast(null,null,"remove");
+  		        	 if(data.length<=0){
+  		        	      return;
+  		        	    }
+  		      		        $scope.newsList=$scope.newsList.concat(data);
+  		      		        $scope.$apply();
+  		      		         myUtils.myPrevToast("加载完成", null, "remove");
+  		          }  
+  		          });
+    			},"add");
+  		}
+    		$(window).scroll(function(){
+        		//console.log(myUtils.isScrollBottom(document));
+        		if(myUtils.isScrollBottom(document)){
+        			onReachBottom();
+        		}
+        			
+        		});
+    		
+    		
+    		/*  $scope.addMore=function(){
+    			$("#addMore").children().text("正在加载中...");
+    			var pageNum=$(".listGroup").size()+1;
+    			var type=$(".nav-active div").text().trim();
+    			console.log(pageNum)
+    			console.log(type)
+    			initData({
+        			pageNum:pageNum,
+        			pageSize:10,
+        			type:type,
+        			orderName:"time",
+        			orderWay:"desc"
+        			});
+    			$("#addMore").children().text("点击加载更多》");
+    		};  */
+    		//跳转页面
+    		$scope.newsDetails=function(type,news_id){
+    			location.replace("/woman/news_details?type="+type+"&news_id="+news_id);
+    			console.log("/woman/news_details?type="+type+"&news_id="+news_id)
+    		};
+    		//新闻初始化
+    		$scope.newsInit={
+    				news_id:6160,
+    				img_address:'http://t.kejixun.com/uploadfile/2016/0804/20160804024053197.jpg',
+        			title:'手机支付流行，小偷开始猖獗',
+        			type:'奇闻',
+        			time:'2016-08-04 14:40:53',
+        			content:">· 对商家而言，很难判别顾客究竟是遗漏扫码，还是不会扫码；</p>"
+        				+" <p>· 数据显示，采用自助扫码技术的商家，失窃率比同业平均水平高出122%；</p>"
+        				  +"<p>· 商家频繁地捉到小偷，并且小偷会承认犯罪。</p>"
+        				  +"<p>Hopkins表示：“许多商家开始认识到了这些问题，开始采取措施来提醒相关风险，并确保购物篮中所有商品都被扫码且打印在收据上。”</p>"
+        				  +" <p>“零售业的所有创新都是商业选择——处于购买体验更愉悦与商家利润更丰厚的考量。但同时也可能带来一些消极结果，例如失窃率增加。”</p>"
+        				  +"<p>该研究显示，商家的一些选择或许会招致一些出乎预料的行为和结果。</p> "
+        				 +"</div></div>"
+        			};
+    		//广告代码
+    		//$("body").append("<div><img style='width:100%;height:10%;position:fixed;left:0;bottom:0'  src='/resources/img/splash.jpg'></img></div>");
+    		$.get("/adsense/list/10",function(data){
+    			if(data&&data[0].content){    				
+        			console.log(data)
+        			myUtils.executeJS(data[0].content);
+        			}
+    		});
+    		
+    	});
+    </script>
+</body>
+</html>

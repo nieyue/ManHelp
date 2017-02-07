@@ -1,0 +1,27 @@
+<!-- 增加新闻 -->
+	<form>
+    <label for="addNewsTitle" class="text-danger">※新闻标题（必填）</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="addNewsTitle"  placeholder="输入新闻标题">
+  </div>
+    <label for="addNewsType" class="text-danger">※新闻类型（必填）</label>
+  <div class="comment-input-margin ">
+    <input type="text" class="comment-input" ng-model="addNewsType"  placeholder="输入新闻类型">
+  </div>
+    <label  class="text-danger">※是否置顶，默认否</label>
+  <div class="comment-input-margin ">
+    <input type="radio" name="radioFixedRecommend" ng-disabled="disableFixedRecommend"  ng-model="fixedRecommend" value="0"/>否
+	<input type="radio" name="radioFixedRecommend" ng-disabled="disableFixedRecommend" ng-model="fixedRecommend" value="1"/>是<br>
+  </div>
+    <label  class="text-danger">※是否热门推荐，默认否</label>
+ <div class="comment-input-margin ">
+    <input type="radio" name="radioIsRecommend" ng-disabled="disableIsRecommend" ng-model="isRecommend" value="0"/>否
+	<input type="radio" name="radioIsRecommend" ng-disabled="disableIsRecommend" ng-model="isRecommend" value="1"/>是<br>
+  </div>
+    <label for="addNewsContent" class="text-danger">※新闻内容（必填）</label>
+  <div class="comment-input-margin">
+    <script id="editor" type="text/plain" style="width:800px;"></script>
+  </div>
+  <button type="button" class="btn btn-lg btn-danger" ng-click="addNewsForm()">保存发布</button>
+</form>
+<!-- 增加新闻 end-->

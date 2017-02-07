@@ -1,0 +1,41 @@
+<!-- 东方新闻 -->
+<div class="text-center text-danger h2">东方新闻</div>
+<div class="text-danger">★自定义抓取页面</div>
+<div class="comment-input-margin">
+<input class="comment-input" ng-model="addDF" type="input" placeholder="请输入想要抓取的url"/>
+<button type="button" class="btn btn-info" id="addDFUrlBtn"  ng-click="getDFNews('addDF')">抓取URL</button>
+</div>
+<hr/>
+<div class="table-responsive">
+  <table class="table">
+  <caption class="text-danger text-center">规则配置（默认已配，不能抓取时修改）</caption>
+  <tr class="success">
+  	<th>link</th>
+  	<th>文章内容</th>
+  </tr>
+  <tr>
+  	<td>
+		<input  ng-model="link" type="input"/>
+	</td>
+  	<td>
+		<input  ng-model="content" type="input"/>
+	</td>
+  </tr>
+  </table>
+</div>
+<div class="table-responsive">
+  <table class="table">
+    <tr class="success">
+  	<th>列表url</th>
+  </tr>
+   <tr>
+  	<td>
+		<div class="comment-input-margin">
+			<input class="comment-input" ng-model="firstDF" type="input"/><button class="btn btn-danger" ng-click="getDFNews('firstDF')" >点击抓取</button>
+		</div>
+	</td>
+  </tr>
+  </table>
+</div>
+
+<!-- 东方新闻end -->

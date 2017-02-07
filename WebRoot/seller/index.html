@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>男人帮后台管理系统</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+<meta name="keywords" content="男人帮">
+<meta charset="UTF-8">
+<meta name="description"
+	content="男人长帅点吧，太抢手；不帅吧，拿不出手。活泼点吧，说你太油；不出声吧，说你太闷。穿西装吧，说你太严肃； 穿随便一点吧，说你乡巴佬。找个漂亮女人吧，太操心；找个不漂亮的吧，又不甘心。光顾事业了，人家说你没责任感；光顾家了， 人家又说你没本事。专一点吧，人家说你不成熟；花心点吧，人家说你是禽兽。有钱了，人家说你变坏了；没有钱，人家骂你是窝囊废。自己奋斗吧，等有钱了女友早跑了；让女人养吧，不如自宫练葵花宝典。不去应酬吧，怕被老板废了；去应酬吧，怕被老婆废了 。会挣钱吧，怕你包二奶；不挣钱吧，又怕孩子断奶。结婚吧，怕自己后悔；不结婚吧，怕她反悔。要个孩子吧，怕将来没钱养；不要孩子吧，怕老了没人养。可怜的男人，事业是国家的，荣誉是单位的，成绩是领导的，工资是老婆的，财产是儿女的">
+<link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/sellerbase.css" rel="stylesheet">
+</head>
+<body ng-app="sellerApp" ng-controller="sellerCtrl">
+	<!-- 顶部 -->
+	<nav class="navbar-default navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#example-navbar-collapse">
+					<span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">男人帮后台管理系统</a>
+			</div>
+			<div class="collapse navbar-collapse" id="example-navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<!-- <li><a href="#">立即注册</a></li>
+					<li><a href="#">登录</a></li> -->
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	<!-- end顶部 -->
+	<!-- 巨幕 -->
+	<div class="jumbotron mock-img-jumbotron">
+  		<div class="container seller-formdiv ">
+  			<!-- sellerLogin -->
+			<form  id="sellerLoginForm" ng-submit="sellerSubmit()">
+			<div class="form-group text-center">
+			<label id="sellerErrorValue" class="text-danger"></label>
+			</div>
+				<div class="form-group">
+					 <input
+						type="tel" class="form-control" id="sellerPhone" ng-model="sellerPhone"
+						placeholder="手机">
+				</div>
+				<div class="form-group">
+					 <input
+						type="password" class="form-control" id="sellerPassword" ng-model="sellerPassword"
+						placeholder="密码">
+				</div>
+				<!-- <div class="checkbox">
+					<label> 
+					<input type="checkbox" id="autoLogin" checked="checked">自动登录
+					</label>
+				</div> -->
+				<div class="form-group">
+				<button type="submit" class="btn btn-success btn-block" id="sellerSubmit" >登录</button>
+				</div>				
+				<div class="form-group">
+				<!-- <a href="/seller/seller_register">立即注册，免费开店&gt;</a>
+				<a class="pull-right">忘记密码？找回密码</a> -->
+				</div>				
+			</form>
+  			<!-- end sellerLogin -->
+  			<!-- sellerLogining -->
+  			<form class="col-xs-offset-6 col-xs-6" style="display:none;" id="sellerLogining"> 
+			<div class="form-group text-center">
+			<label id="sellerErrorValue" class="text-danger hidden"></label>
+			</div>
+				<div class="form-group text-center img-circle">
+					 <img id="sellerImgSrc" class="img-circle" style="width:100px;height:100px;" src="/resources/img/preLoding.jpg"/>
+				</div>
+				<div class="form-group">
+				<div class="text-center alert alert-success" id="sellerNiceName">这个商家很懒，还没名字~……~</div>
+				</div>
+				
+				<div class="form-group">
+				<button type="button"  class="button button-small button-raised button-caution" id="sellerAutoLogin">进入后台</button>
+				<button type="button" class="button button-small button-raised button-royal pull-right" id="sellerAutoLoginOut">退出登录</button>
+				</div>				
+			</form>
+  			<!-- end sellerLogining -->
+		</div>
+	</div>
+	<!-- end巨幕 -->
+
+<!-- foot -->
+  <div class="container-fuild seller-foot">
+ 	<div class="seller-foot-contact">
+ 		<div>联系我们</div>
+ 		<div>公司地址：湖南省长沙市岳麓区阳光城1107室</div>
+ 	</div>
+  <div class="seller-foot-copyright"><p>Copyright 2016 itcast Inc,All rights reserved.</p></div>
+  </div>
+<!-- endfoot -->
+
+	<script src="/resources/js/jquery2.1.js"></script>
+	<script src="/resources/js/bootstrap3.2.0.js"></script>
+	<script src="/resources/js/angularjs.min.1.5.7.js"></script>
+	<script src="/resources/js/base.js"></script>
+	<script src="/resources/js/seller.js"></script>
+	<script>
+	angular.module('sellerApp',[])
+	.config(function($httpProvider){
+		$httpProvider.defaults.transformRequest=function(obj){
+			var str=[];
+			for ( var p in obj) {
+				str.push(encodeURIComponent(p)+"="+encodeURIComponent(obj[p]))
+			}
+			return str.join("&");
+		}
+		$httpProvider.defaults.headers.post={
+			'Content-Type':'application/x-www-form-urlencoded'
+		}
+	})
+	.controller('sellerCtrl',function($scope,$http){
+		$scope.sellerSubmit=function(){
+			$http.post("/manager/login",{managerPhone:$scope.sellerPhone,managerPassword:$scope.sellerPassword})
+			.success(function(data,status,headers,config){
+				if(data!=null&&typeof data =='object'){
+				console.log(data.manager_id);
+					myUtils.myLoadingToast("登录成功", function(){
+					location.replace("/seller/main");
+						
+					});
+				}else{
+					myUtils.myLoadingToast("登录失败", function(){
+					});
+				}
+				//console.log(status);
+				//console.log(headers);
+				//console.log(config);
+			}).error(function(data,status,headers,config){
+				console.log(data);
+				console.log(status);
+				console.log(headers);
+				console.log(config);
+				myUtils.myLoadingToast("登录失败", function(){
+					});
+			});
+		}
+	});
+	</script>
+</body>
+</html>

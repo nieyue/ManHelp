@@ -1,0 +1,79 @@
+<!-- 热点新闻 -->
+<div class="text-center text-danger h2">热点新闻</div>
+<div class="text-danger">★自定义抓取页面</div>
+<div class="comment-input-margin">
+<input class="comment-input" ng-model="addHot" type="input" placeholder="请输入想要抓取的url"/>
+<button type="button" class="btn btn-info" id="addHotUrlBtn"  ng-click="getHotNews('addHot')">抓取URL</button>
+</div>
+<hr/>
+<div class="table-responsive">
+  <table class="table">
+  <caption class="text-danger text-center">规则配置（默认已配，不能抓取时修改）</caption>
+  <tr class="success">
+  	<th>link</th>
+  	<th>标题</th>
+  	<th>时间</th>
+  </tr>
+  <tr>
+  	<td>
+		<input  ng-model="link" type="input"/>
+	</td>
+  	<td>
+		<input  ng-model="title" type="input"/>
+	</td>
+  	<td>
+	<input  ng-model="time" type="input"/>
+	</td>
+  </tr>
+   <tr class="success">
+  	<th>类型</th>
+  	<th>图片地址</th>
+  	<th>文章内容</th>
+  </tr>
+  <tr>
+  	<td>
+		<input  ng-model="type" type="input"/>
+	</td>
+  	<td>
+		<input  ng-model="img_address" type="input"/>
+	</td>
+  	<td>
+		<input  ng-model="content" type="input"/>
+	</td>
+  </tr>
+
+  </table>
+</div>
+<div class="table-responsive">
+  <table class="table">
+    <tr class="success">
+  	<th>列表url</th>
+  </tr>
+   <tr>
+  	<td>
+		<div class="comment-input-margin">
+			<label class="text-danger">奇闻</label>
+			<input class="comment-input" ng-model="firstHot" type="input"/><button class="btn btn-danger" ng-click="getHotNews('firstHot')" >点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">八卦</label>
+			<input class="comment-input" ng-model="secondHot" type="input"/><button class="btn btn-danger" ng-click="getHotNews('secondHot')">点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">热点</label>
+			<input class="comment-input" ng-model="thirdHot" type="input"/><button class="btn btn-danger" ng-click="getHotNews('thirdHot')">点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">体育</label>
+			<input class="comment-input" ng-model="fourthHot" type="input"/><button class="btn btn-danger" ng-click="getHotNews('fourthHot')">点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">笑话</label>
+			<input class="comment-input" ng-model="fifthHot" type="input"/><button class="btn btn-danger" ng-click="getHotNews('fifthHot')">点击抓取</button>
+		</div>
+	</td>
+  </tr>
+  </table>
+</div>
+
+<!-- 热点新闻end -->

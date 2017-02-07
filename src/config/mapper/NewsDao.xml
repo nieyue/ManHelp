@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.NewsDao">
+<!-- 添加新闻-->
+<insert id="addNews" parameterType="News" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		news_tb 
+   		 (type,title,time,fixed_recommend,is_recommend,img_address,content)
+   VALUES
+    	 (#{type},#{title},#{time},#{fixedRecommend},#{isRecommend},#{imgAddress},#{content})  
+</insert>  
+<!-- 更新新闻 -->
+<update id="updateNews" parameterType="News" >  
+    UPDATE 
+    	news_tb 
+    SET 
+    	news_id=#{newsId},
+    	type=#{type},
+    	title=#{title},
+    	time=#{time},
+    	fixed_recommend=#{fixedRecommend},
+    	is_recommend=#{isRecommend},
+    	img_address=#{imgAddress},
+    	content=#{content}
+    WHERE
+    	 news_id=#{newsId}  
+</update> 
+<!-- 删除新闻  -->
+<delete id="delNews"  parameterType="Integer" >  
+    DELETE FROM
+    	 news_tb WHERE news_id=#{newsId}
+</delete>  
+<!-- 删除重复新闻  -->
+<delete id="delNewsReview" >
+  DELETE FROM
+		news_tb where news_id in (select news_id from (select  max(news_id) as news_id,count(title) as count from news_tb group by title having count >1 order by count desc) as tab ) 
+
+ </delete>  
+<!-- 加载单个新闻-->
+<select id="loadNews" parameterType="Integer" resultType="News" >
+SELECT 
+	    news_id,
+    	type,
+    	title,
+    	time,
+    	fixed_recommend,
+    	is_recommend,
+    	img_address,
+    	content
+FROM news_tb 
+WHERE news_id=#{newsId}
+</select>
+<!-- 分页查询新闻 -->
+<select id="browsePagingNews" resultType="News">  
+    SELECT
+	    news_id,
+    	type,
+    	title,
+    	time,
+    	fixed_recommend,
+    	is_recommend,
+    	img_address,
+    	content
+	FROM news_tb
+	<if test="type!=null">WHERE type=#{type}</if>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageNum},#{pageSize}
+</select>
+<!-- 查询所有新闻 -->
+<select id="browseNews" resultType="News">  
+    SELECT
+        news_id,
+    	type,
+    	title,
+    	time,
+    	fixed_recommend,
+    	is_recommend,
+    	img_address,
+    	content
+	FROM news_tb
+	<if test="type!=null">WHERE type=#{type}</if>
+	ORDER BY
+		${orderName} ${orderWay}
+</select>    
+<!-- 随机查询置顶新闻 -->
+<select id="browseFixedRecommendRandomNews" resultType="News">  
+ SELECT 
+ 		news_id,
+    	type,
+    	title,
+    	time,
+    	fixed_recommend,
+    	is_recommend,
+    	img_address,
+    	content
+FROM news_tb 
+WHERE  fixed_recommend=${fixedRecommend}
+ORDER BY time desc LIMIT #{pageSize};
+</select>    
+<!-- 随机查询几条新闻 -->
+<select id="browseRandomRecommendNews" resultType="News">  
+ SELECT 
+ 		news_id,
+    	type,
+    	title,
+    	time,
+    	fixed_recommend,
+    	is_recommend,
+    	img_address,
+    	content
+FROM news_tb  AS t1 
+JOIN (SELECT ROUND(RAND() * ((SELECT MAX(news_id) FROM news_tb )-(SELECT MIN(news_id) FROM news_tb ))+(SELECT MIN(news_id) FROM news_tb)) AS id) AS t2 
+WHERE t1.news_id >= t2.id AND  is_recommend=${isRecommend}
+ORDER BY rand() LIMIT #{pageSize};
+</select>    
+</mapper>

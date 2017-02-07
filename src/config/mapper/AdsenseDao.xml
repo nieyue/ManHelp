@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.AdsenseDao">
+<!-- 添加用户 -->
+<insert id="addAdsense" parameterType="Adsense" flushCache="true">  
+   INSERT IGNORE INTO
+   		 adsense_tb (type,content)
+   VALUES
+    	 (#{type},#{content}) 
+</insert>  
+<!-- 更新用户 -->
+<update id="updateAdsense" parameterType="Adsense">  
+    UPDATE 
+    	adsense_tb 
+    SET 
+    	type=#{type},
+    	content=#{content}
+    WHERE
+    	 adsense_id=#{adsenseId}  
+</update> 
+<!-- 加载单个用户 -->
+<select id="loadAdsense" parameterType="Integer" resultType="Adsense" >
+SELECT 
+	 adsense_id,
+	 type, 
+	 content 
+FROM adsense_tb 
+WHERE adsense_id=#{adsenseId}
+</select>
+<!-- 查询所有用户 -->
+<select id="browseAdsense" resultType="Adsense">  
+    SELECT
+    	adsense_id,
+	 	type,  
+	 	content  
+	FROM adsense_tb
+	ORDER BY
+		adsense_id
+	DESC 
+</select>
+<!-- 查询所有用户 -->
+<select id="browseAdsenseByType" resultType="Adsense">  
+    SELECT
+    	adsense_id,
+	 	type,  
+	 	content  
+	FROM adsense_tb
+	WHERE type=#{type}
+	ORDER BY
+		adsense_id
+	DESC 
+</select>
+<!-- 删除注册账户-->
+<delete id="delAdsense"  parameterType="Integer">  
+    DELETE FROM
+    	 adsense_tb WHERE adsense_id=#{adsenseId}
+</delete>  
+</mapper>

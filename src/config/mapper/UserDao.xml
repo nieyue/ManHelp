@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.UserDao">
+<!-- 添加用户 -->
+<insert id="addUser" parameterType="User" flushCache="true">  
+   INSERT IGNORE INTO
+   		 user_tb (nice_name,name,password,
+   		 <if test="regTime!=null">reg_time,</if>
+   		 <if test="lastLoginTime!=null">last_login_time,</if>
+   		 openid
+   		 )
+   VALUES
+    	 (#{niceName},#{name},#{password},
+   		 <if test="regTime!=null">#{regTime},</if>
+   		 <if test="lastLoginTime!=null">#{lastLoginTime},</if>
+    	 #{openid}
+  			)  
+</insert>  
+<!-- 更新用户 -->
+<update id="updateUser" parameterType="User">  
+    UPDATE 
+    	user_tb 
+    SET 
+    	nice_name=#{niceName},
+    	name=#{name},
+    	openid=#{openid},
+    	password=#{password},
+    	reg_time=#{regTime},
+    	last_login_time=#{lastLoginTime}
+    WHERE
+    	 user_id=#{userId}  
+</update> 
+<!-- 加载单个用户 -->
+<select id="loadUser" parameterType="Integer" resultType="User" >
+SELECT 
+	 user_id,
+	 nice_name,
+	 name,
+	 password,
+	 openid,
+	 reg_time,
+	 last_login_time 
+FROM user_tb 
+WHERE user_id=#{userId}
+</select>
+<!-- 分页查询用户 -->
+<select id="searchUser" resultType="User">  
+    SELECT
+    	user_id,
+	 	nice_name,
+	 	name,
+	 	password,
+	 	openid,
+	 	reg_time,
+	 	last_login_time  
+	FROM user_tb
+	ORDER BY
+		reg_time
+	DESC LIMIT
+		#{pageNum},#{pageSize} 
+</select>
+<!-- 查询所有用户 -->
+<select id="browseUser" resultType="User">  
+    SELECT
+    	user_id,
+	 	nice_name,
+	 	name,
+	 	password,
+	 	openid,
+	 	reg_time,
+	 	last_login_time  
+	FROM user_tb
+	ORDER BY
+		reg_time
+	DESC 
+</select>
+<!-- 检查用户是否存在 -->
+<select id="chkLoginName" resultType="boolean">  
+    SELECT
+	 	count(user_id)
+	FROM user_tb
+	WHERE name=#{name}
+</select>  
+<!-- 找回用户 -->
+<select id="retrieveAccount" resultType="User">  
+    SELECT
+	 	user_id,
+	 	nice_name,
+	 	name,
+	 	password,
+	 	openid,
+	 	reg_time,
+	 	last_login_time 
+	FROM user_tb
+	WHERE name=#{name}
+</select>  
+<!-- 账户登录-->
+<select id="userLogin"  resultType="User">  
+    SELECT
+	 	user_id,
+	 	nice_name,
+	 	name,
+	 	password,
+	 	openid,
+	 	reg_time,
+	 	last_login_time 
+	FROM user_tb
+	WHERE name=#{name} and password=#{password}
+</select>  
+<!-- 微信账户隐形登录-->
+<select id="weixinBaseUserLogin"  resultType="User">  
+    SELECT
+	 	user_id,
+	 	nice_name,
+	 	name,
+	 	password,
+	 	openid,
+	 	reg_time,
+	 	last_login_time 
+	FROM user_tb
+	WHERE openid=#{openid}
+</select>  
+<!-- 删除注册账户-->
+<delete id="delUser"  parameterType="Integer">  
+    DELETE FROM
+    	 user_tb WHERE user_id=#{userId}
+</delete>  
+</mapper>

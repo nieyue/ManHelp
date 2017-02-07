@@ -1,0 +1,64 @@
+<!-- 左边导航 -->
+	 <div class="panel-group"  id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel " >
+    <div class="panel-heading" >
+      <h4 class="panel-title">
+        <a role="button" class="nav-active" ui-sref="main.notice" href="#collapseOne">
+          	首页
+        </a>
+      </h4>
+    </div>
+  </div>
+  <div class="panel " >
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" class="toCaret" data-parent="#accordion"  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+         新闻抓取
+        </a>
+          <span class="caret pull-right" ></span>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+      <div><a ui-sref="main.newsHot">热点新闻</a></div>
+      <div><a ui-sref="main.newsQQ">腾讯新闻</a></div>
+      <div><a ui-sref="main.newsDF">东方新闻</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel " >
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a  role="button" data-toggle="collapse" class="toCaret" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+         新闻管理
+        </a>
+          <span class="caret pull-right"></span>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+		<div><a ui-sref="main.newsList">新闻列表</a></div>
+		<div><a ui-sref="main.newsAdd">增加新闻</a></div>
+		<!-- <div><a ui-sref="main.newsUpdate">修改新闻</a></div>
+		<div><a ui-sref="main.newsDelete">删除新闻</a></div> -->
+      </div>
+    </div>
+  </div>
+  <div class="panel " >
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a  role="button" data-toggle="collapse" class="toCaret" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+         广告管理
+        </a>
+          <span class="caret pull-right"></span>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+		<div><a ui-sref="main.manAdsense">男人帮广告位</a></div>
+		<div><a ui-sref="main.womanAdsense">女人帮广告位</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+	<!-- end左边导航 -->

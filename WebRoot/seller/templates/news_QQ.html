@@ -1,0 +1,91 @@
+<!-- 腾讯新闻 -->
+<div class="text-center text-danger h2">腾讯新闻</div>
+<div class="text-danger">★自定义抓取页面</div>
+<div class="comment-input-margin">
+<input class="comment-input" ng-model="addQQ" type="input" placeholder="请输入想要抓取的url"/>
+<button type="button" class="btn btn-info" id="addQQUrlBtn"  ng-click="getQQNews('addQQ')">抓取URL</button>
+</div>
+<hr/>
+<div class="table-responsive">
+  <table class="table">
+  <caption class="text-danger text-center">规则配置（默认已配，不能抓取时修改）</caption>
+  <tr class="success">
+  	<th>link</th>
+  	<th>标题</th>
+  	<th>时间</th>
+  </tr>
+  <tr>
+  	<td>
+		<input  ng-model="link" type="input"/>
+	</td>
+  	<td>
+		<input  ng-model="title" type="input"/>
+	</td>
+  	<td>
+	<input  ng-model="time" type="input"/>
+	</td>
+  </tr>
+   <tr class="success">
+  	<th>类型</th>
+  	<th>图片地址</th>
+  	<th>文章内容</th>
+  </tr>
+  <tr>
+  	<td>
+		<input  ng-model="type" type="input"/>
+	</td>
+  	<td>
+		<input  ng-model="img_address" type="input"/>
+	</td>
+  	<td>
+		<input  ng-model="content" type="input"/>
+	</td>
+  </tr>
+
+  </table>
+</div>
+<div class="table-responsive">
+  <table class="table">
+    <tr class="success">
+  	<th>列表url <small class="text-danger">嫌麻烦？点击<button class="btn btn-danger" ng-click="getQQNews('0')">一键抓取</button></small></th>
+  </tr>
+   <tr>
+  	<td>
+		<div class="comment-input-margin">
+			<label class="text-danger">社会</label>
+			<input class="comment-input" ng-model="urls[1]" type="input"/><button class="btn btn-danger" ng-click="getQQNews('1')" >点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">军事</label>
+			<input class="comment-input" ng-model="urls[2]" type="input"/><button class="btn btn-danger" ng-click="getQQNews('2')">点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">八卦</label>
+			<input class="comment-input" ng-model="urls[3]" type="input"/><button class="btn btn-danger" ng-click="getQQNews('3')">点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">体育</label>
+			<input class="comment-input" ng-model="urls[4]" type="input"/><button class="btn btn-danger" ng-click="getQQNews('4')">点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">科技</label>
+			<input class="comment-input" ng-model="urls[5]" type="input"/><button class="btn btn-danger" ng-click="getQQNews('5')">点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">数码</label>
+			<input class="comment-input" ng-model="urls[6]" type="input"/><button class="btn btn-danger" ng-click="getQQNews('6')">点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">潮流</label>
+			<input class="comment-input" ng-model="urls[7]" type="input"/><button class="btn btn-danger" ng-click="getQQNews('7')">点击抓取</button>
+		</div>
+		<div class="comment-input-margin">
+			<label class="text-danger">星座</label>
+			<input class="comment-input" ng-model="urls[8]" type="input"/><button class="btn btn-danger" ng-click="getQQNews('8')">点击抓取</button>
+		</div>
+	</td>
+  </tr>
+  </table>
+</div>
+
+<!-- 腾讯新闻end -->

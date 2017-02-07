@@ -1,0 +1,25 @@
+<!-- 男人帮管理 -->
+<div >
+<div class="btn-group" style="margin:20px 330px;" role="group" aria-label="...">
+  <button type="button" class="btn btn-default btn-info" ng-click="adsenseManIndexBtn()" id="adsenseManIndexBtn">首&nbsp; &nbsp;页</button>
+  <button type="button" class="btn btn-default" ng-click="adsenseManDetailsBtn()" id="adsenseManDetailsBtn">详情页</button>
+</div>
+	<!-- 首页管理 -->
+	<div style="border:1px solid #ccc;width:320px;height:500px;box-shadow:0 0 15px #ccc;" id="adsenseManIndexModel">
+		<iframe src="" style="width:101%;height:100%;overflow-y:hidden"  id="adsenseManIndexIframe"></iframe>
+		<div style="border:1px solid #ccc;width:320px;height:50px;text-align:center;line-height:50px;position:absolute;top:70px;left:420px;background-color:#ccc;"><span style="color:red;">主页</span>~填写代码</div>
+		<textarea style="border:1px solid #ccc;width:320px;height:380px;position:absolute;top:150px;left:420px;resize:vertical" ng-model="adsenseManIndexCode"></textarea>
+  		<button type="button" class="btn btn-danger" ng-click="adsenseManIndexCodeBtn()" id="adsenseManIndexCodeBtn" style="position:absolute;bottom:0;left:420px;width:320px;">提交代码</button>
+	</div>
+	<!-- 首页管理  end-->
+	<!-- 详情页管理 -->
+	<div style="border:1px solid #888;width:320px;height:500px;box-shadow:0 0 15px #888;display:none;" id="adsenseManDetailsModel">
+	<iframe src="" style="width:101%;height:100%;overflow-y:hidden"  id="adsenseManDetailsIframe"></iframe>
+		<div style="border:1px solid #888;width:320px;height:50px;text-align:center;line-height:50px;position:absolute;top:70px;left:420px;background-color:#888;"><span style="color:red;">详情页</span>~填写代码</div>
+		<textarea style="border:1px solid #888;width:320px;height:380px;position:absolute;top:150px;left:420px;resize:vertical" ng-model="adsenseManDetailsCode"></textarea>
+  		<button type="button" class="btn btn-danger" ng-click="adsenseManDetailsCodeBtn()" id="adsenseManDetailsCodeBtn" style="position:absolute;bottom:0;left:420px;width:320px;">提交代码</button>
+	</div>
+	<!-- 详情页管理 end -->
+	
+</div>
+<!-- 男人帮管理 end-->

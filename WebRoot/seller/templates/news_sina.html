@@ -1,0 +1,54 @@
+ 	<!-- 商品管理 -->
+<div class="button-group" id="merBtnGroup">
+  <button type="button" class="button  button-3d button-primary" style="width:155px;">上架时间</button>
+  <button type="button" class="button button-3d button-primary" style="width:155px;">销量</button>
+  <button type="button" class="button button-3d button-primary"  style="width:155px;">库存</button>
+  <button type="button" class="button button-3d button-primary" style="width:155px;">已卖完</button>
+  <button type="button" class="button button-3d button-primary" style="width:155px;" id="offShelfMer">已下架</button>
+ <button type="button" class="button button-3d button-caution" style="width:155px;" id="addMerchandiseBtn">+添加商品</button>
+ </div>
+<hr/>
+	<div class="checkbox-inline">
+   <label><input type="checkbox" id="merchandiseCheckboxBoss" >全选</label>
+	</div>
+	&nbsp;&nbsp;已选中0件商品
+	<button type="button" class="button button-3d button-caution button-small " >批量删除</button>
+	<button type="button" class="button button-3d button-inverse button-small " >批量下架</button>
+<div style="overflow-x:auto;">
+<table class="table text-center table-mobile" id="merchandiseList">
+ 
+ <thead>
+      <tr class="myactive"> 
+         <th class="text-center">商品描述</th>
+         <th class="text-center">原始价格</th>
+         <th class="text-center">折扣</th>
+         <th class="text-center">销售价格</th>
+         <th class="text-center">邮费</th>
+         <th class="text-center">销量</th>
+         <th class="text-center">库存</th>
+         <th class="text-center">分类</th>
+         <th class="text-center">更新时间</th>
+         <th class="text-center">操作</th>
+      </tr>
+   </thead>
+   <tbody>
+     
+   </tbody>
+</table>
+</div>
+<div class="pagination-warp">
+  <!-- <ul class="pagination pagination-lg">
+    <li>
+      <a href="#" id="prevElement" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="pageNumber"><a href="#">1</a></li>
+    <li>
+      <a href="#" id="nextElement" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul> -->
+  <ul class="pagination pagination-lg" id="merPagination"></ul>
+</div>
