@@ -610,6 +610,20 @@ var myUtils = {
 	      	}
 	      	return isscrollbottom;
 },
+/**
+ * 提示
+ */
+myTipToast : function(imgUrl ) {
+	$("body")
+	.append(
+			"<div id='tipToastWarp' style='background-color:#000;position:fixed;width:100%;height:100%;top:0;left:0;opacity:0.9; z-index:999999999'>"
+			+"<img style='width:100%' src='"+imgUrl+"'/></div>"
+			);
+	$("#tipToastWarp").click(function(){
+		$("#tipToastWarp").remove();
+	});
+
+},
 	/**
 	 * 实现慢事件执行的toast
 	 */

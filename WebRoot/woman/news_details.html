@@ -29,6 +29,11 @@
 		<div style="margin-top:55px !important;margin-bottom:20px;">
 		<div class="list-group media comment-list-item">
 			<div class="media-center" >
+			<!-- 广告 -->
+				<a  style="padding:0 !important;" id="guanggao" href="#">
+				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170208/1486541696221082378.jpg">
+				</a>
+			<!-- 广告  end-->
 				<div ><h3 ng-bind="news.title"></h3></div>
 				<div class="text-muted">
 					<span ng-bind="news.time"></span>
@@ -131,6 +136,14 @@
 	<script>
 	
 	$(function(){
+	//广告
+		$("#guanggao").click(function(){
+		if(!myUtils.isWeiXinBrowse()){
+		location.replace("http://apknew.vipvipcar.com/shangwuapk/20170208/18167/47ef0237-07e5-446c-9c3e-5def41d89d6e/%E9%BB%84%E9%87%91%E6%8C%96%E7%9F%BF%E5%B7%A5_2004_AG2016_522_20170208140613_zwqacc.apk");
+		}else{
+		myUtils.myTipToast("/resources/img/live_weixin.png");
+		}
+		});
 		//重置详情页所有图片
 		$("img").each(function(){
 			if($(this).attr("src").substring($(this).attr("src").lastIndexOf(".")+1)!="gif"
