@@ -660,7 +660,10 @@ var myUtils = {
 	/**
 	 * 底部加载toast
 	 */
-	myFootLoadingToast : function(bottom, fn,motion) {
+	myFootLoadingToast : function(position,bottom, fn,motion) {
+		if(!position){
+			position="fixed";
+		}
 		if(typeof bottom!='number'||isNaN(bottom)){
 			bottom=0;
 		}
@@ -681,11 +684,12 @@ var myUtils = {
 			}
 			return;
 		}
-		
-		
-		$("body")
-				.append(
-						"<div id='footToast' style='display:none;color:#fff;background-color:#ccc;text-align:center;line-height:30px;border:0px solid black;min-height:30px;width:100%;bottom:"+bottom+";left:0;position:fixed;'><canvas id='bottomloading'  height='30px' width='30px' style='display:inline-block;margin-bottom:-10px;' >您的浏览器不支持html5</canvas><span id='footToastValue'>正在努力加载中...</span></div>");
+		var appendOrAfter="append";
+		if(position=="relative"){
+			appendOrAfter="after";
+		}
+		$("body")[appendOrAfter](
+						"<div id='footToast' style='display:none;color:#fff;background-color:#ccc;text-align:center;line-height:30px;border:0px solid black;min-height:30px;width:100%;bottom:"+bottom+";left:0;position:"+position+";'><canvas id='bottomloading'  height='30px' width='30px' style='display:inline-block;margin-bottom:-10px;' >您的浏览器不支持html5</canvas><span id='footToastValue'>正在努力加载中...</span></div>");
 		
 			if(typeof fn=='function'){
 				fn();

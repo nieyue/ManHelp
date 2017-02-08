@@ -25,7 +25,22 @@
 	<!-- 导航 -->
 		<div class="row text-center comment-list-item comment-top-fixed" style="top:50px !important;" id="topNav">
 			
-			<a class="col-xs-2 " href="#" ng-click="list('社会')">
+			<a class="col-xs-2 col-xs-offset-1" href="#" ng-click="list('社会')">
+				<div>社会</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('美图')">
+				<div>美图</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('体育')">
+				<div>体育</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('奇闻')">
+				<div>奇闻</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('段子')">
+				<div>段子</div>
+			</a>
+<!-- 			<a class="col-xs-2 " href="#" ng-click="list('社会')">
 				<div>社会</div>
 			</a>
 			<a class="col-xs-2" href="#" ng-click="list('美图')">
@@ -42,7 +57,7 @@
 			</a>
 			<a class="col-xs-2" href="#" ng-click="list('微投')">
 				<div>微投</div>
-			</a>
+			</a> -->
 			
 		</div>
 		<!-- 导航end -->
@@ -99,10 +114,10 @@
 		<div>点击加载更多》</div>
 		</a> -->
 		<!--  加载更多end -->
-	</div>
 		<!-- 底部end -->
-		<div class="comment-bottom">Copyright 2015 itcast Inc,All rights reserved.</div>
+		<div class="comment-bottom" ng-if="noMore">Copyright 2015 itcast Inc,All rights reserved.</div>
 		<!--  底部end -->
+	</div>
 		<!-- cnzz -->
 		<div style="display:none;">
 		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260079475'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260079475' type='text/javascript'%3E%3C/script%3E"));</script>
@@ -195,6 +210,7 @@
     		          }  
     		          });  
     		}
+    		$scope.noMore=false;//false还有，true没有更多
     		$scope.pageNum=1;//第多少个
     		$scope.pageSize=10;//每页个数
     		$scope.type=myUtils.GetQueryString("type")||"社会";//初始化类别
@@ -225,16 +241,27 @@
     		function onReachBottom(){
     			$scope.pageNum=$scope.pageNum+$scope.pageSize;
     			$scope.pageSize=$scope.pageSize;
-    			myUtils.myFootLoadingToast(null,function(){
+    			myUtils.myFootLoadingToast("relative",null,function(){
     			$.ajax({  
   		          type : "get",
+  		          timeout: 3000,
   		          async : false,
   		          url : "/news/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&type="+$scope.type+"&orderName=time&orderWay=desc",  
+  		          complete: function (xhr) {
+                  myUtils.myFootLoadingToast("relative",null,null,"remove");
+  				if(xhr.responseJSON&&xhr.responseJSON.code==40000){
+                  myUtils.myLoadingToast("请求失败！请检查！");
+                	return ;
+         		 }
+  				},
   		          success : function(data){
-  		      		     myUtils.myFootLoadingToast(null,null,"remove");
+  		      		     myUtils.myFootLoadingToast("relative",null,null,"remove");
   		        	 if(data.length<=0){
+  		        	 $scope.noMore=true;
+  		        	 $scope.$apply();
   		        	      return;
   		        	    }
+  		        	    $scope.noMore=false;
   		      		        $scope.newsList=$scope.newsList.concat(data);
   		      		        $scope.$apply();
   		      		         myUtils.myPrevToast("加载完成", null, "remove");
@@ -243,8 +270,12 @@
     			},"add");
   		}
     		$(window).scroll(function(){
-        		//console.log(myUtils.isScrollBottom(document));
-        		if(myUtils.isScrollBottom(document)){
+        		console.log($scope.noMore);
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
         			onReachBottom();
         		}
         			

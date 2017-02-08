@@ -25,7 +25,22 @@
 	<!-- 导航 -->
 		<div class="row text-center comment-list-item comment-top-fixed" style="top:50px !important;" id="topNav">
 			
-			<a class="col-xs-2" href="#" ng-click="list('潮流')">
+			<a class="col-xs-2 col-xs-offset-1" href="#" ng-click="list('潮流')">
+				<div>潮流</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('丽人')">
+				<div>丽人</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('星座')">
+				<div>星座</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('情感')">
+				<div>情感</div>
+			</a>
+			<a class="col-xs-2" href="#" ng-click="list('八卦')">
+				<div>八卦</div>
+			</a>
+<!-- 			<a class="col-xs-2" href="#" ng-click="list('潮流')">
 				<div>潮流</div>
 			</a>
 			<a class="col-xs-2" href="#" ng-click="list('丽人')">
@@ -42,7 +57,7 @@
 			</a>
 			<a class="col-xs-2" href="#" ng-click="list('微投')">
 				<div>微投</div>
-			</a>
+			</a> -->
 		</div>
 		<!-- 导航end -->
 		<!-- 新闻列表 -->
@@ -97,10 +112,10 @@
 		<div>点击加载更多》</div>
 		</a> -->
 		<!--  加载更多end -->
-	</div>
 		<!-- 底部end -->
-		<div class="comment-bottom">Copyright 2015 itcast Inc,All rights reserved.</div>
+		<div class="comment-bottom" ng-if="noMore">Copyright 2015 itcast Inc,All rights reserved.</div>
 		<!--  底部end -->
+	</div>
 		<!-- cnzz -->
 		<div style="display:none;">
 		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260946323'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1260946323' type='text/javascript'%3E%3C/script%3E"));</script>
@@ -150,13 +165,13 @@
     		          url : "/news/list?pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&type="+a.type+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
     		          async : false,  
     		          success : function(data){
-    		        	  if(data==''){
+    		        	 /*  if(data==''){
     		        		  $("#addMore").hide();
     		        		  return ;
     		        	  }else{
     		        		  $("#addMore").show();
     		        		  
-    		        	  }
+    		        	  } */
     		        	  if(a.pageNum>1){
     		        		  for (var int = 0; int < data.length; int++) {
     		        			$scope.newsList.push(data[int]); 
@@ -169,6 +184,7 @@
     		          }  
     		          });  
     		}
+    		$scope.noMore=false;//false还有，true没有更多
     		$scope.pageNum=1;//第多少个
     		$scope.pageSize=10;//每页个数
     		$scope.type=myUtils.GetQueryString("type")||"潮流";//初始化类别
@@ -198,16 +214,27 @@
     		function onReachBottom(){
     			$scope.pageNum=$scope.pageNum+$scope.pageSize;
     			$scope.pageSize=$scope.pageSize;
-    			myUtils.myFootLoadingToast(null,function(){
+    			myUtils.myFootLoadingToast("relative",null,function(){
     			$.ajax({  
   		          type : "get",
+  		          timeout: 3000,
   		          async : false,
   		          url : "/news/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&type="+$scope.type+"&orderName=time&orderWay=desc",  
+  		           complete: function (xhr) {
+                  myUtils.myFootLoadingToast("relative",null,null,"remove");
+  				if(xhr.responseJSON&&xhr.responseJSON.code==40000){
+                  myUtils.myLoadingToast("请求失败！请检查！");
+                	return ;
+         		 }
+  				},
   		          success : function(data){
-  		      		     myUtils.myFootLoadingToast(null,null,"remove");
+  		      		     myUtils.myFootLoadingToast("relative",null,null,"remove");
   		        	 if(data.length<=0){
+  		        	 $scope.noMore=true;
+  		        	 $scope.$apply();
   		        	      return;
   		        	    }
+  		        	    $scope.noMore=false;
   		      		        $scope.newsList=$scope.newsList.concat(data);
   		      		        $scope.$apply();
   		      		         myUtils.myPrevToast("加载完成", null, "remove");
@@ -217,7 +244,11 @@
   		}
     		$(window).scroll(function(){
         		//console.log(myUtils.isScrollBottom(document));
-        		if(myUtils.isScrollBottom(document)){
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
         			onReachBottom();
         		}
         			
