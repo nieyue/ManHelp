@@ -269,6 +269,7 @@
             	'rightbody@main': {
                     templateUrl: "/seller/templates/news_list.html"
                 	,controller:function($scope){
+                	$scope.isEmail=false;//默认不显示邮件配置
                 		//新闻列表
                    		function initData(a){
                 			$.ajax({  
@@ -305,6 +306,7 @@
                 			});	
                    		//全部新闻列表
                    		$scope.allNews=function(){
+                   		$scope.isEmail=false;
                    			initData({
                     			pageNum:1,
                     			pageSize:5,
@@ -316,6 +318,7 @@
                    		};
                    		//热门置顶新闻列表
                    		$scope.fixedRecommendNews=function(){
+                   		$scope.isEmail=false;
                    		//热门置顶
           		        	$.ajax({  
               		          type : "get",  
@@ -331,6 +334,7 @@
                    		};
                    		//推荐新闻列表
                    		$scope.isRecommendNews=function(){
+                   		$scope.isEmail=false;
                    		//推荐
             				$.ajax({  
               		          type : "get",  
@@ -518,7 +522,57 @@
                    			});
                 			
                 		};
+                		//切换为邮件配置
+                		$scope.changeEmail=function(){
+                		$scope.isEmail=true;
+                		};
+                		//保存邮件配置、存储在localstorage
+                		$scope.mailServerHost='smtp.mxhichina.com';
+                		$scope.mailServerPort='25';
+                		$scope.userName='benzhenchayuan@yayao8.com';
+                		$scope.password='yayao123+++';
+                		$scope.toAddress='278076304@qq.com';
+                		$scope.saveEmail=function(){
+                		var emailInfo={
+                		"mailServerHost":$scope.mailServerHost,
+                		"mailServerPort":$scope.mailServerPort,
+                		"userName":$scope.userName,
+                		"password":$scope.password,
+                		"toAddress":$scope.toAddress
+                		};
+                		localStorage.setItem("emailInfo", JSON.stringify(emailInfo));
+                		myUtils.myLoadingToast("保存成功",null);
+                		};
+                		//发送邮件
+                		$scope.emailNew=function(news){
+                		if(localStorage.getItem("emailInfo")){
+                		var emailInfo=JSON.parse(localStorage.getItem("emailInfo"));
+                		$scope.mailServerHost=emailInfo.mailServerHost;
+                		$scope.mailServerPort=emailInfo.mailServerPort;
+                		$scope.userName=emailInfo.userName;
+                		$scope.password=emailInfo.password;
+                		$scope.toAddress=emailInfo.toAddress;
+                		}
+                		console.log(emailInfo)
+                		myUtils.myLoginOut("确定发送吗？", function(){
+                   				$.get("/news/email/"+news.news_id+
+                   				"?mailServerHost="+$scope.mailServerHost+
+                   				"&mailServerPort="+$scope.mailServerPort+
+                   				"&userName="+encodeURIComponent($scope.userName)+
+                   				"&password="+encodeURIComponent($scope.password)+
+                   				"&toAddress="+encodeURIComponent($scope.toAddress),
+                   				function(data){
+                   				console.log(data)
+                   	   				if(data.code==200){
+                   	   				myUtils.myLoadingToast("发送成功", null); 
+                   	   				
+                   	   				}else{
+                   	   					myUtils.myLoadingToast("发送失败", null);   	   				
+                   	   				}
+                   	   			});
+                   			});
                 		
+                		};
                     }
             	} 
             }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONObject;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.nieyue.bean.News;
 import com.nieyue.comments.MyJoup;
 import com.nieyue.dto.StateResult;
+import com.nieyue.mail.MailSenderInfo;
+import com.nieyue.mail.SendMailDemo;
 import com.nieyue.service.NewsService;
 
 /**
@@ -181,10 +184,57 @@ public class NewsController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{newsId}", method = {RequestMethod.GET,RequestMethod.POST})
-	public @ResponseBody News loadMer(@PathVariable("newsId") Integer newsId,HttpSession session)  {
+	public @ResponseBody News loadNews(@PathVariable("newsId") Integer newsId,HttpSession session)  {
 		News news=new News();
 		news = newsService.loadNews(newsId);
 		return news;
+	}
+	/**
+	 * 单个新闻发送邮件
+	 * @return
+	 */
+	@RequestMapping(value = "/email/{newsId}", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResult emailNews(
+			@PathVariable("newsId") Integer newsId,
+			@RequestParam(value="mailServerHost")String mailServerHost,
+			@RequestParam(value="mailServerPort")String mailServerPort,
+			@RequestParam(value="userName")String userName,
+			@RequestParam(value="password")String password,
+			@RequestParam(value="toAddress")String toAddress,
+			HttpServletRequest request)  {
+		News news=new News();
+		news = newsService.loadNews(newsId);
+		// 设置邮件服务器信息
+		MailSenderInfo mailInfo = new MailSenderInfo();
+		mailInfo.setMailServerHost(mailServerHost);
+		mailInfo.setMailServerPort(mailServerPort);
+		mailInfo.setValidate(true);
+		// 邮箱用户名
+		mailInfo.setUserName(userName);
+		// 邮箱密码
+		mailInfo.setPassword(password);
+		// 发件人邮箱
+		mailInfo.setFromAddress(userName);
+		// 收件人邮箱
+		mailInfo.setToAddress(toAddress);
+		// 邮件标题
+		mailInfo.setSubject(news.getTitle());
+		//获取域名
+		StringBuffer url = request.getRequestURL();  
+		String tempContextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).toString(); 
+		// 邮件内容
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<strong style='font-size:38px;'>"+news.getTitle()+"</strong><br/><hr/>");
+		Document newsContent = Jsoup.parse(news.getContent());
+		Elements imgs = newsContent.select("img");
+		for (int i = 0; i < imgs.size(); i++) {
+			imgs.get(i).attr("src", tempContextUrl+imgs.get(i).attr("src"));
+		}
+		buffer.append(newsContent);
+		//buffer.append("<a href='http://man.fuwu88.cn/man/news_details?type=%E5%A5%87%E9%97%BB&news_id=9331#'><img src='http://man.fuwu88.cn/uploaderPath/ueditor/image/20170207/1486431046149068348.jpg'/></a><br/>");
+		mailInfo.setContent(buffer.toString());
+       boolean s = SendMailDemo.sendSelfMail(mailInfo);
+		return StateResult.getSR(s);
 	}
 	
 	

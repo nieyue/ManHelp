@@ -3,18 +3,19 @@
 	<button class="btn btn-primary" ng-click="allNews()">全部新闻列表</button>
 	<button class="btn btn-danger" ng-click="fixedRecommendNews()">热门置顶新闻列表</button>
 	<button class="btn btn-info" ng-click="isRecommendNews()">推荐新闻列表</button>
+	<button class="btn btn-success" ng-click="changeEmail()">配置email</button>
 </div>
 <!-- 新闻列表选择end -->
 <!-- 新闻列表 -->
-	<div class="panel panel-default">
+	<div class="panel panel-default" ng-hide="isEmail">
   <!-- Default panel contents -->
   		 <div class="panel-heading">新闻列表</div>
   	</div>
-	<div class="listGroup panel panel-default" ng-repeat="news in newsList" ng-click="newsDetails(news.news_id)">
+	<div ng-hide="isEmail" class="listGroup panel panel-default" ng-repeat="news in newsList" ng-click="newsDetails(news.news_id)">
   <!-- Default panel contents -->
  		 <div class="panel-body">
    		 	<div class="media-left">
-				<a > <img class="media-object  comment-list-item-img " style="margin-top:12px;"
+				<a href="/man/news_details?type={{news.type}}&news_id={{news.news_id}}"> <img class="media-object  comment-list-item-img " style="margin-top:12px;"
 					ng-src="{{news.img_address||newsInit.img_address}}" >
 				</a>
 			</div>
@@ -25,6 +26,7 @@
 					<div class="text-muted"><span ng-bind="news.time||newsInit.time"></span><span class="newsType" ng-bind="news.type||newsInit.type"></span></div>
 				</div>
 				<div class="pull-right">
+					<button class=" btn btn-warning" ng-click="emailNew(news)"><span class="glyphicon glyphicon-envelope"></span>发邮件</button>
 					<button class=" btn btn-warning" ng-click="updateNew(news)"><span class="glyphicon glyphicon-pencil"></span>编辑</button>
 					<button class=" btn btn-danger" ng-click="deleteNew(news)"><span class="glyphicon glyphicon-trash"></span>删除</button>
 				</div>
@@ -33,8 +35,33 @@
  		 
   	</div>
 <!-- 新闻列表end -->
-<!-- 加载更多end -->
-	<a class="btn btn-default btn-block text-center" id="addMore" ng-click="addMore(newsList)">
+<!-- 保存邮件配置 -->
+<div ng-hide="!isEmail">
+    <label  class="text-danger">※SMTP发送邮件服务器地址（必填）</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="mailServerHost"  >
+  </div>
+    <label class="text-danger">※SMTP发送邮件服务器端口（必填）</label>
+  <div class="comment-input-margin ">
+    <input type="text" class="comment-input" ng-model="mailServerPort"  >
+  </div>
+    <label  class="text-danger">※发送者邮箱账号（必填）</label>
+  <div class="comment-input-margin ">
+    <input type="text" class="comment-input" ng-model="userName"  >
+  </div>
+    <label  class="text-danger">※发送者邮箱密码（必填）</label>
+  <div class="comment-input-margin ">
+    <input type="text" class="comment-input" ng-model="password"  >
+  </div>
+    <label  class="text-danger">※接受者邮箱账号（必填）</label>
+  <div class="comment-input-margin ">
+    <input type="text" class="comment-input" ng-model="toAddress"  >
+  </div>
+  <button type="button" class="btn btn-lg btn-danger" ng-click="saveEmail()">保存</button>
+</div>
+<!--  保存邮件配置end -->
+<!-- 加载更多 -->
+	<a class="btn btn-default btn-block text-center" ng-hide="isEmail" id="addMore" ng-click="addMore(newsList)">
 		<div>点击加载更多》</div>
 	</a>
 <!--  加载更多end -->

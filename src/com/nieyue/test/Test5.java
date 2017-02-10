@@ -17,8 +17,11 @@ public class Test5 {
 			  + "<div class='content'><h1>标题</h1> </div>"
 			  + "<div class='content'>"
 			  + "<p>文章内容1</p>"
+			  + "<p><img id ='img1' src='/uploaderPath/ueditor/image/20170206/1486372647807026947a.jpg'/></p>"
 			  + "<p>Parsed HTML into a doc.</p>"
+			  + "<p><img id ='img2' src='/uploaderPath/ueditor/image/20170206/1486372647807026947b.jpg'/></p>"
 			  + "<p>Parsed文章内容3 HTML into a doc.</p>"
+			  + "<p><img id ='img3' src='/uploaderPath/ueditor/image/20170206/1486372647807026947c.jpg'/></p>"
 			  + " </div>"
 			  + "</body></html>";
 			
@@ -30,7 +33,14 @@ public class Test5 {
 	System.out.println(doc.title());
 	System.out.println("............................");
 	System.out.println(doc.select(".content"));
-	
+	System.out.println("............................");
+	System.out.println(doc.select("img"));
+	System.out.println(doc.select("#img1"));
+	for (int i = 0; i < doc.select("img").size(); i++) {
+		doc.select("img").get(i).attr("src", "http://www.baidu.com"+doc.select("img").get(i).attr("src"));
+		System.out.println(doc.select("img").get(i).attr("src"));
+	}
+	System.out.println(doc.toString());
 	Document doc2;
 	try {
 		doc2 = Jsoup.connect("http://t.kejixun.com/4677").get();
