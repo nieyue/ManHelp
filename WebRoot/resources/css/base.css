@@ -91,6 +91,10 @@ body,html{
 	padding:5px 2%;
 	margin:1px 0 !important; 
 }
+.comment-list-item:active{
+	background-color: #f1eff0;
+	
+}
 .comment-list-item-img{
 	width: 100px;
 	height: 76px;

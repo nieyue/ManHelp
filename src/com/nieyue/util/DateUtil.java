@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -23,7 +24,37 @@ public class DateUtil {
 	nowTime= df.format(dt);//用DateFormat的format()方法在dt中获取并以yyyy/MM/dd HH:mm:ss格式显示
 	return nowTime;
 	}
-	
+	/**
+	 * 格式化时间yyyy-MM-dd HH:mm:ss
+	 * @return
+	 */
+	public static String getFormatDate(Date date){
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置显示格式
+		String nowTime="";
+		nowTime= df.format(date);//用DateFormat的format()方法在dt中获取并以yyyy/MM/dd HH:mm:ss格式显示
+		return nowTime;
+	}
+	/**
+	 * 格式化时间yyyy-MM-dd HH:mm:ss
+	 * @return
+	 */
+	public static String getFormatDate(Date date,String format){
+		DateFormat df = new SimpleDateFormat(format);//设置显示格式
+		String nowTime="";
+		nowTime= df.format(date);//用DateFormat的format()方法在dt中获取并以yyyy/MM/dd HH:mm:ss格式显示
+		return nowTime;
+	}
+	/**
+	 * 格式化时间yyyy-MM-dd
+	 * @return
+	 */
+	public static String getCurrentTimeDay(){
+	Date dt=new Date();//如果不需要格式,可直接用dt,dt就是当前系统时间
+	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置显示格式
+	String nowTime="";
+	nowTime= df.format(dt);//用DateFormat的format()方法在dt中获取并以yyyy/MM/dd HH:mm:ss格式显示
+	return nowTime;
+	}
 	/**
 	 * 格式化时间"yyyyMMddHHmmss
 	 * @return
@@ -39,7 +70,7 @@ public class DateUtil {
 	 * 格式化时间"yyyyMMdd
 	 * @return
 	 */
-	public static String getDayTime(){
+	public static String getImgDir(){
 		Date dt=new Date();//如果不需要格式,可直接用dt,dt就是当前系统时间
 		DateFormat df = new SimpleDateFormat("yyyyMMdd");//设置显示格式
 		String nowTime="";
@@ -123,8 +154,14 @@ public class DateUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	long daysBetween = (d2.getTime()-d1.getTime())/(3600*24*1000);//两日期之间相隔的天数 
-    	return daysBetween;  
+		if(isSameDate(d1, d2)){//同一天
+			return 0l;
+		}else if(Math.abs((d2.getTime()-d1.getTime()))<=3600*24*1000){//差24小时以内算一天
+			return 1l;
+		}else{
+			long daysBetween = (d2.getTime()-d1.getTime())/(3600*24*1000);//两日期之间相隔的天数 	
+			return daysBetween;  
+		}
     }  
     /**
      * 获取从起始日期开始几天后的日期
@@ -175,7 +212,7 @@ public class DateUtil {
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
     	Date da = sdf.parse(date);
     	return da;  
-    }  
+    }
     /**
      * 格式化时间从yyyy-MM-dd到Wed Mar 02 09:19:00 CST 2016
      * @param args
@@ -206,14 +243,36 @@ public class DateUtil {
     	Date da = sdf.parse(date);
     	return da;  
     }  
-	
-    
+    /**
+     * 是否同一天
+     * @param date1
+     * @param date2
+     * @return
+     */
+    public static boolean isSameDate(Date date1, Date date2) {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+
+        boolean isSameYear = cal1.get(Calendar.YEAR) == cal2
+                .get(Calendar.YEAR);
+        boolean isSameMonth = isSameYear
+                && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH);
+        boolean isSameDate = isSameMonth
+                && cal1.get(Calendar.DAY_OF_MONTH) == cal2
+                        .get(Calendar.DAY_OF_MONTH);
+
+        return isSameDate;
+    }
+
     //  输出结果：  
     //  timeStamp=1417792627  
     //  date=2014-12-05 23:17:07  
     //  1417792627  
     //static HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-    public static void main(String[] args) throws ParseException {  
+    public static void main(String[] args) {  
     	System.out.println(getCurrentTime());
     	System.out.println(getOrdersTime());
     	String timeStamp = timeStamp();  
@@ -232,6 +291,6 @@ public class DateUtil {
         System.out.println(getSeparatedTime());
         System.out.println(getFirstToDay(new Date(), 1).toLocaleString());
         System.out.println(getFirstToSecondsTime(new Date(), 1).toLocaleString());
-        System.out.println(parseSelfDate("1988-11-11 11:11", "yyyy-MM-dd HH:mm").toLocaleString());
+        System.out.println(getImgDir());
     }  
 }

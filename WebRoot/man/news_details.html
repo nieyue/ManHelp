@@ -190,12 +190,13 @@
 	  	//新增下一页
 	  	
 	  	var prePageNum=0;//初始上一页
-		var nextPageNum=15;//初始下一页
-		var pageSize=15;//初始页面长度
+		var nextPageNum=1500000;//初始下一页
+		var pageSize=1500000;//初始页面长度
 	  	var list="p";
 		if(($("p").length<=0) && ($("li").length>0)){
 			list="li";
 			}
+			console.log($(list).length)
 	  	var totalpage=$(list).length;//总数目
 	  	var totalSize=$(list).length%pageSize==0?$(list).length/pageSize:parseInt($(list).length/pageSize)+1;//总页数
 	  	var currentPage=1;
@@ -203,7 +204,7 @@
 		"<a  class='btn btn-success pull-left' id='prevPageBox'>上一页</a>");
 			$("#newsDetails").after(
 					"<a  class='btn btn-success pull-right' id='nextPageBox'><span id='currentPageId'>"+currentPage+"</span>/"+totalSize+"下一页</a>")
-		$("#nextPageBox").after("<div class='text-center text-info' id='noPageBox'>没有更多了</div>");
+		$("#nextPageBox").after("<div class='text-center' style='color:#ccc;' id='noPageBox'>没有更多了</div>");
 		$("#prevPageBox").hide();
 		$("#noPageBox").hide();
 		if(totalSize==1){

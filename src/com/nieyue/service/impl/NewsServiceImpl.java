@@ -106,5 +106,10 @@ public class NewsServiceImpl implements NewsService {
 		List<News> l = newsDao.browseRandomRecommendNews(pageSize,isRecommend);
 		return l;
 	}
+	@Override
+	public List<String> browseTypeNews() {
+		List<String> tl = newsDao.browseTypeNews();
+		return tl;
+	}
 	
 }

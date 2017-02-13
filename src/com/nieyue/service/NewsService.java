@@ -27,4 +27,6 @@ public interface NewsService {
 	public List<News> browseFixedRecommendRandomNews(int pageSize,int fixedRecommend);
 	/** 随机查询推荐新闻 */
 	public List<News> browseRandomRecommendNews(int pageSize,int isRecommend);
+	/** 查询所有类型 去空 去重*/
+	public List<String> browseTypeNews();
 }

@@ -50,6 +50,11 @@ public class NewsServiceImplTest {
 	public void testLoadNews() {
 		fail("Not yet implemented");
 	}
+	@Test
+	public void testTypeNews() {
+		List<String> l = newsService.browseTypeNews();
+		System.out.println(l);
+	}
 
 	@Test
 	public void testBrowseNews() {

@@ -5,6 +5,10 @@
 	<button class="btn btn-info" ng-click="isRecommendNews()">推荐新闻列表</button>
 	<button class="btn btn-success" ng-click="changeEmail()">配置email</button>
 </div>
+<div style="margin:10px;">
+<p>动态分类列表</p>
+	<button class="btn btn-primary" ng-click="list(type)" ng-repeat="type in newsTypes">{{type}}</button>
+</div>
 <!-- 新闻列表选择end -->
 <!-- 新闻列表 -->
 	<div class="panel panel-default" ng-hide="isEmail">
@@ -61,7 +65,7 @@
 </div>
 <!--  保存邮件配置end -->
 <!-- 加载更多 -->
-	<a class="btn btn-default btn-block text-center" ng-hide="isEmail" id="addMore" ng-click="addMore(newsList)">
+	<a class="btn btn-default btn-block text-center" style="display:block" ng-hide="isEmail || newsList.length<pageSize" id="addMore" ng-click="addMore()">
 		<div>点击加载更多》</div>
 	</a>
 <!--  加载更多end -->

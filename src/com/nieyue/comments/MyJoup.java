@@ -7,9 +7,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -20,6 +17,9 @@ import com.nieyue.service.ImgService;
 import com.nieyue.service.NewsService;
 import com.nieyue.util.DateUtil;
 import com.nieyue.util.HttpClientUtil;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  * 网页数据抓取

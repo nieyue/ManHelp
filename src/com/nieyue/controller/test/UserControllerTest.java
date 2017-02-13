@@ -61,7 +61,8 @@ public class UserControllerTest {
 			// url="/news/grab?url=http://3g.k.sohu.com/t/n"+Integer.valueOf(152233000+i)+"&mode=新浪";//新闻抓取
 		 //url="/news/list?pageNum=11&pageSize=10&type=热点&orderName=news_id&orderWay=asc";//list
 		 //url="/news/list?pageNum=11&pageSize=10&type=首页&orderName=news_id&orderWay=asc";//list
-		 url="/news/list/random?pageSize=10";//list
+		 //url="/news/list/random?pageSize=10";//list
+		url="/news/types";//type list
 		if(type.equals(0)){
 		this.mvc.perform(get(url))
 		//.andExpect(status().isOk())

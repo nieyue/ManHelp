@@ -270,6 +270,9 @@
                     templateUrl: "/seller/templates/news_list.html"
                 	,controller:function($scope){
                 	$scope.isEmail=false;//默认不显示邮件配置
+                	$scope.type="首页";//默认类型为首页，即都可以显示
+                	$scope.pageNum=1;
+                	$scope.pageSize=10;
                 		//新闻列表
                    		function initData(a){
                 			$.ajax({  
@@ -296,21 +299,37 @@
                 		          }  
                 		          });  
                 		}
+                		//新闻类型列表
+                   		function initTypeData(){
+                			$.ajax({  
+                		          type : "get",  
+                		          url : "/news/types",  
+                		          async : false,  
+                		          success : function(data){
+                		        	  $scope.newsTypes=data;
+                		        	  $scope.$apply(); 
+                		        	  myUtils.myPrevToast("加载完成", null, "remove");
+                		          }  
+                		          });  
+                		}
                    		//初始化
                 		initData({
-                			pageNum:1,
-                			pageSize:5,
-                			type:"首页",
+                			pageNum:$scope.pageNum,
+                			pageSize:$scope.pageSize,
+                			type:$scope.type,
                 			orderName:"news_id",
                 			orderWay:"desc"
                 			});	
+                			initTypeData();
                    		//全部新闻列表
                    		$scope.allNews=function(){
+                   		$scope.type="首页";
                    		$scope.isEmail=false;
+                   		$scope.pageNum=1;
                    			initData({
-                    			pageNum:1,
-                    			pageSize:5,
-                    			type:"首页",
+                    			pageNum:$scope.pageNum,
+                    			pageSize:$scope.pageSize,
+                    			type:$scope.type,
                     			orderName:"news_id",
                     			orderWay:"desc"
                     			});	
@@ -356,14 +375,12 @@
                    		//获取更多
                 		$scope.addMore=function(){
                 			$("#addMore").children().text("正在加载中...");
-                			var pageNum=$(".listGroup").size()+1;
-                			var type=$(".nav-active div").text().trim();
-                			console.log(pageNum)
-                			console.log(type)
+                			//var pageNum=$(".listGroup").size()+1;
+                			$scope.pageNum=$scope.pageNum+$scope.pageSize;
                 			initData({
-                    			pageNum:pageNum,
-                    			pageSize:5,
-                    			type:type,
+                    			pageNum:$scope.pageNum,
+                    			pageSize:$scope.pageSize,
+                    			type:$scope.type,
                     			orderName:"news_id",
                     			orderWay:"desc"
                     			});
@@ -385,6 +402,13 @@
 									"<div class='comment-input-margin '>"+
 									"   <input type='text' class='comment-input' id='updateNewsType'  placeholder='输入新闻类型'>"+
 									" </div>"+
+									"  <label  class='text-danger'>※封面图片url</label>"+
+									"<div class='comment-input-margin '>"+
+									"   <input type='file' class='comment-input' id='newsFileUpload'  >"+
+									" <div>"+
+									" <img style='width:300px;height: 200px;' src='"+news.img_address+"' id='updateImgId'/>"+
+									"</div>"+
+									"</div>"+
 									 "<label  class='text-danger'>※是否置顶，默认否</label>"+
 									  "<div class='comment-input-margin '>"+
 									    "<input type='radio' name='radioFixedRecommend' class='disableFixedRecommend' value='0'/>否"+
@@ -457,6 +481,27 @@
                  				});
                  			}
                  			initForm();
+                 			//上传新闻封面图片
+                 		$("#newsFileUpload").change(function(){
+                 			myUtils.fileUpload(
+                 				    {inputfile:$("#newsFileUpload"),
+                 				    ajaxObj:{
+                 				        formData:[
+                 				            {key:"testFileUpload",value:$("#newsFileUpload").get(0).files[0]}
+                 				            ],
+                 				        url:"/news/img/add",
+                 				        success:(data)=>{
+                 				            if(data){
+                 				            myUtils.myLoadingToast("上传成功",null);
+                 				            myUtils.myPrevToast("上传成功",null,"remove");
+                 				          news.img_address=data;
+                 				          $("#updateImgId").attr("src",news.img_address);
+                 				            }
+                 				        }
+                 				    }
+                 				}
+                 				);
+                 		});
                  			//提交更新表单
                  			console.log(ue)
                  			$("#sellerSubmit").unbind().click(function(){
@@ -496,6 +541,7 @@
                  					ue.ready(function(){
                  					ue.setContent(content);
                  					}); */
+                  		        	 initTypeData();//初始化类型列表
                   		        	  return;
                   		        	  }
                   		        	  myUtils.myPrevToast("修改失败", null, "remove");
@@ -513,6 +559,7 @@
                    	   				$scope.newsList.splice($scope.newsList.indexOf(news), 1);
                    	   				//$scope.newsList.splice(news.news_id,1);
                    	   				$scope.$apply();
+                   	   				initTypeData();//初始化类型列表
                    	   				myUtils.myLoadingToast("删除成功", null); 
                    	   				
                    	   				}else{
@@ -573,6 +620,19 @@
                    			});
                 		
                 		};
+                		//点击显示该类型列表
+                		$scope.list=function(type){
+                		$scope.type=type;
+                		$scope.pageNum=1;
+                		//初始化
+                		initData({
+                			pageNum:$scope.pageNum,
+                			pageSize:$scope.pageSize,
+                			type:$scope.type,
+                			orderName:"news_id",
+                			orderWay:"desc"
+                			});	
+                		};
                     }
             	} 
             }
@@ -606,6 +666,28 @@
                  			});
                  			
                  			console.log($scope.fixedRecommend)
+                 		//上传新闻封面图片
+                 		$("#newsFileUpload").change(function(){
+                 			myUtils.fileUpload(
+                 				    {inputfile:$("#newsFileUpload"),
+                 				    ajaxObj:{
+                 				        formData:[
+                 				            {key:"testFileUpload",value:$("#newsFileUpload").get(0).files[0]}
+                 				            ],
+                 				        url:"/news/img/add",
+                 				        success:(data)=>{
+                 				            if(data){
+                 				            myUtils.myLoadingToast("上传成功",null);
+                 				            myUtils.myPrevToast("上传成功",null,"remove");
+                 				           $scope.imgUrl=data;
+                 				           $scope.$apply();
+                 				            }
+                 				        }
+                 				    }
+                 				}
+                 				);
+                 		});
+                 			
                      	    //提交表单
                     	$scope.addNewsForm=function(){
                     		var title=$scope.addNewsTitle;
@@ -613,12 +695,14 @@
                     		var fixedRecommend=$scope.fixedRecommend;
                     		var isRecommend=$scope.isRecommend;
                     		var content=ue.getContent();
+                    		var imgUrl=$scope.imgUrl;
               		        	  console.log(content)
                     		myUtils.myPrevToast("添加中", function(){
                     		$.ajax({  
               		          type : "post",  
               		          url : "/news/add",  
               		          data:{"title":title,"type":type,
+              		          		"imgAddress":imgUrl,
               		        	  "fixedRecommend":fixedRecommend,
               		        	  "isRecommend":isRecommend,
               		        	  "content":content},
@@ -627,6 +711,7 @@
               		        	if(data.code==200){
               		        	$scope.addNewsTitle="";
               		        	$scope.addNewsType="";
+              		        	$scope.imgUrl="";
               		        	$scope.fixedRecommend="0";//默认置顶否
                      			$scope.isRecommend="0";//默认推荐否
               		        	$scope.$apply();

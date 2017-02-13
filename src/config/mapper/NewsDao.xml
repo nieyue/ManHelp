@@ -117,4 +117,8 @@ JOIN (SELECT ROUND(RAND() * ((SELECT MAX(news_id) FROM news_tb )-(SELECT MIN(new
 WHERE t1.news_id >= t2.id AND  is_recommend=${isRecommend}
 ORDER BY rand() LIMIT #{pageSize};
 </select>    
+<!-- 查询所有类型 去空 去重 -->
+<select id="browseTypeNews" resultType="String">  
+ SELECT distinct type from news_tb where type!='' AND type is not null;
+</select>    
 </mapper>

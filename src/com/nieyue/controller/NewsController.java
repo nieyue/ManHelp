@@ -1,5 +1,6 @@
 package com.nieyue.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +8,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import net.sf.json.JSONObject;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nieyue.bean.News;
 import com.nieyue.comments.MyJoup;
@@ -27,6 +27,11 @@ import com.nieyue.dto.StateResult;
 import com.nieyue.mail.MailSenderInfo;
 import com.nieyue.mail.SendMailDemo;
 import com.nieyue.service.NewsService;
+import com.nieyue.util.DateUtil;
+import com.nieyue.util.FileUploadUtil;
+import com.nieyue.util.UploaderPath;
+
+import net.sf.json.JSONObject;
 
 /**
  * 新闻控制类
@@ -102,9 +107,13 @@ public class NewsController {
 	 */
 	@RequestMapping(value = "/add", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResult addNews(@ModelAttribute News news, HttpSession session)  {
+		if(news.getImgAddress()==null||news.getImgAddress().equals("")){
 		Document doc = Jsoup.parse(news.getContent());
 		if(!doc.select("img").equals(new Elements())){
 			news.setImgAddress(doc.select("img").get(0).attr("src"));
+		}
+		}else{
+			news.setImgAddress(news.getImgAddress());
 		}
 		boolean am = newsService.addNews(news);
 		return StateResult.getSR(am);
@@ -188,6 +197,33 @@ public class NewsController {
 		News news=new News();
 		news = newsService.loadNews(newsId);
 		return news;
+	}
+	/**
+	 * 查询所有类型 去空 去重
+	 * @return
+	 */
+	@RequestMapping(value = "/types", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody List<String> browseTypeNews()  {
+		List<String> tl = newsService.browseTypeNews();
+		return tl;
+	}
+	/**
+	 * 图片增加、修改
+	 * @return
+	 * @throws IOException 
+	 */
+	@RequestMapping(value = "/img/add", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody String addAdvertiseImg(
+			@RequestParam("testFileUpload") MultipartFile file,
+			HttpSession session ) throws IOException  {
+		String imgUrl = null;
+		String imgdir=DateUtil.getImgDir();
+		try{
+			imgUrl = FileUploadUtil.FormDataMerImgFileUpload(file, session,UploaderPath.GetValueByKey(UploaderPath.ROOTPATH),UploaderPath.GetValueByKey(UploaderPath.IMG),imgdir);
+		}catch (IOException e) {
+			throw new IOException();
+		}
+		return imgUrl;
 	}
 	/**
 	 * 单个新闻发送邮件

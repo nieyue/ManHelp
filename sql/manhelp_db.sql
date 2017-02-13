@@ -23,6 +23,7 @@ fixed_recommend tinyint(4) COMMENT '是否置顶 默认否',
 is_recommend tinyint(4) COMMENT '是否推荐 默认否',
 img_address varchar(255) COMMENT '图片地址',
 content longtext COMMENT '文章内容',
+#status varchar(255) COMMENT '状态',
 PRIMARY KEY (news_id)
 )ENGINE = InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='新闻表';
 
