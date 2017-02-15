@@ -86,7 +86,7 @@ WHERE news_id=#{newsId}
 	ORDER BY
 		${orderName} ${orderWay}
 </select>    
-<!-- 随机查询置顶新闻 -->
+<!-- 查询置顶新闻 -->
 <select id="browseFixedRecommendRandomNews" resultType="News">  
  SELECT 
  		news_id,
@@ -99,7 +99,22 @@ WHERE news_id=#{newsId}
     	content
 FROM news_tb 
 WHERE  fixed_recommend=${fixedRecommend}
-ORDER BY time desc LIMIT #{pageSize};
+ORDER BY time desc LIMIT #{pageNum},#{pageSize};
+</select>    
+<!-- 查询推荐新闻 -->
+<select id="browseRecommendNews" resultType="News">  
+ SELECT 
+ 		news_id,
+    	type,
+    	title,
+    	time,
+    	fixed_recommend,
+    	is_recommend,
+    	img_address,
+    	content
+FROM news_tb 
+WHERE  is_recommend=${isRecommend}
+ORDER BY time desc LIMIT #{pageNum},#{pageSize};
 </select>    
 <!-- 随机查询几条新闻 -->
 <select id="browseRandomRecommendNews" resultType="News">  

@@ -26,7 +26,9 @@ public interface NewsDao {
 	/** 分页新闻 */
 	public List<News> browsePagingNews(@Param("type")String type,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;
 	/** 随机查询置顶新闻 */
-	public List<News> browseFixedRecommendRandomNews(@Param("pageSize")int pageSize,@Param("fixedRecommend")int fixedRecommend);
+	public List<News> browseFixedRecommendRandomNews(@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("fixedRecommend")int fixedRecommend);
+	/** 查询推荐新闻 */
+	public List<News> browseRecommendNews(@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("isRecommend")int isRecommend);
 	/** 随机查询推荐新闻 */
 	public List<News> browseRandomRecommendNews(@Param("pageSize")int pageSize,@Param("isRecommend")int isRecommend);
 	/** 查询所有类型 去空 去重*/

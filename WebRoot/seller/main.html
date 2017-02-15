@@ -273,6 +273,7 @@
                 	$scope.type="首页";//默认类型为首页，即都可以显示
                 	$scope.pageNum=1;
                 	$scope.pageSize=10;
+                   	$scope.changeMore=0;//默认
                 		//新闻列表
                    		function initData(a){
                 			$.ajax({  
@@ -317,7 +318,7 @@
                 			pageNum:$scope.pageNum,
                 			pageSize:$scope.pageSize,
                 			type:$scope.type,
-                			orderName:"news_id",
+                			orderName:"time",
                 			orderWay:"desc"
                 			});	
                 			initTypeData();
@@ -330,41 +331,64 @@
                     			pageNum:$scope.pageNum,
                     			pageSize:$scope.pageSize,
                     			type:$scope.type,
-                    			orderName:"news_id",
+                    			orderName:"time",
                     			orderWay:"desc"
                     			});	
                    			$("#addMore").show();//显示加载
                    		};
                    		//热门置顶新闻列表
-                   		$scope.fixedRecommendNews=function(){
-                   		$scope.isEmail=false;
+                   		function fixedRecommendNews(){
                    		//热门置顶
           		        	$.ajax({  
               		          type : "get",  
-              		          url : "/news/list/random/fixedRecommend?pageSize=3",  
+              		          url : "/news/list/random/fixedRecommend?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize,  
               		          async : false,  
               		          success : function(data){
+              		          if($scope.pageNum>1){
+                		        		  for (var int = 0; int < data.length; int++) {
+                		        			$scope.newsList.push(data[int]); 
+                						}
+                		      }else{
               		        	 $scope.newsList=data; 
-              		        	$("#addMore").hide();//隐藏加载
+                		        	  }
+              		        	//$("#addMore").hide();//隐藏加载
               		        	  myUtils.myPrevToast("加载完成", null, "remove");
               		          }  
               		          }); 
-            				
+                   		}
+                   		
+                   		$scope.fixedRecommendNews=function(){
+                   		$scope.isEmail=false;
+                   		$scope.pageNum=1;
+                   		$scope.changeMore=1;
+                   		fixedRecommendNews();
                    		};
                    		//推荐新闻列表
-                   		$scope.isRecommendNews=function(){
-                   		$scope.isEmail=false;
+                   		function isRecommendNews(){
                    		//推荐
             				$.ajax({  
               		          type : "get",  
-              		          url : "/news/list/random/isRecommend?pageSize=5",  
+              		          url : "/news/list/random/isRecommend?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize,  
               		          async : false,  
               		          success : function(data){
+              		        	 if($scope.pageNum>1){
+                		        		  for (var int = 0; int < data.length; int++) {
+                		        			$scope.newsList.push(data[int]); 
+                						}
+                		      }else{
               		        	 $scope.newsList=data; 
-              		        	$("#addMore").hide();//隐藏加载
+                		        	  }
+              		        	//$("#addMore").hide();//隐藏加载
               		        	  myUtils.myPrevToast("加载完成", null, "remove");
               		          }  
               		          });  
+                   		}
+                   		
+                   		$scope.isRecommendNews=function(){
+                   		$scope.isEmail=false;
+                   		$scope.pageNum=1;
+                   		$scope.changeMore=2;
+                   		isRecommendNews();
                    		};
                    		/* $scope.$watch("newsList",function(){
                    			console.log($scope.newsList)
@@ -377,13 +401,19 @@
                 			$("#addMore").children().text("正在加载中...");
                 			//var pageNum=$(".listGroup").size()+1;
                 			$scope.pageNum=$scope.pageNum+$scope.pageSize;
+                			if($scope.changeMore==1){
+                			fixedRecommendNews();
+                			}else if($scope.changeMore==2){
+                			isRecommendNews();
+                			}else{
                 			initData({
                     			pageNum:$scope.pageNum,
                     			pageSize:$scope.pageSize,
                     			type:$scope.type,
-                    			orderName:"news_id",
+                    			orderName:"time",
                     			orderWay:"desc"
                     			});
+                			}
                 						
                 			$("#addMore").children().text("点击加载更多》");
                 		}; 
@@ -629,7 +659,7 @@
                 			pageNum:$scope.pageNum,
                 			pageSize:$scope.pageSize,
                 			type:$scope.type,
-                			orderName:"news_id",
+                			orderName:"time",
                 			orderWay:"desc"
                 			});	
                 		};
@@ -751,7 +781,7 @@
                     templateUrl: "/seller/templates/news_manadsense.html",
                     controller:function($scope){
                     	$("#adsenseManIndexIframe").attr("src",location.protocol+"//"+location.host+"/man/index");
-                    	$("#adsenseManDetailsIframe").attr("src",location.protocol+"//"+location.host+"/man/news_details?type=情感&news_id=4293");
+                    	$("#adsenseManDetailsIframe").attr("src",location.protocol+"//"+location.host+"/man/news_details?type=情感&news_id=9256");
                     	//切换
                     	$scope.adsenseManIndexBtn=function(){
                     		if(!$("#adsenseManIndexBtn").hasClass("btn-info")){
@@ -792,7 +822,7 @@
                     		,function(data){
                     			if(data.code==200){
                   		        myUtils.myPrevToast("添加成功", null, "remove");
-                          	$("#adsenseManDetailsIframe").attr("src",location.protocol+"//"+location.host+"/man/news_details?type=情感&news_id=4293");
+                          	$("#adsenseManDetailsIframe").attr("src",location.protocol+"//"+location.host+"/man/news_details?type=情感&news_id=9256");
                     			}
                     		});
                     		},"add");
@@ -809,7 +839,7 @@
                     templateUrl: "/seller/templates/news_womanadsense.html",
                     controller:function($scope){
                     	$("#adsenseWomanIndexIframe").attr("src",location.protocol+"//"+location.host+"/woman/index");
-                    	$("#adsenseWomanDetailsIframe").attr("src",location.protocol+"//"+location.host+"/woman/news_details?type=情感&news_id=4293");
+                    	$("#adsenseWomanDetailsIframe").attr("src",location.protocol+"//"+location.host+"/woman/news_details?type=情感&news_id=9256");
                     	//切换
                     	$scope.adsenseWomanIndexBtn=function(){
                     		if(!$("#adsenseWomanIndexBtn").hasClass("btn-info")){
@@ -851,7 +881,7 @@
                     		,function(data){
                     			if(data.code==200){
                   		        myUtils.myPrevToast("添加成功", null, "remove");
-                  		      $("#adsenseWomanDetailsIframe").attr("src",location.protocol+"//"+location.host+"/woman/news_details?type=情感&news_id=4293");
+                  		      $("#adsenseWomanDetailsIframe").attr("src",location.protocol+"//"+location.host+"/woman/news_details?type=情感&news_id=9256");
                     			}
                     		});
                     		},"add");

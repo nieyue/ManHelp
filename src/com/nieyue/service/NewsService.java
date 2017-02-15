@@ -24,7 +24,9 @@ public interface NewsService {
 	/** 分页新闻 */
 	public List<News> browsePagingNews(String type,int pageNum,int pageSize,String orderName,String orderWay) ;
 	/** 随机查询置顶新闻 */
-	public List<News> browseFixedRecommendRandomNews(int pageSize,int fixedRecommend);
+	public List<News> browseFixedRecommendRandomNews(int pageNum,int pageSize,int fixedRecommend);
+	/** 查询推荐新闻 */
+	public List<News> browseRecommendNews(int pageNum,int pageSize,int isRecommend);
 	/** 随机查询推荐新闻 */
 	public List<News> browseRandomRecommendNews(int pageSize,int isRecommend);
 	/** 查询所有类型 去空 去重*/

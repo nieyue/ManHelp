@@ -27,12 +27,13 @@
 	<!-- 标志end -->
 	
 		<!-- 新闻列表 -->
-		<div style="margin-top:50px !important;margin-bottom:20px" id="newsDeatilsBody" >
-		<div class="list-group media comment-list-item">
+		<div style="margin-top:50px !important;margin-bottom:5px" id="newsDeatilsBody" >
+		<div style="padding:2%;background-color:#fff;">
 			<div class="media-center">
 			<!-- 广告 -->
-				<a  style="padding:0 !important;" id="guanggao" href="#">
-				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170208/1486541696221082378.jpg">
+				<a  style="padding:0 !important;" class="guanggao" 
+				href="http://dl.91cashmobi.com/apk/TSYY_RH_098_098_170214_V1.0.1.apk">
+				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170214/1487066476470089148.png">
 				</a>
 			<!-- 广告  end-->
 				<div ><h3 ng-bind="news.title"></h3></div>
@@ -44,55 +45,52 @@
 				 <div ng-bind-html="news.content" id="newsDetails">
 				</div> 
 				 		
-					<!-- 遮罩 -->
-					<div id="detailsShow" class="comment-full-screen" style="display:none">
-					<!-- 标志 -->
-					<div class="comment-top-fixed comment-title-top">
-						<a class="comment-title-left" id="detailsHide" href="#">&lt;返回</a>
-					<span class="comment-title-center">
-					<i class="glyphicon glyphicon-fire"></i>
-					男人帮
-					</span>
-					</div>
-					<!-- 标志end -->
-					<iframe src="" id="i" class="comment-full-screen" target="i"   style="margin-top:50px;"></iframe> 
-					</div>
-					<!--  遮罩end -->
 					
 			</div>
 		</div>
 		</div>
+			<!-- 广告 -->
+				<a  style="padding:0 !important;" class="guanggao" 
+				href="http://dl.91cashmobi.com/apk/TSYY_RH_098_098_170214_V1.0.1.apk">
+				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170215/1487122589689085949.jpg">
+				</a>
+			<!-- 广告  end-->
 		<!-- 新闻列表end -->
-		<!-- 热门-->
-		<div class="list-group media comment-list-item" style="margin-top:50px;">
+		<!-- 置顶-->
+		<div class="list-group media " style="padding:2%;background-color:#fff;margin-top:5px;">
 			<div class="media-center">
 				<div class="comment-hot-title">
 					<span class="comment-hot-icon"></span>
-					<span class="comment-hot-word">热门</span>
-					<span class="comment-hot-line"></span>
+					<span class="comment-hot-word">更多精彩</span>
+					<!-- <span class="comment-hot-line"></span> -->
 				</div>
 				
-		<!-- 热门 -->
 				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" ng-repeat="fixedRecommendNews in fixedRecommendList" ng-click="newsDetails(fixedRecommendNews.type,fixedRecommendNews.news_id)">
 					<div class="media-left">
-						<a href="#"> <img class="media-object  comment-list-item-img"
+						<a href="#" style="padding:5px 0 !important;"> <img class="media-object  comment-list-item-img"
 					ng-src="{{fixedRecommendNews.img_address||newsInit.img_address}}" >
 						</a>
 					</div>
 					<div class="media-body comment-right-body">
 						<div class="media-heading" ></div>
 						<div class="pull-left">
-						<div class="comment-right-body-title"><span ng-bind="fixedRecommendNews.title||newsInit.title"></span></div>
-						<div class="text-muted"><span ng-bind="fixedRecommendNews.time||newsInit.time"></span><span class="newsType" ng-bind="fixedRecommendNews.type||newsInit.type"></span></div>
+							<div class="comment-right-body-title" style="height:41px;overflow: hidden;">
+								<span ng-bind="fixedRecommendNews.title||newsInit.title"></span>
+							</div>
+						<div class="text-muted" style="color:#bfbebe;font-size:12px;">
+						<span style="float: left;" class="newsType"  ng-bind="fixedRecommendNews.type||newsInit.type"></span>
+						<span style="float: left;line-height:14px;margin:0 5px;">|</span>
+						<span   ng-bind="fixedRecommendNews.time | dateDiff"></span>
+						</div>
 					</div>
 					</div>
 				</div>
 				</div>
 				</div>
-		<!-- 热门end -->
+		<!--  置顶end -->
 		
 		<!-- 推荐 -->
-		<div class="list-group media comment-list-item">
+<!-- 		<div class="list-group media comment-list-item">
 			<div class="media-center">
 				<div class="comment-hot-title">
 					<span class="comment-hot-icon"></span>
@@ -100,7 +98,6 @@
 					<span class="comment-hot-line"></span>
 				</div>
 				
-		<!-- 随机推荐 -->
 				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" ng-repeat="isRecommendNews in isRecommendList" ng-click="newsDetails(isRecommendNews.type,isRecommendNews.news_id)">
 					<div class="media-left">
 						<a href="#"> <img class="media-object  comment-list-item-img"
@@ -110,15 +107,18 @@
 					<div class="media-body comment-right-body">
 						<div class="media-heading" ></div>
 						<div class="pull-left">
-						<div class="comment-right-body-title"><span ng-bind="isRecommendNews.title||newsInit.title"></span></div>
-						<div class="text-muted"><span ng-bind="isRecommendNews.time||newsInit.time"></span><span class="newsType" ng-bind="isRecommendNews.type||newsInit.type"></span></div>
-					</div>
+							<div class="comment-right-body-title">
+								<span ng-bind="isRecommendNews.title||newsInit.title"></span>
+							</div>
+							<div class="text-muted">
+								<span ng-bind="isRecommendNews.time||newsInit.time"></span>
+								<span class="newsType" ng-bind="isRecommendNews.type||newsInit.type"></span>
+							</div>
+						</div>
 					</div>
 				</div>
-		<!-- 随机推荐end -->
-		
 			</div>
-		</div>
+		</div> -->
 		<!-- 推荐end -->
 		
 		
@@ -143,10 +143,8 @@
 
 	$(function(){
 		//广告
-		$("#guanggao").click(function(){
-		if(!myUtils.isWeiXinBrowse()){
-		location.replace("http://apknew.vipvipcar.com/shangwuapk/20170208/18167/47ef0237-07e5-446c-9c3e-5def41d89d6e/%E9%BB%84%E9%87%91%E6%8C%96%E7%9F%BF%E5%B7%A5_2004_AG2016_522_20170208140613_zwqacc.apk");
-		}else{
+		$(".guanggao").click(function(){
+		if(myUtils.isWeiXinBrowse()){
 		myUtils.myTipToast("/resources/img/live_weixin.png");
 		}
 		});
@@ -190,13 +188,14 @@
 	  	//新增下一页
 	  	
 	  	var prePageNum=0;//初始上一页
-		var nextPageNum=1500000;//初始下一页
-		var pageSize=1500000;//初始页面长度
+		var nextPageNum=10;//初始下一页
+		var pageSize=10;//初始页面长度
+		var showQuanWen=true;//使用展开全文模式
 	  	var list="p";
 		if(($("p").length<=0) && ($("li").length>0)){
 			list="li";
 			}
-			console.log($(list).length)
+			
 	  	var totalpage=$(list).length;//总数目
 	  	var totalSize=$(list).length%pageSize==0?$(list).length/pageSize:parseInt($(list).length/pageSize)+1;//总页数
 	  	var currentPage=1;
@@ -204,14 +203,27 @@
 		"<a  class='btn btn-success pull-left' id='prevPageBox'>上一页</a>");
 			$("#newsDetails").after(
 					"<a  class='btn btn-success pull-right' id='nextPageBox'><span id='currentPageId'>"+currentPage+"</span>/"+totalSize+"下一页</a>")
-		$("#nextPageBox").after("<div class='text-center' style='color:#ccc;' id='noPageBox'>没有更多了</div>");
+		$("#nextPageBox").after("<div class='text-center hide' style='color:#ccc;' id='noPageBox'>没有更多了</div>");
 		$("#prevPageBox").hide();
 		$("#noPageBox").hide();
+		console.log(totalSize)
 		if(totalSize==1){
 			$("#nextPageBox").hide();
 			$("#noPageBox").show();
-		}
-			
+		}else if(showQuanWen){
+		//使用展开全文模式	
+		$("#prevPageBox").hide();
+		$("#nextPageBox").hide();
+		$("#noPageBox").hide();
+	  	$("#newsDetails").after(
+		"<a id='showQuanWenId' style='display:block' class='text-center text-info'>展开全文∨</a>");
+	  	$("#showQuanWenId").off().click(function(){
+	  	nextPageNum=1500000;
+	  	pageSize=1500000;
+	  	$("#showQuanWenId").remove();
+	  	showPage(prePageNum,nextPageNum);
+	  	});
+	  	}
 		//重置p
 		function showPage(prePageNum,nextPageNum){
 		$(list).each(function(index){
@@ -221,7 +233,7 @@
 			$(this).show();
 		}
 		});
-		if(location.href.indexOf("#")>-1){
+		if(location.href.indexOf("#")>-1 && !showQuanWen){
 	  		location.href=location.href;
 	  		}else{
 	  		location.href=location.href+"#";
@@ -266,6 +278,11 @@
 		
 	});
     	var detailsApp=angular.module('detailsApp',[]);
+    	detailsApp.filter("dateDiff",function(){
+                return function(dateTimeStamp){
+                    return myUtils.getDateDiff(dateTimeStamp);
+                }
+            });
     	detailsApp.controller('detailsCtrl',function($scope,$sce){
     		function initData(id,fixedRecommendSize,isRecommendSize){
     			$.ajax({  
@@ -327,7 +344,7 @@
       		          }  
       		          }); 
     				//推荐
-    				$.ajax({  
+    				/* $.ajax({  
       		          type : "get",  
       		          url : "/news/list/random/isRecommend?pageSize="+isRecommendSize+"",  
       		          async : false,  
@@ -335,14 +352,14 @@
       		        	  $scope.isRecommendList=data; 
       		        	  myUtils.myPrevToast("加载完成", null, "remove");
       		          }  
-      		          });   
+      		          });  */  
   		         
   		          }  
   		          });  
     			
     			
     		}
-    		initData(myUtils.GetQueryString("news_id"),3,5);
+    		initData(myUtils.GetQueryString("news_id"),14,5);
     		//跳转页面
     		$scope.newsDetails=function(type,news_id){
     			location.replace("/man/news_details?type="+type+"&news_id="+news_id);

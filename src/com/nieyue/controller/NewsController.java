@@ -72,10 +72,15 @@ public class NewsController {
 	 */
 	@RequestMapping(value = "/list/random/isRecommend", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody List<News> browseRandomRecommendNews(
+			@RequestParam(value="pageNum",defaultValue="0",required=false) int pageNum,
 			@RequestParam(value="pageSize",defaultValue="5",required=false) int pageSize,
 			HttpSession session)  {
 		List<News> list = new ArrayList<News>();
-			list= newsService.browseRandomRecommendNews(pageSize,1);
+		if(pageNum==0){
+			list= newsService.browseRandomRecommendNews(pageSize,1);			
+		}else{
+			list=newsService.browseRecommendNews(pageNum, pageSize, 1);
+		}
 		return list;
 	}
 	/**
@@ -86,10 +91,11 @@ public class NewsController {
 	 */
 	@RequestMapping(value = "/list/random/fixedRecommend", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody List<News> browseFixedRecommendRandomNews(
+			@RequestParam(value="pageNum",defaultValue="1",required=false) int pageNum,
 			@RequestParam(value="pageSize",defaultValue="3",required=false) int pageSize,
 			HttpSession session)  {
 		List<News> list = new ArrayList<News>();
-		list= newsService.browseFixedRecommendRandomNews(pageSize,1);
+		list= newsService.browseFixedRecommendRandomNews(pageNum,pageSize,1);
 		return list;
 	}
 	/**

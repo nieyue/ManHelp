@@ -214,7 +214,7 @@ body,html{
 	height:18px;
 	line-height:18px;
 	width:2%;
-	border-left: 3px solid red;
+	border-left: 8px solid red;
 }
 .comment-hot-word{
 	position:absolute;
@@ -224,6 +224,7 @@ body,html{
 	line-height:20px;
 	height:20px;
 	width:22%;
+	font-weight:bold;
 	font-size: 16px;
 }
 .comment-hot-line{

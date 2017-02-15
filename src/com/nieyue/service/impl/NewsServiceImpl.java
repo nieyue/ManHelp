@@ -95,14 +95,23 @@ public class NewsServiceImpl implements NewsService {
 	
 	/** 随机查询置顶新闻 */
 	@Override
-	public List<News> browseFixedRecommendRandomNews(int pageSize,
+	public List<News> browseFixedRecommendRandomNews(int pageNum,int pageSize,
 			int fixedRecommend) {
-		List<News> l = newsDao.browseFixedRecommendRandomNews(pageSize,fixedRecommend);
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<News> l = newsDao.browseFixedRecommendRandomNews(pageNum-1,pageSize,fixedRecommend);
 		return l;
 	}
 	/** 随机查询推荐新闻 */
 	@Override
 	public List<News> browseRandomRecommendNews(int pageSize, int isRecommend) {
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
 		List<News> l = newsDao.browseRandomRecommendNews(pageSize,isRecommend);
 		return l;
 	}
@@ -110,6 +119,17 @@ public class NewsServiceImpl implements NewsService {
 	public List<String> browseTypeNews() {
 		List<String> tl = newsDao.browseTypeNews();
 		return tl;
+	}
+	@Override
+	public List<News> browseRecommendNews(int pageNum, int pageSize, int isRecommend) {
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<News> l = newsDao.browseRecommendNews(pageNum-1,pageSize,isRecommend);
+		return l;
 	}
 	
 }
