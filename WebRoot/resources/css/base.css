@@ -61,7 +61,7 @@ a:hover,a:active{
 **body
 */
 body,html{
-	background-color: #DDDFE6;
+	background-color: #f8f8f8;
 	height:100%;
 }
 /**
@@ -313,3 +313,34 @@ body,html{
  	border-bottom-color: red; 
  	color: red !important;
 }
+
+/**
+**加载动画
+**
+*/
+.loadAnimation
+	{ width: 30px; height: 30px; position: relative; margin: 0 auto; }
+	 
+	.loadAnimation span{ 
+		display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #000;opacity:0.2; position: absolute; -webkit-animation: load 0.52s ease infinite; }
+	 @-webkit-keyframes load{
+	   0%{ -webkit-transform: scale(1.8); opacity: 1; } 
+	   100%{ -webkit-transform: scale(1); opacity: 0.2; }
+ }
+    .loadAnimation span:nth-child(1){ 
+    	left: 0; top: 50%; margin-top:-3px; -webkit-animation-delay:0.07s; }
+
+     .loadAnimation span:nth-child(2){ 
+     	left: 3px; top: 3px; -webkit-animation-delay:0.13s; } 
+     .loadAnimation span:nth-child(3){ 
+     	left: 50%; top: 0; margin-left: -3px; -webkit-animation-delay:0.2s; } 
+     .loadAnimation span:nth-child(4){ 
+     	top: 3px; right:3px; -webkit-animation-delay:0.26s; } 
+     .loadAnimation span:nth-child(5){ 
+     	right: 0; top: 50%; margin-top:-3px; -webkit-animation-delay:0.33s; } 
+     .loadAnimation span:nth-child(6){ 
+     		right: 3px; bottom:5px; -webkit-animation-delay:0.39s; } 
+     .loadAnimation span:nth-child(7){ 
+     	bottom: 0; left: 50%; margin-left: -3px; -webkit-animation-delay:0.46s; }
+     .loadAnimation span:nth-child(8){ 
+     	bottom: 3px; left: 3px; -webkit-animation-delay:0.52s; }

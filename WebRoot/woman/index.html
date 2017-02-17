@@ -60,10 +60,11 @@
 			</a> -->
 		</div>
 		<!-- 导航end -->
+		<div class='loadAnimation'style="margin-top:105px !important;z-index:99999;" ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 		<!-- 新闻列表 -->
-		<div style="margin-top:105px !important;">
+		<div style="margin-top:105px !important;display:none" id="loadAnimationBody">
 		<!-- 第一列表 -->
-		<div class="listGroup list-group media comment-list-item" ng-repeat="news in newsList"  ng-if="!$index" ng-click="newsDetails(news.type,news.news_id)">
+		<div class="listGroup list-group media comment-list-item" ng-repeat="news in newsList" on-finish-render-filters ng-if="!$index" ng-click="newsDetails(news.type,news.news_id)">
 			
 			 <div class="media-center">
 				<a href="#"> <img style="width:104%;height:200px;margin:-25px -2%;" class="media-object  comment-list-item-img "
@@ -85,7 +86,7 @@
 		</div>
 		<!-- 第一列表end -->
 		<!-- 第二列表 -->
-		<div class="listGroup list-group media comment-list-item" ng-repeat="news in newsList"  ng-if="$index" ng-click="newsDetails(news.type,news.news_id)">
+		<div class="listGroup list-group media comment-list-item" ng-repeat="news in newsList" on-finish-render-filters ng-if="$index" ng-click="newsDetails(news.type,news.news_id)">
 			<div class="media-left">
 				<a href="#" style="padding:5px 0 !important;"> <img class="media-object  comment-list-item-img "
 					ng-src="{{news.img_address||newsInit.img_address}}" >
@@ -105,6 +106,9 @@
 		</div>
 		<!-- 第二列表end -->
 		
+		<!-- 底部end -->
+		<div class="comment-bottom" ng-if="noMore">Copyright 2015 itcast Inc,All rights reserved.</div>
+		<!--  底部end -->
 		</div>
 		<!-- 新闻列表end -->
 		<!-- 加载更多end -->
@@ -112,9 +116,6 @@
 		<div>点击加载更多》</div>
 		</a> -->
 		<!--  加载更多end -->
-		<!-- 底部end -->
-		<div class="comment-bottom" ng-if="noMore">Copyright 2015 itcast Inc,All rights reserved.</div>
-		<!--  底部end -->
 	</div>
 		<!-- cnzz -->
 		<div style="display:none;">
@@ -140,6 +141,19 @@
                     return myUtils.getDateDiff(dateTimeStamp);
                 }
             });
+            
+            indexApp.directive('onFinishRenderFilters', function() {
+					return {
+					restrict: 'A',
+					link: function(scope, element, attr) {
+					if (scope.$last === true) {
+					$("#loadAnimationBody").show();
+					$(".loadAnimation").hide();
+					scope.$emit('ngRepeatFinished');
+					}
+					}
+					};
+					});
     	indexApp.controller('indexCtrl',function($scope){
     		$("#topNav a").each(function(){
     		//不存在，就展示首页

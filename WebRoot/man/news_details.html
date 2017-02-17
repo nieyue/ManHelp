@@ -14,8 +14,8 @@
 
 </head>
 
-<body ng-app="detailsApp">
-	<div ng-controller="detailsCtrl" class="comment-wrap" >
+<body ng-app="detailsApp" >
+	<div ng-controller="detailsCtrl" class="comment-wrap"  >
 	<!-- 标志 -->
 		<div class="comment-top-fixed comment-title-top">
 		<a class="comment-title-left" href="javascript:location.href='/man/index?type='+myUtils.GetQueryString('type')">&lt;返回</a>
@@ -25,16 +25,16 @@
 		</span>
 		</div>
 	<!-- 标志end -->
-	
+			<div class='loadAnimation'style="margin-top:105px !important;z-index:99999;" ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 		<!-- 新闻列表 -->
-		<div style="margin-top:50px !important;margin-bottom:5px" id="newsDeatilsBody" >
-		<div style="padding:2%;background-color:#fff;">
+		<div style="margin-top:50px !important;display:none;" id="newsDeatilsBody"   >
+		<div style="padding:2%;background-color:#fff;margin-bottom:5px;">
 			<div class="media-center">
 			<!-- 广告 -->
-				<a  style="padding:0 !important;" class="guanggao" 
+				<!-- <a  style="padding:0 !important;" class="guanggao" 
 				href="http://dl.91cashmobi.com/apk/TSYY_RH_098_098_170214_V1.0.1.apk">
 				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170214/1487066476470089148.png">
-				</a>
+				</a> -->
 			<!-- 广告  end-->
 				<div ><h3 ng-bind="news.title"></h3></div>
 				<div class="text-muted">
@@ -48,12 +48,16 @@
 					
 			</div>
 		</div>
-		</div>
+		
 			<!-- 广告 -->
-				<a  style="padding:0 !important;" class="guanggao" 
+			<a  style="padding:0 !important;"  
+				href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx76814e5d646aef20&redirect_uri=http%3A%2F%2Fqipai.yychess.com%2Fniuniu_server_fk%2Findex.php&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect">
+				<img  src="http://man.fuwu88.cn//uploaderPath/ueditor/image/20170215/1487157782013046877.png">
+				</a>
+				<!-- <a  style="padding:0 !important;" class="guanggao" 
 				href="http://dl.91cashmobi.com/apk/TSYY_RH_098_098_170214_V1.0.1.apk">
 				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170215/1487122589689085949.jpg">
-				</a>
+				</a> -->
 			<!-- 广告  end-->
 		<!-- 新闻列表end -->
 		<!-- 置顶-->
@@ -65,7 +69,7 @@
 					<!-- <span class="comment-hot-line"></span> -->
 				</div>
 				
-				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" ng-repeat="fixedRecommendNews in fixedRecommendList" ng-click="newsDetails(fixedRecommendNews.type,fixedRecommendNews.news_id)">
+				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" on-finish-render-filters ng-repeat="fixedRecommendNews in fixedRecommendList" ng-click="newsDetails(fixedRecommendNews.type,fixedRecommendNews.news_id)">
 					<div class="media-left">
 						<a href="#" style="padding:5px 0 !important;"> <img class="media-object  comment-list-item-img"
 					ng-src="{{fixedRecommendNews.img_address||newsInit.img_address}}" >
@@ -125,7 +129,7 @@
 		<!-- 底部end -->
 		<div class="comment-bottom">Copyright 2015 itcast Inc,All rights reserved.</div>
 		<!--  底部end -->
-		
+		</div>
 		</div>
 		<!-- cnzz -->
 		<div style="display:none;">
@@ -283,6 +287,18 @@
                     return myUtils.getDateDiff(dateTimeStamp);
                 }
             });
+            detailsApp.directive('onFinishRenderFilters', function() {
+					return {
+					restrict: 'A',
+					link: function(scope, element, attr) {
+					if (scope.$last === true) {
+					$("#newsDeatilsBody").show();
+					$(".loadAnimation").hide();
+					scope.$emit('ngRepeatFinished');
+					}
+					}
+					};
+					});
     	detailsApp.controller('detailsCtrl',function($scope,$sce){
     		function initData(id,fixedRecommendSize,isRecommendSize){
     			$.ajax({  

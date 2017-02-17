@@ -30,25 +30,6 @@ var myUtils = {
 	},
 	/**
 	 * 是否微信浏览器
-	 * param o js文件或js地址或js代码
-	 * 
-	 */
-	executeJS:function(o){
-		if(o==''||o==null||o==undefined){
-			return;
-		}
-		if(/<script/.test(o)){
-			//document.write(o);
-			$("body").after(o);
-		}else if(/.js/.test(o)){
-			var no="<script src='"+o+"'><\/script>";
-			$("body").after(no);
-		}else{
-			eval(o);
-		}
-	},
-	/**
-	 * 是否微信浏览器
 	 * return true 是
 	 * return false 否
 	 */
@@ -95,6 +76,14 @@ var myUtils = {
 		           }    
 		        }
 			});
+	},
+	/**
+	 * 设置域名
+	 * 
+	 */
+	getDomain:function(){
+		//return "http://advertiseserver.yayao8.com";
+		return "http://localhost";
 	},
 	/**
 	 * 如果没选择店铺就404
@@ -186,7 +175,18 @@ var myUtils = {
 		h = date.getHours() + ':';
 		m = date.getMinutes() + ':';
 		s = date.getSeconds(); 
-		return Y+M+D+h+m+s; 
+	return Y+M+D+h+m+s; 
+	},
+	/**
+	 * 时间戳转yyyy-MM-dd
+	 * 
+	 */
+	timeStampToDayDate:function(timeStamp){
+		var date = new Date(timeStamp);
+		Y = date.getFullYear() + '-';
+		M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+		D = date.getDate();
+	return Y+M+D; 
 	},
 	/**
 	 * 时间戳转MM-dd
@@ -197,6 +197,58 @@ var myUtils = {
 		M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
 		D = date.getDate() + ' ';
 	return M+D; 
+	},
+   /**
+   * 获取当前当日00:00:00的时间
+   * 
+   */
+  todayStartTime:function(){  
+		var date=new Date();
+		date.setHours(0);
+		date.setMinutes(0);
+		date.setSeconds(0);
+		return date;
+	},
+	/**
+   * 获取当前当日23:59:59的时间
+   * 
+   */
+  todayEndTime:function(){  
+		var date=new Date();
+		date.setHours(23);
+		date.setMinutes(59);
+		date.setSeconds(59);
+		return date;
+	},
+	/**
+   * 获取n天前的00:00:00的时间
+   * 
+   */
+  beforeDayToTodayTime:function(n){  
+		var date=new Date();
+		date.setHours(0);
+		date.setMinutes(0);
+		date.setSeconds(0);
+		if(isNaN(n)||n<=0){
+			n=0;
+		}
+		var ndate=date.getTime()-1000*60*60*24*n;
+		return new Date(ndate);
+	},
+	/**
+   * 获取n天后的最后23:59:59的时间
+   * 
+   */
+  todayToNDayEndTime:function(n){  
+		var date=new Date();
+		date.setHours(23);
+		date.setMinutes(59);
+		date.setSeconds(59);
+		if(isNaN(n)||n<=0){
+			n=0;
+		}
+		var ndate=date.getTime()+1000*60*60*24*n;
+		return new Date(ndate);
 	},
 	/**
 	 * 获取当前url的参数
@@ -542,10 +594,12 @@ var myUtils = {
 	/**
 	 * 弹性滑动
 	 */
-	elasticSlide:function(attrValue){
-		var startY,moveY;
-			$(attrValue).on(myTouchEvents.touchstart,function(event){
-				event.stopPropagation();
+	elasticSlide:function(backgroundElement ,contentElement,height){
+		var startY,endY,moveY,speed,startTime,endTime,moveTime;
+			$(backgroundElement).on(myTouchEvents.touchstart,function(event){
+				//event.stopPropagation();
+				speed=0;
+				startTime=new Date().getTime();
 				// event.preventDefault();
 				// console.log(event.originalEvent.touches[0].pageX);
 	           // console.log(event.originalEvent.targetTouches);
@@ -554,34 +608,74 @@ var myUtils = {
 				thismove();
 			});
 			function thismove(){
-		$(attrValue).on(myTouchEvents.touchmove,function(event){
-			event.stopPropagation();
-			moveY=event.pageY||event.originalEvent.targetTouches[0].pageY;
-			event.preventDefault();
-			if(moveY-startY<100&&moveY-startY>0){
+		$(backgroundElement).on(myTouchEvents.touchmove,function(event){
+			//event.stopPropagation();
+			endY=event.pageY||event.originalEvent.targetTouches[0].pageY;
+			if(endY-startY<height&&endY-startY>=0){
 				if(myUtils.isScrollTop()){
-					// console.log(myUtils.isScrollTop());
-					$(attrValue).css("margin-top",(moveY-startY));
+					event.preventDefault();
+					$(".myScrollHide").removeClass("hide");
+					$(".myScrollHide").eq(0).css("margin-left",(parseFloat($("body").css("width"))-parseFloat($(".myScrollHide").eq(0).css("width")))/2+"px");
+					
+					// if($(".myScrollHide").length<=0){
+					// $(contentElement).before("<div class='text-center myScrollHide ' style='color:white'>雅耀（湖南）科技有限公司提供技术支持</div>");
+					// }
+					$(contentElement).css("transform","translateY("+(endY-startY)+"px)");
 				}else {
-					$(attrValue).unbind(myTouchEvents.touchmove);
+					
+					$(backgroundElement).unbind(myTouchEvents.touchmove);
+					
 				}
 			}
-			else if(moveY-startY<0&&moveY-startY>-100){
-				// window.event.preventDefault();
-				if(myUtils.isScrollBottom(attrValue)){
-				$(attrValue).css("margin-top",(moveY-startY));
+			else if(endY-startY<0&&endY-startY>-height){
+				console.log(myUtils.isScrollBottom(contentElement))
+				if(myUtils.isScrollBottom(contentElement)){
+					event.preventDefault();
+					$(".myScrollHide").removeClass("hide");
+					$(".myScrollHide").eq(1).css("margin-left",(parseFloat($("body").css("width"))-parseFloat($(".myScrollHide").eq(1).css("width")))/2+"px");
+				$(contentElement).css("transform","translateY("+(endY-startY)+"px)");
 				}else{
-					$(attrValue).unbind(myTouchEvents.touchmove);
+					
+					$(backgroundElement).unbind(myTouchEvents.touchmove);
+					
+				
 				}
 			}
 		});
-			}
-		$(attrValue).on(myTouchEvents.touchend,function(event){
+			//}
+		$(backgroundElement).on(myTouchEvents.touchend,function(event){
 			// event.preventDefault();
 			event.stopPropagation();
-			$(attrValue).css("margin-top",0);
-			// $(this).unbind(myTouchEvents.touchmove);
+			// endTime=new Date().getTime();
+			// moveTime=endTime-startTime;
+			// moveY=endY-startY;
+			// speed=moveY/moveTime;
+			// console.log(moveTime);
+			// var backSpeed=speed;//返回每次速度
+			// var backTime=1;//返回每次耗时
+			// var backTotalTime=moveTime;//返回剩余时间
+			// var a=speed/moveTime;//加速度
+			// var backMoveY=moveY;//返回剩余距离
+			// var isTop=true;//是否顶部滑动
+			// if(backMoveY<0){
+			// 	isTop=false;
+			// 	}
+			// var s=setInterval(function(){
+			// 	$(contentElement).css("transform","translateY("+backMoveY+"px)");
+			// 	 backSpeed=backSpeed+a;//速度加加速度
+			// 	 backMoveY=backMoveY-backSpeed*backTime;//剩余返回距离
+			// 	if(isTop&&backMoveY<=0||!isTop&&backMoveY>=0){//到位
+			// 		clearInterval(s);
+			// 	}
+				
+			// },0.001);
+			$(contentElement).css("transform","translateY(0)");
+			$(".myScrollHide").addClass("hide");
+			$(backgroundElement).unbind(myTouchEvents.touchmove);
+			$(backgroundElement).unbind(myTouchEvents.touchend);
+		
 		});
+		}
 	},
 	/**
 	 * 判断是否滑动到顶部
@@ -780,8 +874,8 @@ myTipToast : function(imgUrl ) {
 	myConfirm : function(value,fn) {
 		$("body")
 		.append(
-				"<div id='confirmDiv' style='position:fixed;width:100%;height:100%;background-color:#ccc;opacity:0.5;left:0;top:0;'></div><div id='confirm' style='color:#fff;background-color:black;text-align:center;line-height:30px;border:1px solid black;border-radius:5px;height:200px;width:200px;margin:-100px -100px;top:50%;left:50%;position:fixed;font-size:20px;'>"
-				+ "<div class='glyphicon glyphicon-trash' style='text-align:center;width:50%;height:50%;font-size:66px;margin-top:10px;'></div><div style='position:absolute;top:100px;width:100%;text-align:center;'>"+value+"</div><div class='btn btn-primary' style='position:absolute;left:15px;bottom:15px;width:80px;' id='confirmYes'>确定</div><div class='btn btn-default' style='position:absolute;right:15px;bottom:15px;width:80px;' id='confirmNo'>取消</div></div>");
+				"<div id='confirmDiv' style='position:fixed;width:100%;height:100%;background-color:#ccc;opacity:0.5;left:0;top:0;'></div><div id='confirm' style='z-index:9999;color:#fff;background-color:black;text-align:center;line-height:30px;border:1px solid black;border-radius:5px;height:200px;width:200px;margin:-100px -100px;top:50%;left:50%;position:fixed;font-size:20px;'>"
+				+ "<div class='glyphicon glyphicon-exclamation-sign' style='text-align:center;width:50%;height:50%;font-size:66px;margin-top:10px;'></div><div style='position:absolute;top:100px;width:100%;text-align:center;'>"+value+"</div><div class='btn btn-primary' style='position:absolute;left:15px;bottom:15px;width:80px;' id='confirmYes'>确定</div><div class='btn btn-default' style='position:absolute;right:15px;bottom:15px;width:80px;' id='confirmNo'>取消</div></div>");
 	$('#confirmYes').click(function(){
 		$('#confirmDiv').remove();
 		$('#confirm').remove();
@@ -796,12 +890,31 @@ myTipToast : function(imgUrl ) {
 	});
 	},
 	/**
+	 * 自定义template
+	 */
+	myTemplate : function(value) {
+		var myTemplateWidth= 330;
+		var myTemplateMarginWidth= 165;
+		if(document.querySelector("html").offsetWidth>640){
+			myTemplateWidth= 860;
+			myTemplateMarginWidth= 430;
+		}
+		$("body")
+		.append(
+				"<div id='myTemplateDiv' style='position:fixed;width:100%;height:100%;background-color:#ccc;opacity:0.5;left:0;top:0;'></div><div id='myTemplate' style='z-index:9999;color:#000;background-color:#fff;text-align:center;line-height:30px;border:1px solid #fff;border-radius:5px;height:300px;width:"+myTemplateWidth+"px;margin:-100px -"+myTemplateMarginWidth+"px;top:50%;left:50%;position:fixed;font-size:20px;'>"
+				+ "<div style='position:absolute;top:20px;width:100%;text-align:center;'>"+value+"</div><div class='btn btn-default' style='position:absolute;right:15px;bottom:15px;width:80px;' id='myTemplateNo'>关闭</div></div>");
+	$('#myTemplateNo').click(function(){
+		$('#myTemplateDiv').remove();
+		$('#myTemplate').remove();	
+	});
+	},
+	/**
 	 * 自定义登录退出
 	 */
 	myLoginOut : function(value,fn) {
 		$("body")
 		.append(
-				"<div id='confirmDiv' style='position:fixed;width:100%;height:100%;background-color:#ccc;opacity:0.5;left:0;top:0;'></div><div id='confirm' style='color:#fff;background-color:black;text-align:center;line-height:30px;border:1px solid black;border-radius:5px;height:200px;width:200px;margin:-100px -100px;top:50%;left:50%;position:fixed;font-size:20px;'>"
+				"<div id='confirmDiv' style='position:fixed;width:100%;height:100%;background-color:#ccc;opacity:0.5;left:0;top:0;'></div><div id='confirm' style='z-index:9999;color:#fff;background-color:black;text-align:center;line-height:30px;border:1px solid black;border-radius:5px;height:200px;width:200px;margin:-100px -100px;top:50%;left:50%;position:fixed;font-size:20px;'>"
 				+ "<div class='glyphicon glyphicon-off' style='text-align:center;width:50%;height:50%;font-size:66px;margin-top:10px;'></div><div style='position:absolute;top:100px;width:100%;text-align:center;'>"+value+"</div><div class='btn btn-primary' style='position:absolute;left:15px;bottom:15px;width:80px;' id='confirmYes'>确定</div><div class='btn btn-default' style='position:absolute;right:15px;bottom:15px;width:80px;' id='confirmNo'>取消</div></div>");
 		$('#confirmYes').click(function(){
 			$('#confirmDiv').remove();
@@ -980,6 +1093,7 @@ var myTouchEvents = {
 			this.touchstart = "mousedown";
 			this.touchmove = "mousemove";
 			this.touchend = "mouseup";
+			
 
 		}
 	},
@@ -1041,6 +1155,7 @@ var myTouchEvents = {
  * 初始化
  * 
  */
+	
 // 触摸事件
 myTouchEvents.initTouchEvents();
 // 阻塞Loading
