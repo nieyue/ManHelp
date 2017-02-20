@@ -75,7 +75,9 @@
 			<div class="media-body comment-right-body">
 				<div class="media-heading" ></div>
 				<div class="pull-left">
-					<div class="comment-right-body-title" style="height:41px;overflow: hidden;"><span ng-bind="news.title||newsInit.title"></span></div>
+					<div class="comment-right-body-title" >
+						<span style="overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="news.title||newsInit.title"></span>
+					</div>
 					<div class="text-muted" style="color:#bfbebe;font-size:12px;">
 					<span style="float: left;" class="newsType"  ng-bind="news.type||newsInit.type"></span>
 					<span style="float: left;line-height:14px;margin:0 5px;">|</span>
@@ -95,7 +97,9 @@
 			<div class="media-body comment-right-body">
 				<div class="media-heading" ></div>
 				<div class="pull-left">
-					<div class="comment-right-body-title" style="height:41px;overflow: hidden;"><span ng-bind="news.title||newsInit.title"></span></div>
+					<div class="comment-right-body-title" >
+						<span style="overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="news.title||newsInit.title"></span>
+					</div>
 					<div class="text-muted" style="color:#bfbebe;font-size:12px;">
 					<span style="float: left;" class="newsType"  ng-bind="news.type||newsInit.type"></span>
 					<span style="float: left;line-height:14px;margin:0 5px;">|</span>
