@@ -1,4 +1,20 @@
 /**
+**爱度综艺简体 字体
+*/
+@font-face {
+    font-family: "WebFont";
+    src: url("/resources/fonts/_-webfont.eot"); /* IE9 */
+    src: url("/resources/fonts/_-webfont.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("/resources/fonts/_-webfont.woff") format("woff"), /* chrome, firefox */
+    
+    /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+    url("/resources/fonts/_-webfont.ttf") format("truetype"), 
+    url("/resources/fonts/_-webfont.svg#WebFont") format("svg"); /* iOS 4.1- */
+    font-style: normal;
+    font-weight: normal;
+}
+.aiduFont{ font-family: 'WebFont',Arial, sans-serif;  }
+/**
 **重写text-danger 
 */
 .text-danger{

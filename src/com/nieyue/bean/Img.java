@@ -21,13 +21,18 @@ public class Img implements Serializable{
 	 */
 	private String imgAddress;
 	/**
+	 * 图片顺序
+	 */
+	private Integer number;
+	/**
 	 * 新闻id
 	 */
 	private Integer newsId;
-	public Img(Integer imgId, String imgAddress, Integer newsId) {
+	public Img(Integer imgId, String imgAddress,Integer number, Integer newsId) {
 		super();
 		this.imgId = imgId;
 		this.imgAddress = imgAddress;
+		this.number=number;
 		this.newsId = newsId;
 	}
 	public Img() {
@@ -50,6 +55,12 @@ public class Img implements Serializable{
 	}
 	public void setNewsId(Integer newsId) {
 		this.newsId = newsId;
+	}
+	public Integer getNumber() {
+		return number;
+	}
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 	
 	
