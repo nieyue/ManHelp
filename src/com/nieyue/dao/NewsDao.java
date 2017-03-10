@@ -23,6 +23,8 @@ public interface NewsDao {
 	public News loadNews(Integer newsId);	
 	/** 根据类别浏览新闻 */
 	public List<News> browseNews(@Param("type")String type,@Param("orderName")String orderName,@Param("orderWay")String orderWay);
+	/** 根据标题分页新闻 */
+	public List<News> browsePagingNewsByTitle(@Param("title")String title,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;
 	/** 分页新闻 */
 	public List<News> browsePagingNews(@Param("type")String type,@Param("pageNum")int pageNum,@Param("pageSize")int pageSize,@Param("orderName")String orderName,@Param("orderWay")String orderWay) ;
 	/** 随机查询置顶新闻 */

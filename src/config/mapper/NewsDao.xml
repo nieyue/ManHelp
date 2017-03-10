@@ -4,7 +4,7 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.nieyue.dao.NewsDao">
 <!-- 添加新闻-->
-<insert id="addNews" parameterType="News" flushCache="true"  >  
+<insert id="addNews" parameterType="News" keyProperty="newsId" flushCache="true"  >  
    INSERT IGNORE INTO
    		news_tb 
    		 (type,title,time,fixed_recommend,is_recommend,img_address,content)
@@ -52,6 +52,24 @@ SELECT
 FROM news_tb 
 WHERE news_id=#{newsId}
 </select>
+<!-- 根据标题分页查询新闻 -->
+<select id="browsePagingNewsByTitle" resultType="News">  
+    SELECT
+	    news_id,
+    	type,
+    	title,
+    	time,
+    	fixed_recommend,
+    	is_recommend,
+    	img_address
+    	<!--,content-->
+	FROM news_tb
+	<if test="title!=null">WHERE title like '%' #{title} '%'</if>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageNum},#{pageSize}
+</select>
 <!-- 分页查询新闻 -->
 <select id="browsePagingNews" resultType="News">  
     SELECT
@@ -61,8 +79,8 @@ WHERE news_id=#{newsId}
     	time,
     	fixed_recommend,
     	is_recommend,
-    	img_address,
-    	content
+    	img_address
+    	<!--,content-->
 	FROM news_tb
 	<if test="type!=null">WHERE type=#{type}</if>
 	ORDER BY
@@ -79,8 +97,8 @@ WHERE news_id=#{newsId}
     	time,
     	fixed_recommend,
     	is_recommend,
-    	img_address,
-    	content
+    	img_address
+    	<!--,content-->
 	FROM news_tb
 	<if test="type!=null">WHERE type=#{type}</if>
 	ORDER BY
@@ -95,8 +113,8 @@ WHERE news_id=#{newsId}
     	time,
     	fixed_recommend,
     	is_recommend,
-    	img_address,
-    	content
+    	img_address
+    	<!--,content-->
 FROM news_tb 
 WHERE  fixed_recommend=${fixedRecommend}
 ORDER BY time desc LIMIT #{pageNum},#{pageSize};
@@ -110,8 +128,8 @@ ORDER BY time desc LIMIT #{pageNum},#{pageSize};
     	time,
     	fixed_recommend,
     	is_recommend,
-    	img_address,
-    	content
+    	img_address
+    	<!--,content-->
 FROM news_tb 
 WHERE  is_recommend=${isRecommend}
 ORDER BY time desc LIMIT #{pageNum},#{pageSize};
@@ -125,8 +143,8 @@ ORDER BY time desc LIMIT #{pageNum},#{pageSize};
     	time,
     	fixed_recommend,
     	is_recommend,
-    	img_address,
-    	content
+    	img_address
+    	<!--,content-->
 FROM news_tb  AS t1 
 JOIN (SELECT ROUND(RAND() * ((SELECT MAX(news_id) FROM news_tb )-(SELECT MIN(news_id) FROM news_tb ))+(SELECT MIN(news_id) FROM news_tb)) AS id) AS t2 
 WHERE t1.news_id >= t2.id AND  is_recommend=${isRecommend}

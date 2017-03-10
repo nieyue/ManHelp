@@ -52,7 +52,7 @@ body,html{
 	font-size:16px;
 }
 .panel-body div{
-	padding:5px;
+	padding:2px;
 }
 /**
 **重写caret小三角
@@ -259,8 +259,8 @@ a:hover{
 	margin:2% 0 !important; 
 }
 .comment-list-item-img{
-	width: 64px;
-	height: 64px;
+	width: 120px;
+	height: 80px;
 }
 /**
 **固定底部

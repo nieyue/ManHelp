@@ -14,7 +14,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import com.nieyue.bean.Img;
 import com.nieyue.bean.News;
+import com.nieyue.service.ImgService;
 import com.nieyue.service.NewsService;
 import com.nieyue.service.UserService;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,6 +25,8 @@ import com.nieyue.service.UserService;
 public class NewsServiceImplTest {
 	@Resource
 	NewsService newsService;
+	@Resource
+	ImgService imgService;
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -58,9 +62,23 @@ public class NewsServiceImplTest {
 
 	@Test
 	public void testBrowseNews() {
-		List<News> l = newsService.browseNews("奇闻","news_id", "asc");
-		System.out.println(l.get(7).getContent());
-		System.out.println(l.size());
+		List<String> t = newsService.browseTypeNews();
+		for (int i = 0; i < t.size(); i++) {
+			List<News> l = newsService.browseNews(t.get(i), "news_id", "asc");
+			System.out.println(l);
+			for (int j = 0; j < l.size(); j++) {
+				News news = l.get(j);
+				String imgaddress = news.getImgAddress();
+				Img img = new Img();
+				img.setImgAddress(imgaddress);
+				img.setNumber(1);
+				img.setNewsId(news.getNewsId());
+				imgService.addImg(img);
+			}
+		}
+//		List<News> l = newsService.browseNews("奇闻","news_id", "asc");
+//		System.out.println(l.get(7).getContent());
+//		System.out.println(l.size());
 	}
 
 	@Test

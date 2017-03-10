@@ -1,13 +1,17 @@
 package com.nieyue.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.nieyue.bean.Img;
 import com.nieyue.bean.News;
+import com.nieyue.dao.ImgDao;
 import com.nieyue.dao.NewsDao;
+import com.nieyue.dto.NewsDTO;
 import com.nieyue.service.NewsService;
 
 /**
@@ -19,6 +23,8 @@ import com.nieyue.service.NewsService;
 public class NewsServiceImpl implements NewsService {
 	@Resource
 	NewsDao newsDao;
+	@Resource
+	ImgDao imgDao;
 	/**
 	 * 增加新闻
 	 * @param 
@@ -130,6 +136,175 @@ public class NewsServiceImpl implements NewsService {
 		}
 		List<News> l = newsDao.browseRecommendNews(pageNum-1,pageSize,isRecommend);
 		return l;
+	}
+	@Override
+	public List<News> browsePagingNewsByTitle(String title, int pageNum, int pageSize, String orderName,
+			String orderWay) {
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<News> l = newsDao.browsePagingNewsByTitle(title,pageNum-1,pageSize,orderName,orderWay);
+		return l;
+	}
+	@Override
+	public boolean addNewsDTO(NewsDTO newsDTO) {
+		boolean b=false;
+		News news = newsDTO.getNews();
+		b = newsDao.addNews(news);
+		List<Img> il = newsDTO.getImgList();
+		for (int i = 0; i < il.size(); i++) {
+			Img img = il.get(i);
+			img.setNewsId(news.getNewsId());
+			b=imgDao.addImg(img);
+		}
+		return b;
+	}
+	@Override
+	public boolean updateNewsDTO(NewsDTO newsDTO) {
+		boolean b=false;
+		News news = newsDTO.getNews();
+		b = newsDao.updateNews(news);
+		List<Img> il = newsDTO.getImgList();
+		for (int i = 0; i < il.size(); i++) {
+			Img img = il.get(i);
+			b=imgDao.updateImg(img);
+		}
+		return b;
+	}
+	@Override
+	public NewsDTO loadNewsDTO(Integer newsId) {
+		NewsDTO newsDTO=new NewsDTO();
+		News news = newsDao.loadNews(newsId);
+		newsDTO.setNews(news);
+		List<Img> il = imgDao.browseImg(newsId, "number", "asc");
+		newsDTO.setImgList(il);
+		return newsDTO;
+	}
+	/**
+	 * 浏览新闻DTO
+	 * @param 
+	 */
+	@Override
+	public List<NewsDTO> browseNewsDTO(String type, String orderName, String orderWay) {
+		if(type.equals("首页")){
+			type=null;
+		}
+		List<News> l = newsDao.browseNews(type, orderName, orderWay);
+		List<NewsDTO> nl = new ArrayList<NewsDTO>();
+		for (int i = 0; i < l.size(); i++) {
+			News news = l.get(i);
+			NewsDTO nnews = new NewsDTO();
+			nnews.setNews(news);
+			List<Img> il = imgDao.browseImg(news.getNewsId(), "number", "desc");
+			nnews.setImgList(il);
+			nl.add(nnews);
+		}
+		return nl;
+	}
+	@Override
+	public List<NewsDTO> browsePagingNewsDTOByTitle(String title, int pageNum, int pageSize, String orderName,
+			String orderWay) {
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<News> l = newsDao.browsePagingNewsByTitle(title,pageNum-1,pageSize,orderName,orderWay);
+		List<NewsDTO> nl = new ArrayList<NewsDTO>();
+		for (int i = 0; i < l.size(); i++) {
+			News news = l.get(i);
+			NewsDTO nnews = new NewsDTO();
+			nnews.setNews(news);
+			List<Img> il = imgDao.browseImg(news.getNewsId(), "number", "desc");
+			nnews.setImgList(il);
+			nl.add(nnews);
+		}
+		return nl;
+	}
+	@Override
+	public List<NewsDTO> browsePagingNewsDTO(String type, int pageNum, int pageSize, String orderName,
+			String orderWay) {
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		if(type.equals("首页")){
+			type=null;
+		}
+		List<News> l = newsDao.browsePagingNews(type, pageNum-1, pageSize, orderName, orderWay);
+		List<NewsDTO> nl = new ArrayList<NewsDTO>();
+		for (int i = 0; i < l.size(); i++) {
+			News news = l.get(i);
+			NewsDTO nnews = new NewsDTO();
+			nnews.setNews(news);
+			List<Img> il = imgDao.browseImg(news.getNewsId(), "number", "desc");
+			nnews.setImgList(il);
+			nl.add(nnews);
+		}
+		return nl;
+	}
+	@Override
+	public List<NewsDTO> browseFixedRecommendRandomNewsDTO(int pageNum, int pageSize, int fixedRecommend) {
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<News> l = newsDao.browseFixedRecommendRandomNews(pageNum-1,pageSize,fixedRecommend);
+		List<NewsDTO> nl = new ArrayList<NewsDTO>();
+		for (int i = 0; i < l.size(); i++) {
+			News news = l.get(i);
+			NewsDTO nnews = new NewsDTO();
+			nnews.setNews(news);
+			List<Img> il = imgDao.browseImg(news.getNewsId(), "number", "desc");
+			nnews.setImgList(il);
+			nl.add(nnews);
+		}
+		return nl;
+	}
+	@Override
+	public List<NewsDTO> browseRecommendNewsDTO(int pageNum, int pageSize, int isRecommend) {
+		if(pageNum<1){
+			pageNum=1;
+		}
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<News> l = newsDao.browseRecommendNews(pageNum-1,pageSize,isRecommend);
+		List<NewsDTO> nl = new ArrayList<NewsDTO>();
+		for (int i = 0; i < l.size(); i++) {
+			News news = l.get(i);
+			NewsDTO nnews = new NewsDTO();
+			nnews.setNews(news);
+			List<Img> il = imgDao.browseImg(news.getNewsId(), "number", "desc");
+			nnews.setImgList(il);
+			nl.add(nnews);
+		}
+		return nl;
+	}
+	@Override
+	public List<NewsDTO> browseRandomRecommendNewsDTO(int pageSize, int isRecommend) {
+		if(pageSize<1){
+			pageSize=0;//没有数据
+		}
+		List<News> l = newsDao.browseRandomRecommendNews(pageSize,isRecommend);
+		List<NewsDTO> nl = new ArrayList<NewsDTO>();
+		for (int i = 0; i < l.size(); i++) {
+			News news = l.get(i);
+			NewsDTO nnews = new NewsDTO();
+			nnews.setNews(news);
+			List<Img> il = imgDao.browseImg(news.getNewsId(), "number", "desc");
+			nnews.setImgList(il);
+			nl.add(nnews);
+		}
+		return nl;
 	}
 	
 }

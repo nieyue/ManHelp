@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nieyue.bean.News;
 import com.nieyue.comments.MyJoup;
+import com.nieyue.dto.NewsDTO;
 import com.nieyue.dto.StateResult;
 import com.nieyue.mail.MailSenderInfo;
 import com.nieyue.mail.SendMailDemo;
@@ -46,8 +48,8 @@ public class NewsController {
 	
 	/**
 	 * 分页浏览所有新闻
-	 * @param orderName 商品排序数据库字段
-	 * @param orderWay 商品排序方法 asc升序 desc降序
+	 * @param orderName 排序数据库字段
+	 * @param orderWay 排序方法 asc升序 desc降序
 	 * @return
 	 */
 	@RequestMapping(value = "/list", method = {RequestMethod.GET,RequestMethod.POST})
@@ -63,6 +65,77 @@ public class NewsController {
 			}
 			list= newsService.browsePagingNews(type,pageNum, pageSize, orderName, orderWay);
 			return list;
+	}
+	/**
+	 * 分页浏览所有新闻DTO
+	 * @param orderName 排序数据库字段
+	 * @param orderWay 排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/dto/list", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody List<NewsDTO> browsePagingNewsDTO(
+			@RequestParam(value="type",defaultValue="首页",required=false) String type,
+			@RequestParam(value="pageNum",defaultValue="0",required=false)int pageNum,
+			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
+			@RequestParam(value="orderName",required=false,defaultValue="news_id") String orderName,
+			@RequestParam(value="orderWay",required=false,defaultValue="asc") String orderWay,HttpSession session)  {
+		List<NewsDTO> list = new ArrayList<NewsDTO>();
+		if(pageNum==0 ||pageSize==0){//查询所有
+			list= newsService.browseNewsDTO(type, orderName, orderWay);
+			return list;
+		}
+		list= newsService.browsePagingNewsDTO(type,pageNum, pageSize, orderName, orderWay);
+		return list;
+	}
+	/**
+	 * 分页推荐新闻DTO
+	 * @param orderName 排序数据库字段
+	 * @param orderWay 排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/dto/list/isRecommend", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody List<NewsDTO> browseRecommendNewsDTO(
+			@RequestParam(value="isRecommend",defaultValue="1",required=false) int isRecommend,
+			@RequestParam(value="pageNum",defaultValue="0",required=false)int pageNum,
+			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
+			HttpSession session)  {
+		List<NewsDTO> list = new ArrayList<NewsDTO>();
+		list= newsService.browseRecommendNewsDTO(pageNum, pageSize, isRecommend);
+		return list;
+	}
+	/**
+	 * 根据标题分页浏览所有新闻
+	 * @param orderName 排序数据库字段
+	 * @param orderWay 排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/list/title", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody List<News> browsePagingNewsByTitle(
+			@RequestParam(value="title",defaultValue="无",required=false) String title,
+			@RequestParam(value="pageNum",defaultValue="0",required=false)int pageNum,
+			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
+			@RequestParam(value="orderName",required=false,defaultValue="news_id") String orderName,
+			@RequestParam(value="orderWay",required=false,defaultValue="asc") String orderWay,HttpSession session)  {
+		List<News> list = new ArrayList<News>();
+		list= newsService.browsePagingNewsByTitle(title, pageNum, pageSize, orderName, orderWay);
+		return list;
+	}
+	/**
+	 * 根据标题分页浏览所有新闻DTO
+	 * @param orderName 排序数据库字段
+	 * @param orderWay 排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/dto/list/title", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody List<NewsDTO> browsePagingNewsByTitleDTO(
+			@RequestParam(value="title",defaultValue="无",required=false) String title,
+			@RequestParam(value="pageNum",defaultValue="0",required=false)int pageNum,
+			@RequestParam(value="pageSize",defaultValue="10",required=false) int pageSize,
+			@RequestParam(value="orderName",required=false,defaultValue="news_id") String orderName,
+			@RequestParam(value="orderWay",required=false,defaultValue="asc") String orderWay,HttpSession session)  {
+		List<NewsDTO> list = new ArrayList<NewsDTO>();
+		list= newsService.browsePagingNewsDTOByTitle(title, pageNum, pageSize, orderName, orderWay);
+		return list;
 	}
 	/**
 	 * 随机浏览推荐新闻
@@ -84,6 +157,25 @@ public class NewsController {
 		return list;
 	}
 	/**
+	 * 随机浏览推荐新闻DTO
+	 * @param orderName 商品排序数据库字段
+	 * @param orderWay 商品排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/dto/list/random/isRecommend", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody List<NewsDTO> browseRandomRecommendNewsDTO(
+			@RequestParam(value="pageNum",defaultValue="0",required=false) int pageNum,
+			@RequestParam(value="pageSize",defaultValue="5",required=false) int pageSize,
+			HttpSession session)  {
+		List<NewsDTO> list = new ArrayList<NewsDTO>();
+		if(pageNum==0){
+			list= newsService.browseRandomRecommendNewsDTO(pageSize,1);			
+		}else{
+			list=newsService.browseRecommendNewsDTO(pageNum, pageSize, 1);
+		}
+		return list;
+	}
+	/**
 	 * 浏览置顶新闻
 	 * @param orderName 商品排序数据库字段
 	 * @param orderWay 商品排序方法 asc升序 desc降序
@@ -99,12 +191,36 @@ public class NewsController {
 		return list;
 	}
 	/**
+	 * 浏览置顶新闻DTO
+	 * @param orderName 商品排序数据库字段
+	 * @param orderWay 商品排序方法 asc升序 desc降序
+	 * @return
+	 */
+	@RequestMapping(value = "/dto/list/random/fixedRecommend", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody List<NewsDTO> browseFixedRecommendRandomNewsDTO(
+			@RequestParam(value="pageNum",defaultValue="1",required=false) int pageNum,
+			@RequestParam(value="pageSize",defaultValue="3",required=false) int pageSize,
+			HttpSession session)  {
+		List<NewsDTO> list = new ArrayList<NewsDTO>();
+		list= newsService.browseFixedRecommendRandomNewsDTO(pageNum,pageSize,1);
+		return list;
+	}
+	/**
 	 * 新闻修改
 	 * @return
 	 */
 	@RequestMapping(value = "/update", method = {RequestMethod.GET,RequestMethod.POST})
 	public @ResponseBody StateResult updateNews(@ModelAttribute News news,HttpSession session)  {
 		boolean um = newsService.updateNews(news);
+		return StateResult.getSR(um);
+	}
+	/**
+	 * 新闻修改
+	 * @return
+	 */
+	@RequestMapping(value = "/dto/update", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResult updateNewsDTO(@RequestBody NewsDTO newsDTO,HttpSession session)  {
+		boolean um = newsService.updateNewsDTO(newsDTO);
 		return StateResult.getSR(um);
 	}
 	/**
@@ -124,7 +240,15 @@ public class NewsController {
 		boolean am = newsService.addNews(news);
 		return StateResult.getSR(am);
 	}
-	
+	/**
+	 * 新闻增加DTO
+	 * @return
+	 */
+	@RequestMapping(value = "/dto/add", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody StateResult addNewsDTO(@RequestBody NewsDTO newsDTO, HttpSession session)  {
+		boolean am = newsService.addNewsDTO(newsDTO);
+		return StateResult.getSR(am);
+	}
 	/**
 	 * 新闻抓取
 	 * @return
@@ -203,6 +327,16 @@ public class NewsController {
 		News news=new News();
 		news = newsService.loadNews(newsId);
 		return news;
+	}
+	/**
+	 * 单个新闻加载DTO
+	 * @return
+	 */
+	@RequestMapping(value = "/dto/{newsId}", method = {RequestMethod.GET,RequestMethod.POST})
+	public @ResponseBody NewsDTO loadNewsDTO(@PathVariable("newsId") Integer newsId,HttpSession session)  {
+		NewsDTO newsDTO=new NewsDTO();
+		newsDTO = newsService.loadNewsDTO(newsId);
+		return newsDTO;
 	}
 	/**
 	 * 查询所有类型 去空 去重

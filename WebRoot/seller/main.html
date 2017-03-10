@@ -278,7 +278,7 @@
                    		function initData(a){
                 			$.ajax({  
                 		          type : "get",  
-                		          url : "/news/list?pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&type="+a.type+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+                		          url : "/news/dto/list?pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&type="+a.type+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
                 		          async : false,  
                 		          success : function(data){
                 		        	  if(data==''){
@@ -288,14 +288,13 @@
                 		        		  $("#addMore").show();
                 		        		  
                 		        	  }
-                		        	  if(a.pageNum>1){
+                		        	if(a.pageNum>1){
                 		        		  for (var int = 0; int < data.length; int++) {
                 		        			$scope.newsList.push(data[int]); 
                 						}
-                		        	  }else{
-                		        	  $scope.newsList=data; 
-                		        		  
-                		        	  } 
+                		        	}else{
+              		        	 		$scope.newsList=data; 
+                		        	  }
                 		        	  myUtils.myPrevToast("加载完成", null, "remove");
                 		          }  
                 		          });  
@@ -305,10 +304,10 @@
                 			$.ajax({  
                 		          type : "get",  
                 		          url : "/news/types",  
-                		          async : false,  
+                		          async : true,  
                 		          success : function(data){
                 		        	  $scope.newsTypes=data;
-                		        	  $scope.$apply(); 
+                		        	  $scope.$apply();
                 		        	  myUtils.myPrevToast("加载完成", null, "remove");
                 		          }  
                 		          });  
@@ -341,15 +340,15 @@
                    		//热门置顶
           		        	$.ajax({  
               		          type : "get",  
-              		          url : "/news/list/random/fixedRecommend?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize,  
+              		          url : "/news/dto/list/random/fixedRecommend?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize,  
               		          async : false,  
               		          success : function(data){
-              		          if($scope.pageNum>1){
+              		         if($scope.pageNum>1){
                 		        		  for (var int = 0; int < data.length; int++) {
                 		        			$scope.newsList.push(data[int]); 
                 						}
                 		      }else{
-              		        	 $scope.newsList=data; 
+              		        	 		$scope.newsList=data; 
                 		        	  }
               		        	//$("#addMore").hide();//隐藏加载
               		        	  myUtils.myPrevToast("加载完成", null, "remove");
@@ -368,15 +367,15 @@
                    		//推荐
             				$.ajax({  
               		          type : "get",  
-              		          url : "/news/list/random/isRecommend?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize,  
+              		          url : "/news/dto/list/random/isRecommend?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize,  
               		          async : false,  
               		          success : function(data){
-              		        	 if($scope.pageNum>1){
+              		        	  if($scope.pageNum>1){
                 		        		  for (var int = 0; int < data.length; int++) {
                 		        			$scope.newsList.push(data[int]); 
                 						}
-                		      }else{
-              		        	 $scope.newsList=data; 
+                		     	}else{
+              		        	 		$scope.newsList=data; 
                 		        	  }
               		        	//$("#addMore").hide();//隐藏加载
               		        	  myUtils.myPrevToast("加载完成", null, "remove");
@@ -418,10 +417,17 @@
                 			$("#addMore").children().text("点击加载更多》");
                 		}; 
                 		//修改new
-                		$scope.updateNew=function(news){
+                		$scope.updateNew=function(newsdto,news,img_list){
                 			$("#mySellerModal").unbind().click();
                 			$("#mySellerModalLabel").html("修改新闻");
                 			$("#mySellerModalBody").parent().css("width","900px");
+							//循环图片
+							var imgString="";
+							for(var z=0;z<img_list.length;z++){
+							imgString+="<div class='comment-input-margin '> <input type='file' class='comment-input' id='newsFileUpload"+img_list[z].number+"'  ><div>"+
+							"<img style='width:300px;height: 200px;' src='"+img_list[z].img_address+"' id='updateImgId"+img_list[z].number+"'/></div></div>";
+							}
+							console.log(imgString)
                 			$("#mySellerModalBody").html(
                 					"<form>"+
 									" <label for='updateNewsTitle' class='text-danger'>※新闻标题（必填）</label>"+
@@ -433,12 +439,7 @@
 									"   <input type='text' class='comment-input' id='updateNewsType'  placeholder='输入新闻类型'>"+
 									" </div>"+
 									"  <label  class='text-danger'>※封面图片url</label>"+
-									"<div class='comment-input-margin '>"+
-									"   <input type='file' class='comment-input' id='newsFileUpload'  >"+
-									" <div>"+
-									" <img style='width:300px;height: 200px;' src='"+news.img_address+"' id='updateImgId'/>"+
-									"</div>"+
-									"</div>"+
+									imgString+
 									 "<label  class='text-danger'>※是否置顶，默认否</label>"+
 									  "<div class='comment-input-margin '>"+
 									    "<input type='radio' name='radioFixedRecommend' class='disableFixedRecommend' value='0'/>否"+
@@ -459,10 +460,10 @@
         
                  			var	ue = UE.getEditor('editor2');//获取实例，有就得到，没有就创建
                  			function initForm(){
-                 				$.get("/news/"+news.news_id,function(data){
+                 				$.get("/news/dto/"+news.news_id,function(data){
                  					console.log(data)
-                 					$("#updateNewsTitle").val(data.title);
-                 					$("#updateNewsType").val(data.type);
+                 					$("#updateNewsTitle").val(data.news.title);
+                 					$("#updateNewsType").val(data.news.type);
                  					
                  						console.log(data)
                  						//初始化禁用双选
@@ -476,11 +477,11 @@
                  						
                  						$("input[name='radioFixedRecommend']").each(function(){
                  						
-                 						if(data.fixed_recommend==$(this).val()){
+                 						if(data.news.fixed_recommend==$(this).val()){
                  						$(this).prop("checked","checked"); 
                  						initDisableRecommend(this,"input[name='radioIsRecommend']");
                  						}
-                 						if(!data.fixed_recommend){
+                 						if(!data.news.fixed_recommend){
                  							$("input[name='radioFixedRecommend']").eq(0).prop("checked","checked"); 
                  							
                  						}
@@ -491,11 +492,11 @@
                  						});
                  						
                  						$("input[name='radioIsRecommend']").each(function(){
-                 						if(data.is_recommend==$(this).val()){
+                 						if(data.news.is_recommend==$(this).val()){
                  						$(this).prop("checked","checked"); 
                  						initDisableRecommend(this,"input[name='radioFixedRecommend']");
                  						}
-                 						if(!data.is_recommend){
+                 						if(!data.news.is_recommend){
                  							$("input[name='radioIsRecommend']").eq(0).prop("checked","checked"); 
                  							
                  						}
@@ -505,35 +506,42 @@
                  						});
                  						});
                  					ue.ready(function(){
-                 					ue.setContent(data.content);
+                 					ue.setContent(data.news.content);
                  					});
                  					
                  				});
                  			}
                  			initForm();
                  			//上传新闻封面图片
-                 		$("#newsFileUpload").change(function(){
+                 		for(var zz=0;zz<img_list.length;zz++){
+                 		$("#newsFileUpload"+img_list[zz].number).change( function(){
+                 		var imgListNumber=$(this).attr("id").split("newsFileUpload")[1];
+                 		console.log(imgListNumber)
                  			myUtils.fileUpload(
-                 				    {inputfile:$("#newsFileUpload"),
+                 				    {inputfile:$("#newsFileUpload"+imgListNumber),
                  				    ajaxObj:{
                  				        formData:[
-                 				            {key:"testFileUpload",value:$("#newsFileUpload").get(0).files[0]}
+                 				            {key:"testFileUpload",value:$("#newsFileUpload"+imgListNumber).get(0).files[0]}
                  				            ],
                  				        url:"/news/img/add",
-                 				        success:(data)=>{
+                 				        success:function(data){
                  				            if(data){
-                 				            myUtils.myLoadingToast("上传成功",null);
                  				            myUtils.myPrevToast("上传成功",null,"remove");
                  				          news.img_address=data;
-                 				          $("#updateImgId").attr("src",news.img_address);
+                 				          console.log(img_list[imgListNumber-1].img_address)
+                 				          img_list[imgListNumber-1].img_address=data;
+                 				          $("#updateImgId"+imgListNumber).attr("src",img_list[imgListNumber-1].img_address);
                  				            }
                  				        }
                  				    }
                  				}
                  				);
                  		});
+                 		}
+                 		console.log(newsdto)
+                 		console.log(news)
+                 		console.log(img_list)
                  			//提交更新表单
-                 			console.log(ue)
                  			$("#sellerSubmit").unbind().click(function(){
                  				var news_id=news.news_id;
                  				var title=$("#updateNewsTitle").val().trim();
@@ -547,24 +555,33 @@
                         		myUtils.myPrevToast("修改中", function(){
                         		$.ajax({  
                   		          type : "post",  
-                  		          url : "/news/update",  
-                  		          data:{"news_id":news_id,"title":title,"type":type,
-                  		        	  "fixed_recommend":radioFixedRecommend,
-                  		        	  "is_recommend":radioIsRecommend,
-                  		        	  "img_address":img_address,"content":content},
+                  		          url : "/news/dto/update",
+                  		          contentType:'application/json',  
+                  		          data:JSON.stringify({
+              		          news:{  news_id:news_id,
+              		          		  title:title,
+              		          		  type:type,
+              		          		  img_address:img_address,
+              		        	      fixed_recommend:radioFixedRecommend,
+              		        	  	  is_recommend:radioIsRecommend,
+              		        	  	  time:news.time,
+              		        	      content:content},
+              		          img_list:angular.fromJson(angular.toJson(img_list))
+              		        	  }),  
                   		          async : true,  
                   		          success : function(data){
                   		        	if(data.code==200){
                   		   			$("#closeModal").click();
                   		        	  myUtils.myPrevToast("修改成功", null, "remove");
                   		   			//location.reload();
-                  		   			$scope.newsList[$scope.newsList.indexOf(news)].title=title;
-                  		   			$scope.newsList[$scope.newsList.indexOf(news)].type=type;
-                  		   			$scope.newsList[$scope.newsList.indexOf(news)].img_address=img_address;
-                  		   			$scope.newsList[$scope.newsList.indexOf(news)].time=myUtils.timeStampToDate(new Date());
-                  		   			$scope.newsList[$scope.newsList.indexOf(news)].fixed_recommend=radioFixedRecommend;
-                  		   			$scope.newsList[$scope.newsList.indexOf(news)].is_recommend=radioIsRecommend;
-                  		   			$scope.newsList[$scope.newsList.indexOf(news)].content=content;
+                  		   			$scope.newsList[$scope.newsList.indexOf(newsdto)].news.title=title;
+                  		   			$scope.newsList[$scope.newsList.indexOf(newsdto)].news.type=type;
+                  		   			$scope.newsList[$scope.newsList.indexOf(newsdto)].news.img_address=img_address;
+                  		   			$scope.newsList[$scope.newsList.indexOf(newsdto)].news.time=news.time;
+                  		   			$scope.newsList[$scope.newsList.indexOf(newsdto)].news.fixed_recommend=radioFixedRecommend;
+                  		   			$scope.newsList[$scope.newsList.indexOf(newsdto)].news.is_recommend=radioIsRecommend;
+                  		   			$scope.newsList[$scope.newsList.indexOf(newsdto)].news.content=content;
+                  		   			$scope.newsList[$scope.newsList.indexOf(newsdto)].img_list=img_list;
                   		   			$scope.$apply();
                   		   			/* $("#updateNewsTitle").val(title);
                  					$("#updateNewsType").val(type);
@@ -696,8 +713,15 @@
                  			});
                  			
                  			console.log($scope.fixedRecommend)
+                 			
+                 			$scope.imgList=[];//图片列表对象；
                  		//上传新闻封面图片
                  		$("#newsFileUpload").change(function(){
+                 			//最多上传三张
+                 			 if($scope.imgList.length>=3){
+                 			 myUtils.myLoadingToast("最多上传三张");
+                 			 return;
+                 			 }
                  			myUtils.fileUpload(
                  				    {inputfile:$("#newsFileUpload"),
                  				    ajaxObj:{
@@ -705,12 +729,20 @@
                  				            {key:"testFileUpload",value:$("#newsFileUpload").get(0).files[0]}
                  				            ],
                  				        url:"/news/img/add",
-                 				        success:(data)=>{
+                 				        success:function(data){
+				                 			var img={
+				                 			img_id:'',
+				                 			img_address:'',
+				                 			number:'',
+				                 			news_id:''
+				                 			};
                  				            if(data){
-                 				            myUtils.myLoadingToast("上传成功",null);
                  				            myUtils.myPrevToast("上传成功",null,"remove");
-                 				           $scope.imgUrl=data;
-                 				           $scope.$apply();
+                 				            img.number=$scope.imgList.length+1;
+                 				           img.img_address=data;
+                 				            $scope.imgList.push(img);
+                 				            console.log(JSON.parse(angular.toJson($scope.imgList)))
+                 				            $scope.$apply();
                  				            }
                  				        }
                  				    }
@@ -725,23 +757,29 @@
                     		var fixedRecommend=$scope.fixedRecommend;
                     		var isRecommend=$scope.isRecommend;
                     		var content=ue.getContent();
-                    		var imgUrl=$scope.imgUrl;
-              		        	  console.log(content)
+                    		//var imgUrl=$scope.imgUrl;
                     		myUtils.myPrevToast("添加中", function(){
                     		$.ajax({  
               		          type : "post",  
-              		          url : "/news/add",  
-              		          data:{"title":title,"type":type,
-              		          		"imgAddress":imgUrl,
-              		        	  "fixedRecommend":fixedRecommend,
-              		        	  "isRecommend":isRecommend,
-              		        	  "content":content},
+              		          url : "/news/dto/add",  
+              		          contentType:"application/json",  
+              		          data:JSON.stringify({
+              		          news:{title:title,
+              		          		  type:type,
+              		          		  img_address:$scope.imgList[0].img_address,
+              		        	      fixed_recommend:fixedRecommend,
+              		        	  	  is_recommend:isRecommend,
+              		        	  	  time:myUtils.timeStampToDate(new Date()),
+              		        	      content:content},
+              		          img_list:angular.fromJson(angular.toJson($scope.imgList))
+              		        	  }),
               		          async : true,  
               		          success : function(data){
               		        	if(data.code==200){
               		        	$scope.addNewsTitle="";
               		        	$scope.addNewsType="";
-              		        	$scope.imgUrl="";
+              		        	//$scope.imgUrl="";
+              		        	$scope.imgList=[];
               		        	$scope.fixedRecommend="0";//默认置顶否
                      			$scope.isRecommend="0";//默认推荐否
               		        	$scope.$apply();

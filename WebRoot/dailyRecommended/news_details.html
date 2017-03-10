@@ -1,33 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="detailsApp" ng-controller="detailsCtrl" ng-class="fontSize">
 <head>
-<title>新闻详情</title>
+<title ng-bind="news.title"></title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport"
 	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-<meta name="keywords" content="男人帮，男性网，美女，体育，社会，奇闻，段子">
+<meta name="keywords" content="百闻一荐">
 <meta charset="UTF-8">
 <meta name="description"
-	content="男人帮（man.fuwu88.cn）是一家男人的生活资讯网站,致力于为男性朋友提供新闻资讯、体育动态、奇闻异事、幽默笑话以及美女图片欣赏,立志成为男人的加油站。">
+	content="{{news.title}}">
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/swiper.min.css" rel="stylesheet">
 <link href="/resources/css/base.css" rel="stylesheet">
-
 </head>
+<body >
 
-<body ng-app="detailsApp" >
-	<div ng-controller="detailsCtrl" class="comment-wrap"  >
+	<div  class="comment-wrap "  >
 	<!-- 标志 -->
-		<div class="comment-top-fixed comment-title-top">
-		<a class="comment-title-left" href="javascript:location.href='/man/index?type='+myUtils.GetQueryString('type')">&lt;返回</a>
-		<span class="comment-title-center">
-		<i class="glyphicon glyphicon-fire"></i>
-		男人帮
-		</span>
+		<div class="comment-top-fixed comment-title-top" style="background-color:#2b1152;text-align:left">
+		<span class="aiduFont" style="vertical-align:middle;" ng-click="goBackIndex()">&lt;&lt;</span>
+		<span class="aiduFont" style="display:inline-block;font-size:22px;vertical-align:middle;">百闻一荐</span>
+		<span class="aiduFont" style="display:inline-block;font-size:16px;vertical-align:middle;color:#fef504;" ng-bind="news.type"></span>
+		<span class="aiduFont btn  btn-sm" ng-class="fontSizeClassBig"style="display:inline-block;" ng-click="changeFontSize('1')">大</span>
+		<span class="aiduFont btn  btn-sm" ng-class="fontSizeClassNormal"  ng-click="changeFontSize('0')">中</span>
+		<span class="aiduFont btn  btn-sm" ng-class="fontSizeClassSmall" style="display:inline-block;" ng-click="changeFontSize('-1')">小</span>
 		</div>
 	<!-- 标志end -->
 			<div class='loadAnimation'style="margin-top:105px !important;z-index:99999;" ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
 		<!-- 新闻列表 -->
-		<div style="margin-top:50px !important;display:none;" id="newsDeatilsBody"   >
+		<div  style="margin-top:50px !important;display:none;" id="newsDeatilsBody"   >
 		<div style="padding:2%;background-color:#fff;margin-bottom:5px;">
 			<div class="media-center">
 			<!-- 广告 -->
@@ -36,40 +37,38 @@
 				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170214/1487066476470089148.png">
 				</a> -->
 			<!-- 广告  end-->
-				<div ><h3 ng-bind="news.title"></h3></div>
-				<div class="text-muted">
+				<div ><span style="font-size:1.2rem;font-weight:bold" ng-bind="news.title"></span></div>
+				<div class="text-muted" style="font-size:0.8rem;">
 					<span ng-bind="news.time"></span>
 					<span ng-bind="news.type"></span>
 				</div>
-				<span ng-bind-html="html"></span>
-				 <div ng-bind-html="news.content" id="newsDetails">
+				 <div style="font-size:1em !important;" ng-bind-html="news.content" id="newsDetails">
 				</div> 
 				 		
-					
 			</div>
 		</div>
-		
 			<!-- 广告 -->
-			<a  style="padding:0 !important;"  
+			<!-- <a  style="padding:0 !important;"  
 				href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx76814e5d646aef20&redirect_uri=http%3A%2F%2Fqipai.yychess.com%2Fniuniu_server_fk%2Findex.php&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect">
 				<img  src="http://man.fuwu88.cn//uploaderPath/ueditor/image/20170215/1487157782013046877.png">
-				</a>
+				</a> -->
 				<!-- <a  style="padding:0 !important;" class="guanggao" 
 				href="http://dl.91cashmobi.com/apk/TSYY_RH_098_098_170214_V1.0.1.apk">
 				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170215/1487122589689085949.jpg">
 				</a> -->
 			<!-- 广告  end-->
 		<!-- 新闻列表end -->
-		<!-- 置顶-->
-		<div class="list-group media " style="padding:2%;background-color:#fff;margin-top:5px;">
+<div class="list-group media " style="padding:2%;background-color:#fff;margin-top:5px;">
 			<div class="media-center">
 				<div class="comment-hot-title">
-					<span class="comment-hot-icon"></span>
+					<span class="comment-hot-icon" style="border-left-color:#2b1152;"></span>
 					<span class="comment-hot-word">更多精彩</span>
 					<!-- <span class="comment-hot-line"></span> -->
 				</div>
+		<!-- 置顶-->
 				
-				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" on-finish-render-filters ng-repeat="fixedRecommendNews in fixedRecommendList" ng-click="newsDetails(fixedRecommendNews.type,fixedRecommendNews.news_id)">
+<!-- 		
+				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" ng-repeat="fixedRecommendNews in fixedRecommendList" ng-click="newsDetails(fixedRecommendNews.type,fixedRecommendNews.news_id)">
 					<div class="media-left">
 						<a href="#" style="padding:5px 0 !important;"> <img class="media-object  comment-list-item-img"
 					ng-src="{{fixedRecommendNews.img_address||newsInit.img_address}}" >
@@ -81,51 +80,225 @@
 							<div class="comment-right-body-title" >
 								<span style="overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="fixedRecommendNews.title||newsInit.title"></span>
 							</div>
-						<div class="text-muted" style="color:#bfbebe;font-size:12px;">
+						<div class="text-muted" style="color:#bfbebe;font-size:0.5rem;">
 						<span style="float: left;" class="newsType"  ng-bind="fixedRecommendNews.type||newsInit.type"></span>
-						<span style="float: left;line-height:14px;margin:0 5px;">|</span>
+						<span style="float: left;line-height:0.5rem;margin:0 5px;">|</span>
 						<span   ng-bind="fixedRecommendNews.time | dateDiff"></span>
 						</div>
 					</div>
 					</div>
 				</div>
 				</div>
-				</div>
+				</div> -->
 		<!--  置顶end -->
 		
-		<!-- 推荐 -->
-<!-- 		<div class="list-group media comment-list-item">
-			<div class="media-center">
-				<div class="comment-hot-title">
-					<span class="comment-hot-icon"></span>
-					<span class="comment-hot-word">推荐</span>
-					<span class="comment-hot-line"></span>
-				</div>
-				
-				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" ng-repeat="isRecommendNews in isRecommendList" ng-click="newsDetails(isRecommendNews.type,isRecommendNews.news_id)">
-					<div class="media-left">
-						<a href="#"> <img class="media-object  comment-list-item-img"
-					ng-src="{{isRecommendNews.img_address||newsInit.img_address}}" >
-						</a>
+		<!-- 同类型的 -->
+<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in newsTypeList"   ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
+			<!-- 一张图片列表 -->
+			<div ng-if="newsdto.img_list.length==1">
+			<div class="media-left">
+				<a href="#" style="padding:5px 0 !important;">
+				 <img class="media-object  comment-list-item-img"
+					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="comment-right-body-title">
+						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
 					</div>
-					<div class="media-body comment-right-body">
-						<div class="media-heading" ></div>
-						<div class="pull-left">
-							<div class="comment-right-body-title">
-								<span ng-bind="isRecommendNews.title||newsInit.title"></span>
-							</div>
-							<div class="text-muted">
-								<span ng-bind="isRecommendNews.time||newsInit.time"></span>
-								<span class="newsType" ng-bind="isRecommendNews.type||newsInit.type"></span>
-							</div>
-						</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:14px">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
 					</div>
 				</div>
 			</div>
-		</div> -->
+			</div>
+			<!-- 两张图片列表 -->
+			<div ng-if="newsdto.img_list.length==2">
+					<div class="comment-right-body-title">
+						<span style="padding:2%;font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center">
+				<a href="#" style="width:100%;">
+				 <img class="comment-list-item-img-response2" ng-repeat="img in newsdto.img_list"  
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- 三张图片列表 -->
+			<div ng-if="newsdto.img_list.length==3">
+					<div class="comment-right-body-title">
+						<span style="padding:2%;font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center" >
+				<a href="#" style="width:100%;">
+				 <img class="comment-list-item-img-response3" ng-repeat="img in newsdto.img_list" 
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- 同类型的end -->
+		
+		<!-- 推荐 -->
+<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in isRecommendList"   ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
+			<!-- 一张图片列表 -->
+			<div ng-if="newsdto.img_list.length==1">
+			<div class="media-left">
+				<a href="#" style="padding:5px 0 !important;">
+				 <img class="media-object  comment-list-item-img"
+					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="comment-right-body-title">
+						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- 两张图片列表 -->
+			<div ng-if="newsdto.img_list.length==2">
+					<div class="comment-right-body-title">
+						<span style="padding:2%;font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center">
+				<a href="#" style="width:100%;">
+				 <img class="comment-list-item-img-response2" ng-repeat="img in newsdto.img_list" 
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- 三张图片列表 -->
+			<div ng-if="newsdto.img_list.length==3">
+					<div class="comment-right-body-title">
+						<span style="padding:2%;font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center" >
+				<a href="#" style="width:100%;">
+				 <img class="comment-list-item-img-response3" ng-repeat="img in newsdto.img_list"
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
 		<!-- 推荐end -->
 		
+			<!-- 搜索过的-->
+<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8"s ng-repeat="newsdto in newsSearchList" on-finish-render-filters  ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
+			<!-- 一张图片列表 -->
+			<div ng-if="newsdto.img_list.length==1">
+			<div class="media-left">
+				<a href="#" style="padding:5px 0 !important;">
+				 <img class="media-object  comment-list-item-img"
+					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="comment-right-body-title">
+						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- 两张图片列表 -->
+			<div ng-if="newsdto.img_list.length==2">
+					<div class="comment-right-body-title">
+						<span style="padding:2%;font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center">
+				<a href="#" style="width:100%;">
+				 <img class="comment-list-item-img-response2" ng-repeat="img in newsdto.img_list" 
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- 三张图片列表 -->
+			<div ng-if="newsdto.img_list.length==3">
+					<div class="comment-right-body-title">
+						<span style="padding:2%;font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center" >
+				<a href="#" style="width:100%;">
+				 <img class="comment-list-item-img-response3" ng-repeat="img in newsdto.img_list" 
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+		<!-- 搜索过的end -->
 		
+		
+		</div>
+		</div>
 		<!-- 底部end -->
 		<div class="comment-bottom">Copyright 2015 itcast Inc,All rights reserved.</div>
 		<!--  底部end -->
@@ -140,6 +313,7 @@
 	<script src="/resources/js/bootstrap3.2.0.js"></script>
 	<script src="/resources/js/angularjs.min.1.5.7.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="/resources/js/swiper.min.js"></script>
 	<script src="/resources/js/base.js"></script>
 	<script src="/resources/js/weixinlogin.js"></script>
 
@@ -153,7 +327,7 @@
 		}
 		});
 		//重置详情页所有图片
-		$("img").each(function(){
+		 $("#newsDetails img").each(function(){
 			if($(this).attr("src").substring($(this).attr("src").lastIndexOf(".")+1)!="gif"
 					&&$(this).attr("src").substring($(this).attr("src").lastIndexOf(".")+1)!="ico"
 					){
@@ -161,13 +335,16 @@
 			}else{
 				$(this).css({'max-width':'100%'});
 			}
-	  	});
+	  	}); 
+		 $("#newsDetails video").each(function(){
+				$(this).css({'width':'100%',"border":'1px solid #ccc',"box-shadow":'0 1px 5px #ccc'});
+	  	}); 
 		//修改热门推荐图片大小
-	  	$(".comment-list-item-img").each(function(){
+	  	/* $(".comment-list-item-img").each(function(){
 	  		$(this).css({'width':'100px','height':'76px'});
-	  	});
+	  	}); */
 		//去掉内容跳转 
-	  	$("#newsDetails a").each(function(){
+	/*   	$("#newsDetails a").each(function(){
 	  	var $this=$(this);
 	  	var thissrc=$this.attr("href");
 	  	$(this).attr("href","#");
@@ -182,7 +359,7 @@
 	  	});
 		$("#detailsHide").click(function(){
 			$("#detailsShow").hide();
-		});
+		}); */
 	  	//获取data-src
 		$("img").each(function(){
 			if($(this).attr("data-src")){
@@ -220,7 +397,7 @@
 		$("#nextPageBox").hide();
 		$("#noPageBox").hide();
 	  	$("#newsDetails").after(
-		"<a id='showQuanWenId' style='display:block' class='text-center text-info'>展开全文∨</a>");
+		"<a id='showQuanWenId' style='display:block;color:#2b1152;font-weight:bold' class='text-center text-info' >展开全文∨</a>");
 	  	$("#showQuanWenId").off().click(function(){
 	  	nextPageNum=1500000;
 	  	pageSize=1500000;
@@ -300,6 +477,34 @@
 					};
 					});
     	detailsApp.controller('detailsCtrl',function($scope,$sce){
+    		//自定义字体大小 大 中 小
+    		$scope.fontSizeClassBig="btn-default";
+    		$scope.fontSizeClassNormal="btn-danger";
+    		$scope.fontSizeClassSmall="btn-default";
+    		//选择字体大小
+    		$scope.changeFontSize=function(number){
+    		sessionStorage.setItem("dailyRecommendedFontSizeNumber", number);
+    		if(number==1){
+    		$scope.fontSize="fontSizeBig";
+    		$scope.fontSizeClassBig="btn-danger";
+    		$scope.fontSizeClassNormal="btn-default";
+    		$scope.fontSizeClassSmall="btn-default";
+    		}else if(number==0){
+    		$scope.fontSize="fontSizeNormal";
+    		$scope.fontSizeClassBig="btn-default";
+    		$scope.fontSizeClassNormal="btn-danger";
+    		$scope.fontSizeClassSmall="btn-default";
+    		}if(number==-1){
+    		$scope.fontSize="fontSizeSmall";
+    		$scope.fontSizeClassBig="btn-default";
+    		$scope.fontSizeClassNormal="btn-default";
+    		$scope.fontSizeClassSmall="btn-danger";
+    		}
+    		};
+    		if(sessionStorage.getItem("dailyRecommendedFontSizeNumber")){
+    		$scope.changeFontSize(sessionStorage.getItem("dailyRecommendedFontSizeNumber"));
+    		}
+    	
     		function initData(id,fixedRecommendSize,isRecommendSize){
     			$.ajax({  
   		          type : "get",  
@@ -348,9 +553,19 @@
 							    });
 
 					});}
+					//同类型的
+					$.ajax({  
+    		          type : "get",  
+    		          url : "/news/dto/list?pageNum=1&pageSize=1&type="+$scope.news.type,  
+    		          async : false,  
+    		          success : function(data){
+    		        	  $scope.newsTypeList=data; 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });
   		        	
     				//热门置顶
-  		        	$.ajax({  
+  		        	/* $.ajax({  
       		          type : "get",  
       		          url : "/news/list/random/fixedRecommend?pageSize="+fixedRecommendSize+"",  
       		          async : false,  
@@ -358,28 +573,78 @@
       		        	  $scope.fixedRecommendList=data; 
       		        	  myUtils.myPrevToast("加载完成", null, "remove");
       		          }  
-      		          }); 
+      		          });  */
     				//推荐
-    				/* $.ajax({  
+    				 $.ajax({  
       		          type : "get",  
-      		          url : "/news/list/random/isRecommend?pageSize="+isRecommendSize+"",  
+      		          url : "/news/dto/list/random/isRecommend?pageSize="+isRecommendSize,  
       		          async : false,  
       		          success : function(data){
       		        	  $scope.isRecommendList=data; 
       		        	  myUtils.myPrevToast("加载完成", null, "remove");
       		          }  
-      		          });  */  
+      		          });  
+      		           
   		         
   		          }  
   		          });  
     			
     			
     		}
-    		initData(myUtils.GetQueryString("news_id"),14,5);
+    		initData(myUtils.GetQueryString("news_id"),1,1);
+      		//相同标题的
+      		function initSampleTilteData(a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "/news/dto/list/title?pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&title="+a.title+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		         console.log(data)
+    		        	if(data.length<=0){
+    		        	$scope.searchResult=-1;
+    		        	return;
+    		        	}
+    		        	$scope.searchResult=1;
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope.newsSearchList.push(data[int]); 
+							}
+    		        	  }else{
+    		        	  $scope.newsSearchList=data; 
+    		        		  
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		var newsSearch="美女";
+    		if(localStorage.getItem("newsSearch")){
+    		newsSearch=localStorage.getItem("newsSearch");
+    		}
+    		//搜索过了的显示
+    		initSampleTilteData({
+    			pageNum:1,
+    			pageSize:1,
+    			title:$scope.news.title,
+    			orderName:"time",
+    			orderWay:"desc"
+    			});
+      		
+    		//返回首页
+    		$scope.indexType=["视频","历史","奇闻","图片","段子","八卦"];
+    		$scope.goBackIndex=function(){
+    		var type="推荐";
+    		for(var i=0;i<$scope.indexType.length;i++){
+    		if($scope.news.type==$scope.indexType[i]){
+    		location.href='/dailyRecommended/index?type='+myUtils.GetQueryString('type');
+    		return;
+    		}
+    		}
+    		location.href='/dailyRecommended/index?type='+type;
+    		};
     		//跳转页面
     		$scope.newsDetails=function(type,news_id){
-    			location.replace("/man/news_details?type="+type+"&news_id="+news_id);
-    			console.log("/man/news_details?type="+type+"&news_id="+news_id)
+    			location.replace("/dailyRecommended/news_details?type="+type+"&news_id="+news_id);
     		};
     		//新闻初始化
     		$scope.newsInit={
@@ -404,6 +669,12 @@
         			myUtils.executeJS(data[0].content);
         			}
     		});
+    	 new Swiper('.swiper-container', {
+        direction: 'vertical',
+        slidesPerView: 'auto',
+        mousewheelControl: true,
+        freeMode: true
+    		}); 
     	});
     	
     	

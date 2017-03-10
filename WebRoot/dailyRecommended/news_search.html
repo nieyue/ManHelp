@@ -1,134 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="searchApp" ng-controller="searchCtrl" ng-class="fontSize">
 <head>
-<title>新闻详情</title>
+<title>搜索</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta name="viewport"
 	content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-<meta name="keywords" content="男人帮，男性网，美女，体育，社会，奇闻，段子">
+<meta name="keywords" content="百闻一荐">
 <meta charset="UTF-8">
 <meta name="description"
-	content="男人帮（man.fuwu88.cn）是一家男人的生活资讯网站,致力于为男性朋友提供新闻资讯、体育动态、奇闻异事、幽默笑话以及美女图片欣赏,立志成为男人的加油站。">
+	content="百闻一荐">
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/base.css" rel="stylesheet">
 
 </head>
 
-<body ng-app="detailsApp" >
-	<div ng-controller="detailsCtrl" class="comment-wrap"  >
+<body  >
+	<div  class="comment-wrap"  >
 	<!-- 标志 -->
-		<div class="comment-top-fixed comment-title-top">
-		<a class="comment-title-left" href="javascript:location.href='/man/index?type='+myUtils.GetQueryString('type')">&lt;返回</a>
-		<span class="comment-title-center">
-		<i class="glyphicon glyphicon-fire"></i>
-		男人帮
-		</span>
+		<div class="comment-top-fixed comment-title-top" style="background-color:#2b1152;text-align:left">
+		<div style="display:inline-block;width:80%;font-size:1.2rem;position:absolute;left:0;top:0;margin:7px;">
+			<input ng-change="searchTextChange()" placeholder="请输入标题字段..." ng-model="searchText" style="color:#000;position:absolute;left:0;top:0;width:100%;height:36px;padding-right:36px;font-weight:lighter;"/>
+			<span ng-click="cleanSearchText()" ng-show="haveSearchText" style="position:absolute;right:0;top:0;color:#000;line-height: 36px;width: 36px;text-align: center;">×</span>
+		</div>
+			<span ng-show="!isSearch" style="position:absolute;left:85%;top:0; width:20%;line-height:50px;color:#fff;" onclick="javascript:location.replace('/dailyRecommended/index')">取消</span>
+			<span ng-show="isSearch" style="position:absolute;left:85%;top:0; width:20%;line-height:50px;color:#fff;" ng-click="search(searchText)" >搜索</span>
 		</div>
 	<!-- 标志end -->
-			<div class='loadAnimation'style="margin-top:105px !important;z-index:99999;" ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+			<div class='loadAnimation'style="display:none;margin-top:50px !important;z-index:99999;" ><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+		
 		<!-- 新闻列表 -->
-		<div style="margin-top:50px !important;display:none;" id="newsDeatilsBody"   >
-		<div style="padding:2%;background-color:#fff;margin-bottom:5px;">
-			<div class="media-center">
-			<!-- 广告 -->
-				<!-- <a  style="padding:0 !important;" class="guanggao" 
-				href="http://dl.91cashmobi.com/apk/TSYY_RH_098_098_170214_V1.0.1.apk">
-				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170214/1487066476470089148.png">
-				</a> -->
-			<!-- 广告  end-->
-				<div ><h3 ng-bind="news.title"></h3></div>
-				<div class="text-muted">
-					<span ng-bind="news.time"></span>
-					<span ng-bind="news.type"></span>
+		<div style="margin-top:50px !important;" >
+		<!-- 无结果 -->
+	<div class="row" ng-if="searchResult==-1">
+			<span class="col-xs-2" style="display:inline-block;">
+				<img  style="" src="/resources/img/nosearch.png">
+			</span>
+		<span class="col-xs-offset-1 col-xs-9" style="margin-top:20px;">
+			<span  style="display:inline-block;width:100%;font-size:1rem;color:#666;font-weight:bold;word-break:break-all;word-wrap: break-word;">
+			抱歉！ 没有找到匹配的"<span style="color:red;" ng-bind="searchText"></span>"相关信息</span>
+			<span  style="display:inline-block;font-size:0.5rem;color:#999;font-weight:bold;">请检查搜索栏中输入是否错误</span>
+		</span>
+		</div> 
+		<!-- 无结果end -->
+			<!-- 列表 -->
+		<div ng-if="searchResult==1">
+		<div class="listGroup list-group media comment-list-item" ng-repeat="newsdto in newsList" on-finish-render-filters ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
+			<!-- 一张图片列表 -->
+			<div ng-if="newsdto.img_list.length==1">
+			<div class="media-left">
+				<a href="#" style="padding:5px 0 !important;">
+				 <img class="media-object  comment-list-item-img"
+					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="comment-right-body-title">
+						<span style="font-size:0.8rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
 				</div>
-				<span ng-bind-html="html"></span>
-				 <div ng-bind-html="news.content" id="newsDetails">
-				</div> 
-				 		
-					
+			</div>
+			</div>
+			<!-- 两张图片列表 -->
+			<div ng-if="newsdto.img_list.length==2">
+					<div class="comment-right-body-title">
+						<span style="padding:2%;font-size:0.8rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center">
+				<a href="#" style="width:100%;">
+				 <img class="comment-list-item-img-response2" ng-repeat="img in newsdto.img_list" 
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+			<!-- 三张图片列表 -->
+			<div ng-if="newsdto.img_list.length==3">
+					<div class="comment-right-body-title">
+						<span style="padding:2%;font-size:0.8rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center" >
+				<a href="#" style="width:100%;">
+				 <img class="comment-list-item-img-response3" ng-repeat="img in newsdto.img_list" 
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
 			</div>
 		</div>
+		</div>
+		<!-- 列表end -->
 		
-			<!-- 广告 -->
-			<a  style="padding:0 !important;"  
-				href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx76814e5d646aef20&redirect_uri=http%3A%2F%2Fqipai.yychess.com%2Fniuniu_server_fk%2Findex.php&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect">
-				<img  src="http://man.fuwu88.cn//uploaderPath/ueditor/image/20170215/1487157782013046877.png">
-				</a>
-				<!-- <a  style="padding:0 !important;" class="guanggao" 
-				href="http://dl.91cashmobi.com/apk/TSYY_RH_098_098_170214_V1.0.1.apk">
-				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170215/1487122589689085949.jpg">
-				</a> -->
-			<!-- 广告  end-->
-		<!-- 新闻列表end -->
-		<!-- 置顶-->
-		<div class="list-group media " style="padding:2%;background-color:#fff;margin-top:5px;">
-			<div class="media-center">
-				<div class="comment-hot-title">
-					<span class="comment-hot-icon"></span>
-					<span class="comment-hot-word">更多精彩</span>
-					<!-- <span class="comment-hot-line"></span> -->
-				</div>
-				
-				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" on-finish-render-filters ng-repeat="fixedRecommendNews in fixedRecommendList" ng-click="newsDetails(fixedRecommendNews.type,fixedRecommendNews.news_id)">
-					<div class="media-left">
-						<a href="#" style="padding:5px 0 !important;"> <img class="media-object  comment-list-item-img"
-					ng-src="{{fixedRecommendNews.img_address||newsInit.img_address}}" >
-						</a>
-					</div>
-					<div class="media-body comment-right-body">
-						<div class="media-heading" ></div>
-						<div class="pull-left">
-							<div class="comment-right-body-title" >
-								<span style="overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="fixedRecommendNews.title||newsInit.title"></span>
-							</div>
-						<div class="text-muted" style="color:#bfbebe;font-size:12px;">
-						<span style="float: left;" class="newsType"  ng-bind="fixedRecommendNews.type||newsInit.type"></span>
-						<span style="float: left;line-height:14px;margin:0 5px;">|</span>
-						<span   ng-bind="fixedRecommendNews.time | dateDiff"></span>
-						</div>
-					</div>
-					</div>
-				</div>
-				</div>
-				</div>
-		<!--  置顶end -->
-		
-		<!-- 推荐 -->
-<!-- 		<div class="list-group media comment-list-item">
-			<div class="media-center">
-				<div class="comment-hot-title">
-					<span class="comment-hot-icon"></span>
-					<span class="comment-hot-word">推荐</span>
-					<span class="comment-hot-line"></span>
-				</div>
-				
-				<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #ccc" ng-repeat="isRecommendNews in isRecommendList" ng-click="newsDetails(isRecommendNews.type,isRecommendNews.news_id)">
-					<div class="media-left">
-						<a href="#"> <img class="media-object  comment-list-item-img"
-					ng-src="{{isRecommendNews.img_address||newsInit.img_address}}" >
-						</a>
-					</div>
-					<div class="media-body comment-right-body">
-						<div class="media-heading" ></div>
-						<div class="pull-left">
-							<div class="comment-right-body-title">
-								<span ng-bind="isRecommendNews.title||newsInit.title"></span>
-							</div>
-							<div class="text-muted">
-								<span ng-bind="isRecommendNews.time||newsInit.time"></span>
-								<span class="newsType" ng-bind="isRecommendNews.type||newsInit.type"></span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
-		<!-- 推荐end -->
+
 		
 		
-		<!-- 底部end -->
-		<div class="comment-bottom">Copyright 2015 itcast Inc,All rights reserved.</div>
-		<!--  底部end -->
 		</div>
 		</div>
 		<!-- cnzz -->
@@ -146,240 +132,99 @@
 	<script>
 
 	$(function(){
-		//广告
-		$(".guanggao").click(function(){
-		if(myUtils.isWeiXinBrowse()){
-		myUtils.myTipToast("/resources/img/live_weixin.png");
-		}
-		});
-		//重置详情页所有图片
-		$("img").each(function(){
-			if($(this).attr("src").substring($(this).attr("src").lastIndexOf(".")+1)!="gif"
-					&&$(this).attr("src").substring($(this).attr("src").lastIndexOf(".")+1)!="ico"
-					){
-	  		$(this).css({'width':'100%'});
-			}else{
-				$(this).css({'max-width':'100%'});
-			}
-	  	});
-		//修改热门推荐图片大小
-	  	$(".comment-list-item-img").each(function(){
-	  		$(this).css({'width':'100px','height':'76px'});
-	  	});
-		//去掉内容跳转 
-	  	$("#newsDetails a").each(function(){
-	  	var $this=$(this);
-	  	var thissrc=$this.attr("href");
-	  	$(this).attr("href","#");
-	  	 $this.click(function(event){
-	  		 if(thissrc.indexOf("http://xw.qq.com/")>-1){
-				return false;	  			 
-	  		 }
-	  		$("#detailsShow").show();
-	  		$("#i").attr("src",thissrc);
-	  		return false;
-	  	}); 
-	  	});
-		$("#detailsHide").click(function(){
-			$("#detailsShow").hide();
-		});
-	  	//获取data-src
-		$("img").each(function(){
-			if($(this).attr("data-src")){
-				$(this).attr("src",$(this).attr("data-src"));
-			}
-		});
-	  	//新增下一页
-	  	
-	  	var prePageNum=0;//初始上一页
-		var nextPageNum=10;//初始下一页
-		var pageSize=10;//初始页面长度
-		var showQuanWen=true;//使用展开全文模式
-	  	var list="p";
-		if(($("p").length<=0) && ($("li").length>0)){
-			list="li";
-			}
-			
-	  	var totalpage=$(list).length;//总数目
-	  	var totalSize=$(list).length%pageSize==0?$(list).length/pageSize:parseInt($(list).length/pageSize)+1;//总页数
-	  	var currentPage=1;
-	  	$("#newsDetails").after(
-		"<a  class='btn btn-success pull-left' id='prevPageBox'>上一页</a>");
-			$("#newsDetails").after(
-					"<a  class='btn btn-success pull-right' id='nextPageBox'><span id='currentPageId'>"+currentPage+"</span>/"+totalSize+"下一页</a>")
-		$("#nextPageBox").after("<div class='text-center hide' style='color:#ccc;' id='noPageBox'>没有更多了</div>");
-		$("#prevPageBox").hide();
-		$("#noPageBox").hide();
-		console.log(totalSize)
-		if(totalSize==1){
-			$("#nextPageBox").hide();
-			$("#noPageBox").show();
-		}else if(showQuanWen){
-		//使用展开全文模式	
-		$("#prevPageBox").hide();
-		$("#nextPageBox").hide();
-		$("#noPageBox").hide();
-	  	$("#newsDetails").after(
-		"<a id='showQuanWenId' style='display:block' class='text-center text-info'>展开全文∨</a>");
-	  	$("#showQuanWenId").off().click(function(){
-	  	nextPageNum=1500000;
-	  	pageSize=1500000;
-	  	$("#showQuanWenId").remove();
-	  	showPage(prePageNum,nextPageNum);
-	  	});
-	  	}
-		//重置p
-		function showPage(prePageNum,nextPageNum){
-		$(list).each(function(index){
-		$(this).css("text-indent","0");
-		$(this).hide();
-		if(index<nextPageNum && index>=prePageNum){
-			$(this).show();
-		}
-		});
-		if(location.href.indexOf("#")>-1 && !showQuanWen){
-	  		location.href=location.href;
-	  		}else{
-	  		location.href=location.href+"#";
-	  		}
-		}
-		showPage(prePageNum,nextPageNum);//初始化
-		//点击下一页
-	  	$("#nextPageBox").on("click",function(d){
-	  		//if($(list).length<prePageNum){
-	  			$("#prevPageBox").show();
-	  		if(currentPage>=totalSize){
-	  			$("#noPageBox").show();
-	  			$("#nextPageBox").hide();
-	  			return ;
-	  		}
-	  	
-	  		prePageNum+=pageSize;
-	  		nextPageNum+=pageSize;
-	  		currentPage++;
-	  		$("#currentPageId").text(currentPage);
-	  		showPage(prePageNum,nextPageNum);
-	  	});
-		//点击上一页
-		$("#prevPageBox").on("click",function(d){
-			prePageNum-=pageSize;
-	  		nextPageNum-=pageSize;
-	  		if($("#noPageBox").is(":visible")){
-	  			$("#noPageBox").hide();
-	  		}
-	  		if($("#nextPageBox").is(":hidden")){
-	  			$("#nextPageBox").show();
-	  		}
-	  		if(prePageNum<=0){
-	  			$("#prevPageBox").hide();
-	  		}
-	  		currentPage--;
-	  		$("#currentPageId").text(currentPage);
-	  		showPage(prePageNum,nextPageNum);
-	  		
-		});
-		
 		
 	});
-    	var detailsApp=angular.module('detailsApp',[]);
-    	detailsApp.filter("dateDiff",function(){
+    	var searchApp=angular.module('searchApp',[]);
+    	searchApp.filter("dateDiff",function(){
                 return function(dateTimeStamp){
                     return myUtils.getDateDiff(dateTimeStamp);
                 }
             });
-            detailsApp.directive('onFinishRenderFilters', function() {
-					return {
-					restrict: 'A',
-					link: function(scope, element, attr) {
-					if (scope.$last === true) {
-					$("#newsDeatilsBody").show();
-					$(".loadAnimation").hide();
-					scope.$emit('ngRepeatFinished');
-					}
-					}
-					};
-					});
-    	detailsApp.controller('detailsCtrl',function($scope,$sce){
-    		function initData(id,fixedRecommendSize,isRecommendSize){
-    			$.ajax({  
-  		          type : "get",  
-  		          url : "/news/"+id,  
-  		          async : false,  
-  		          success : function(data){
-  		        	//console.log(data);
-  		        	var el = $( "<div id='datacontentid'></div>");
-  		        	$(el).html(data.content);
-    				//console.log($(el).text().substring(0, 30)+"...");
-  		        	data.content=$sce.trustAsHtml(data.content);
-    				$scope.news=data;
-  		        	//$scope.news.content=$sce.trustAsHtml($scope.news.content);
-  		        	//微信分享接口
-  		        	if(myUtils.isWeiXinBrowse()){
-  		        	wx.ready(function(){
-							    wx.onMenuShareAppMessage({
-							      title: data.title,
-							      desc: $(el).text().substring(0, 30)+"...",
-							     link: location.href.split('#')[0],
-							      imgUrl: 'http://'+location.host+data.img_address,
-							      trigger: function (res) {
-							        // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
-							       // alert('用户点击发送给朋友');
-							      },
-							      success: function (res) {
-							        myUtils.myLoadingToast("分享成功", null);
-							      },
-							      cancel: function (res) {
-							        myUtils.myLoadingToast("取消分享", null);
-							      },
-							      fail: function (res) {
-							        myUtils.myLoadingToast("分享失败", null);
-							      }
-							    });	
-							    wx.onMenuShareTimeline({
-							        title: data.title, // 分享标题
-							        link: location.href.split('#')[0], // 分享链接
-							        imgUrl: 'http://'+location.host+data.img_address, // 分享图标
-							        success: function () { 
-							        	myUtils.myLoadingToast("分享成功", null);
-							        },
-							        cancel: function () { 
-							        	myUtils.myLoadingToast("取消分享", null);
-							        }
-							    });
-
-					});}
-  		        	
-    				//热门置顶
-  		        	$.ajax({  
-      		          type : "get",  
-      		          url : "/news/list/random/fixedRecommend?pageSize="+fixedRecommendSize+"",  
-      		          async : false,  
-      		          success : function(data){
-      		        	  $scope.fixedRecommendList=data; 
-      		        	  myUtils.myPrevToast("加载完成", null, "remove");
-      		          }  
-      		          }); 
-    				//推荐
-    				/* $.ajax({  
-      		          type : "get",  
-      		          url : "/news/list/random/isRecommend?pageSize="+isRecommendSize+"",  
-      		          async : false,  
-      		          success : function(data){
-      		        	  $scope.isRecommendList=data; 
-      		        	  myUtils.myPrevToast("加载完成", null, "remove");
-      		          }  
-      		          });  */  
-  		         
-  		          }  
-  		          });  
-    			
-    			
+    	searchApp.controller('searchCtrl',function($scope,$sce){
+    	//选择字体大小
+    		$scope.changeFontSize=function(number){
+    		sessionStorage.setItem("dailyRecommendedFontSizeNumber", number);
+    		if(number==1){
+    		$scope.fontSize="fontSizeBig";
+    		}else if(number==0){
+    		$scope.fontSize="fontSizeNormal";
+    		}if(number==-1){
+    		$scope.fontSize="fontSizeSmall";
     		}
-    		initData(myUtils.GetQueryString("news_id"),14,5);
+    		};
+    	//字体大小
+    	if(sessionStorage.getItem("dailyRecommendedFontSizeNumber")){
+    		$scope.changeFontSize(sessionStorage.getItem("dailyRecommendedFontSizeNumber"));
+    		}
+    	
+    		$scope.haveSearchText=false;//是否有搜索文字，默认没有
+    		$scope.searchText="";//搜索文字，默认为空
+    		$scope.isSearch=false;//是否搜索，默认不搜索
+    		//搜索文字改变
+    		$scope.searchTextChange=function(){
+    		$scope.searchResult=0;//输入时初始化
+    		if($scope.searchText!=""){
+    			$scope.isSearch=true;
+    			$scope.haveSearchText=true;    		
+    		}else{
+    			$scope.isSearch=false;
+    		 $scope.haveSearchText=false;
+    		}
+    		};
+    		//清除文字
+    		$scope.cleanSearchText=function(){
+    		$scope.searchResult=0;//输入时初始化
+    		$scope.searchText="";
+    		$scope.isSearch=false;
+    		$scope.haveSearchText=false;
+    		};
+    	
+    		$scope.noMore=false;//false还有，true没有更多
+    		$scope.pageNum=1;//第多少个
+    		$scope.pageSize=10;//每页个数
+    		
+    		$scope.searchResult=0;//没有搜索结果
+    		
+    		function initData(a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "/news/dto/list/title?pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&title="+a.title+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		         console.log(data)
+    		        	if(data.length<=0){
+    		        	$scope.searchResult=-1;
+    		        	return;
+    		        	}
+    		        	$scope.searchResult=1;
+    					localStorage.setItem("newsSearch", a.title);//把搜索的存入本地
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope.newsList.push(data[int]); 
+							}
+    		        	  }else{
+    		        	  $scope.newsList=data; 
+    		        		  
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+    		//搜索
+    		$scope.search=function(searchText){
+    		initData({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			title:searchText,
+    			orderName:"time",
+    			orderWay:"desc"
+    			});
+    		};
+    		
     		//跳转页面
     		$scope.newsDetails=function(type,news_id){
-    			location.replace("/man/news_details?type="+type+"&news_id="+news_id);
-    			console.log("/man/news_details?type="+type+"&news_id="+news_id)
+    			location.replace("/dailyRecommended/news_details?type="+type+"&news_id="+news_id);
+    			console.log("/dailyRecommended/news_details?type="+type+"&news_id="+news_id)
     		};
     		//新闻初始化
     		$scope.newsInit={
@@ -398,12 +243,12 @@
         			};
     		//广告代码
     		//$("body").append("<div><img style='width:100%;height:10%;position:fixed;left:0;bottom:0'  src='/resources/img/splash.jpg'></img></div>");
-    		$.get("/adsense/list/1",function(data){
+    		/* $.get("/adsense/list/1",function(data){
     			if(data&&data[0].content){    				
         			console.log(data)
         			myUtils.executeJS(data[0].content);
         			}
-    		});
+    		}); */
     	});
     	
     	

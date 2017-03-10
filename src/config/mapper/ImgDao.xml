@@ -6,10 +6,12 @@
 <!-- 添加新闻图片-->
 <insert id="addImg" parameterType="Img" flushCache="true" >  
    INSERT IGNORE INTO
-   		 img_tb (img_address,
+   		 img_tb (img_address,number,
    		 news_id)
    VALUES
-    	 (#{imgAddress},
+    	 (
+    	 #{imgAddress},
+    	 #{number},
     	 #{newsId})  
 </insert>  
 <!-- 更新新闻图片 -->
@@ -18,6 +20,7 @@
     	img_tb 
     SET 
     	img_address=#{imgAddress},
+    	number=#{number},
     	news_id=#{newsId}
     WHERE
     	 img_id=#{imgId}  
@@ -32,6 +35,7 @@
 SELECT 
 	 img_id,
 	 img_address,
+	 number,
      news_id
 FROM img_tb 
 WHERE img_id=#{imgId}
@@ -41,6 +45,7 @@ WHERE img_id=#{imgId}
 SELECT 
 	 img_id,
 	 img_address,
+	 number,
      news_id
 FROM img_tb 
 WHERE img_address=#{imgAddress}
@@ -50,6 +55,7 @@ WHERE img_address=#{imgAddress}
     SELECT
 	      img_id,
 		  img_address,
+		  number,
    		  news_id
 	FROM img_tb
 	WHERE news_id=#{newsId}
@@ -63,6 +69,7 @@ WHERE img_address=#{imgAddress}
     SELECT
           img_id,
 		  img_address,
+		  number,
    		  news_id
 	FROM img_tb
 	WHERE news_id=#{newsId}

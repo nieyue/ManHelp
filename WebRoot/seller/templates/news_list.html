@@ -15,24 +15,22 @@
   <!-- Default panel contents -->
   		 <div class="panel-heading">新闻列表</div>
   	</div>
-	<div ng-hide="isEmail" class="listGroup panel panel-default" ng-repeat="news in newsList" ng-click="newsDetails(news.news_id)">
+	<div ng-hide="isEmail" class="listGroup panel panel-default" ng-repeat="newsdto in newsList" ng-click="newsDetails(newsdto.news.news_id)">
   <!-- Default panel contents -->
  		 <div class="panel-body">
-   		 	<div class="media-left">
-				<a href="/man/news_details?type={{news.type}}&news_id={{news.news_id}}"> <img class="media-object  comment-list-item-img " style="margin-top:12px;"
-					ng-src="{{news.img_address||newsInit.img_address}}" >
+   		 	<div class="pull-left" style="vertical-align:middle">
+				<a ng-repeat="img in newsdto.img_list" href="/dailyRecommended/news_details?type={{newsdto.news.type}}&news_id={{newsdto.news.news_id}}">
+				 <img class=" comment-list-item-img " style="margin-top:3px;"
+					ng-src="{{img.img_address||newsInit.img_address}}" >
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
-				<div class="media-heading" ></div>
-				<div class="pull-left">
-					<div class="comment-right-body-title"><span ng-bind="news.title||newsInit.title"></span></div>
-					<div class="text-muted"><span ng-bind="news.time||newsInit.time"></span><span class="newsType" ng-bind="news.type||newsInit.type"></span></div>
-				</div>
 				<div class="pull-right">
-					<button class=" btn btn-warning" ng-click="emailNew(news)"><span class="glyphicon glyphicon-envelope"></span>发邮件</button>
-					<button class=" btn btn-warning" ng-click="updateNew(news)"><span class="glyphicon glyphicon-pencil"></span>编辑</button>
-					<button class=" btn btn-danger" ng-click="deleteNew(news)"><span class="glyphicon glyphicon-trash"></span>删除</button>
+					<div class="comment-right-body-title"><span ng-bind="newsdto.news.title||newsInit.title"></span></div>
+					<div class="text-muted"><span ng-bind="newsdto.news.time||newsInit.time"></span><span class="newsType" ng-bind="newsdto.news.type||newsInit.type"></span></div>
+					<button class=" btn btn-warning" ng-click="emailNew(newsdto.news)"><span class="glyphicon glyphicon-envelope"></span>发邮件</button>
+					<button class=" btn btn-warning" ng-click="updateNew(newsdto,newsdto.news,newsdto.img_list)"><span class="glyphicon glyphicon-pencil"></span>编辑</button>
+					<button class=" btn btn-danger" ng-click="deleteNew(newsdto.news)"><span class="glyphicon glyphicon-trash"></span>删除</button>
 				</div>
 			</div>
  		 </div>

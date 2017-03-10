@@ -31,6 +31,7 @@ PRIMARY KEY (news_id)
 CREATE TABLE img_tb(
 img_id int(11) NOT NULL AUTO_INCREMENT COMMENT '新闻图片id',
 img_address varchar(255) COMMENT '新闻图地址',
+number int(11) COMMENT '图片顺序',
 news_id int(11) COMMENT '新闻id,外键',
 PRIMARY KEY (img_id),
 CONSTRAINT FK_NEWS_IMG FOREIGN KEY (news_id) REFERENCES news_tb (news_id) ON DELETE CASCADE ON UPDATE CASCADE
