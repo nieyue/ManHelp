@@ -47,7 +47,7 @@
 		<div class="listGroup list-group media comment-list-item" ng-repeat="newsdto in newsList" on-finish-render-filters ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<!-- 一张图片列表 -->
 			<div ng-if="newsdto.img_list.length==1">
-			<div class="media-left">
+			<div class="media-left" style="vertical-align:middle">
 				<a href="#" style="padding:5px 0 !important;">
 				 <img class="media-object  comment-list-item-img"
 					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
@@ -69,7 +69,7 @@
 			<!-- 两张图片列表 -->
 			<div ng-if="newsdto.img_list.length==2">
 					<div class="comment-right-body-title">
-						<span style="padding:2%;font-size:0.8rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+						<span style="font-size:0.8rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
 					</div>
 			<div class="text-center">
 				<a href="#" style="width:100%;">
@@ -90,7 +90,7 @@
 			<!-- 三张图片列表 -->
 			<div ng-if="newsdto.img_list.length==3">
 					<div class="comment-right-body-title">
-						<span style="padding:2%;font-size:0.8rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+						<span style="font-size:0.8rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
 					</div>
 			<div class="text-center" >
 				<a href="#" style="width:100%;">

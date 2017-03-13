@@ -146,7 +146,7 @@ a:hover,a:active{
 */
 .comment-list-item-img-response1{
 	width: 100%;
-	height: 100%;
+	height: auto;
 }
 /**
 **2张图
@@ -245,6 +245,7 @@ a:hover,a:active{
 }
 .comment-right-body-title{
 	font-size: 0.8rem;
+	padding:2%;
 	
 }
 /**
