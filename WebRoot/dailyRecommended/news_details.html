@@ -19,7 +19,7 @@
 	<!-- 标志 -->
 		<div class="comment-top-fixed comment-title-top" style="background-color:#2b1152;text-align:left">
 		<span class="aiduFont" style="vertical-align:middle;" ng-click="goBackIndex()">&lt;&lt;</span>
-		<span class="aiduFont" style="display:inline-block;font-size:22px;vertical-align:middle;">百闻一荐</span>
+		<span class="aiduFont" style="display:inline-block;font-size:22px;vertical-align:middle;" ng-click="goBackIndex()">百闻一荐</span>
 		<span class="aiduFont" style="display:inline-block;font-size:16px;vertical-align:middle;color:#fef504;" ng-bind="news.type"></span>
 		<span class="aiduFont btn  btn-sm" ng-class="fontSizeClassBig"style="display:inline-block;" ng-click="changeFontSize('1')">大</span>
 		<span class="aiduFont btn  btn-sm" ng-class="fontSizeClassNormal"  ng-click="changeFontSize('0')">中</span>
@@ -97,9 +97,10 @@
 			<!-- 一张图片列表 -->
 			<div ng-if="newsdto.img_list.length==1">
 			<div class="media-left" style="vertical-align:middle">
-				<a href="#" style="padding:5px 0 !important;">
+				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;">
 				 <img class="media-object  comment-list-item-img"
 					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
@@ -122,8 +123,11 @@
 					</div>
 			<div class="text-center">
 				<a href="#" style="width:100%;">
-				 <img class="comment-list-item-img-response2" ng-repeat="img in newsdto.img_list"  
+				<div ng-repeat="img in newsdto.img_list" class="comment-list-item-img-response2" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%;"
 					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
@@ -143,8 +147,11 @@
 					</div>
 			<div class="text-center" >
 				<a href="#" style="width:100%;">
-				 <img class="comment-list-item-img-response3" ng-repeat="img in newsdto.img_list" 
+				<div ng-repeat="img in newsdto.img_list" class="comment-list-item-img-response3" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%" 
 					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
@@ -165,9 +172,10 @@
 			<!-- 一张图片列表 -->
 			<div ng-if="newsdto.img_list.length==1">
 			<div class="media-left" style="vertical-align:middle">
-				<a href="#" style="padding:5px 0 !important;">
+				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;">
 				 <img class="media-object  comment-list-item-img"
 					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
@@ -190,8 +198,11 @@
 					</div>
 			<div class="text-center">
 				<a href="#" style="width:100%;">
-				 <img class="comment-list-item-img-response2" ng-repeat="img in newsdto.img_list" 
+				<div ng-repeat="img in newsdto.img_list" class="comment-list-item-img-response2" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%;"
 					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
@@ -211,8 +222,11 @@
 					</div>
 			<div class="text-center" >
 				<a href="#" style="width:100%;">
-				 <img class="comment-list-item-img-response3" ng-repeat="img in newsdto.img_list"
+				<div ng-repeat="img in newsdto.img_list" class="comment-list-item-img-response3" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%" 
 					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
@@ -233,9 +247,10 @@
 			<!-- 一张图片列表 -->
 			<div ng-if="newsdto.img_list.length==1">
 			<div class="media-left" style="vertical-align:middle">
-				<a href="#" style="padding:5px 0 !important;">
+				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;">
 				 <img class="media-object  comment-list-item-img"
 					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
@@ -258,8 +273,11 @@
 					</div>
 			<div class="text-center">
 				<a href="#" style="width:100%;">
-				 <img class="comment-list-item-img-response2" ng-repeat="img in newsdto.img_list" 
+				<div ng-repeat="img in newsdto.img_list" class="comment-list-item-img-response2" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%;"
 					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
@@ -279,8 +297,11 @@
 					</div>
 			<div class="text-center" >
 				<a href="#" style="width:100%;">
-				 <img class="comment-list-item-img-response3" ng-repeat="img in newsdto.img_list" 
+				<div ng-repeat="img in newsdto.img_list" class="comment-list-item-img-response3" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%" 
 					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
 				</a>
 			</div>
 			<div class="media-body comment-right-body">
