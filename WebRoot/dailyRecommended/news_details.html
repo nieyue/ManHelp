@@ -96,9 +96,9 @@
 <div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in newsTypeList"   ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<!-- 一张图片列表 -->
 			<div ng-if="newsdto.img_list.length==1">
-			<div class="media-left" style="vertical-align:middle">
-				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;">
-				 <img class="media-object  comment-list-item-img"
+			<div class="media-left" style="vertical-align:middle;width:32%;">
+				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+				 <img class="comment-list-item-img"
 					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
 					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</a>
@@ -171,9 +171,9 @@
 <div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in isRecommendList"   ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<!-- 一张图片列表 -->
 			<div ng-if="newsdto.img_list.length==1">
-			<div class="media-left" style="vertical-align:middle">
-				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;">
-				 <img class="media-object  comment-list-item-img"
+			<div class="media-left" style="vertical-align:middle;width:32%;">
+				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+				 <img class="comment-list-item-img"
 					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
 					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</a>
@@ -246,9 +246,9 @@
 <div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8"s ng-repeat="newsdto in newsSearchList" on-finish-render-filters  ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<!-- 一张图片列表 -->
 			<div ng-if="newsdto.img_list.length==1">
-			<div class="media-left" style="vertical-align:middle">
-				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;">
-				 <img class="media-object  comment-list-item-img"
+			<div class="media-left" style="vertical-align:middle;width:32%;">
+				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+				 <img class="comment-list-item-img"
 					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
 					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				</a>
