@@ -1,7 +1,9 @@
 package com.nieyue.util;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
  * 文件上传路径
@@ -16,15 +18,18 @@ public class UploaderPath {
 	 * @return
 	 */
 	public static String GetValueByKey(String key){
-		 Locale locale = Locale.getDefault();  
-         ResourceBundle localResource = ResourceBundle.getBundle("config/uploaderPath", locale);
-         try {
-        	 String value = localResource.getString(key); 
-        	 return value;
-			
-		} catch (Exception e) {
-			return null;
-		}
+         Properties prop = new Properties();  
+  		String path = UploaderPath.class.getClassLoader().getResource("config/uploaderPath.properties").getPath();  
+  		InputStream is;
+  		try {
+  			is = new FileInputStream(path);
+  				prop.load(is);
+  		} catch (IOException e) {
+  			// TODO Auto-generated catch block
+  			return null;
+  		}  
+  		String value = (String) prop.get(key);
+  		return value;
 	}
 	public static void main(String[] args) {
 		System.out.println(UploaderPath.GetValueByKey("SUCCESS"));

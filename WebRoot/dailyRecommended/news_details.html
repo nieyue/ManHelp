@@ -12,6 +12,26 @@
 <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/css/swiper.min.css" rel="stylesheet">
 <link href="/resources/css/base.css" rel="stylesheet">
+<style type="text/css">
+iframe,video{
+width:104% !important;
+margin-left:-2%;
+height:280px;
+}
+ .baidu-advertise{
+width:104% !important;
+overflow:hidden;
+margin-left:-2%;
+}
+/*  .baidu-advertise,.baidu-advertise div{
+width:100% !important;
+overflow:hidden;
+}
+.baidu-advertise iframe{
+width:100% !important;
+overflow:hidden;
+}  */
+</style>
 </head>
 <body >
 
@@ -93,8 +113,7 @@
 		<!--  置顶end -->
 		
 		<!-- 同类型的 -->
-<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in newsTypeList"   ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
-			<!-- 一张图片列表 -->
+<!-- <div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in newsTypeList"   ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<div ng-if="newsdto.img_list.length==1">
 			<div class="media-left" style="vertical-align:middle;width:32%;">
 				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
@@ -116,7 +135,6 @@
 				</div>
 			</div>
 			</div>
-			<!-- 两张图片列表 -->
 			<div ng-if="newsdto.img_list.length==2">
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
@@ -140,7 +158,6 @@
 				</div>
 			</div>
 			</div>
-			<!-- 三张图片列表 -->
 			<div ng-if="newsdto.img_list.length==3">
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
@@ -164,12 +181,11 @@
 				</div>
 			</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- 同类型的end -->
 		
 		<!-- 推荐 -->
-<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in isRecommendList"   ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
-			<!-- 一张图片列表 -->
+<!-- <div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in isRecommendList"   ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<div ng-if="newsdto.img_list.length==1">
 			<div class="media-left" style="vertical-align:middle;width:32%;">
 				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
@@ -191,7 +207,6 @@
 				</div>
 			</div>
 			</div>
-			<!-- 两张图片列表 -->
 			<div ng-if="newsdto.img_list.length==2">
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
@@ -215,7 +230,6 @@
 				</div>
 			</div>
 			</div>
-			<!-- 三张图片列表 -->
 			<div ng-if="newsdto.img_list.length==3">
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
@@ -239,12 +253,11 @@
 				</div>
 			</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- 推荐end -->
 		
 			<!-- 搜索过的-->
-<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8"s ng-repeat="newsdto in newsSearchList" on-finish-render-filters  ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
-			<!-- 一张图片列表 -->
+<!-- <div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8"s ng-repeat="newsdto in newsSearchList" on-finish-render-filters  ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<div ng-if="newsdto.img_list.length==1">
 			<div class="media-left" style="vertical-align:middle;width:32%;">
 				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
@@ -266,7 +279,6 @@
 				</div>
 			</div>
 			</div>
-			<!-- 两张图片列表 -->
 			<div ng-if="newsdto.img_list.length==2">
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
@@ -290,7 +302,6 @@
 				</div>
 			</div>
 			</div>
-			<!-- 三张图片列表 -->
 			<div ng-if="newsdto.img_list.length==3">
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
@@ -314,14 +325,95 @@
 				</div>
 			</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- 搜索过的end -->
+		
+		<!-- 根据时间加载 -->
+		<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in newsList"  on-finish-render-filters  ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
+			<div ng-if="newsdto.img_list.length==1">
+			<div class="media-left" style="vertical-align:middle;width:32%;">
+				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
+				 <img class="comment-list-item-img"
+					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="comment-right-body-title">
+						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+			<div ng-if="newsdto.img_list.length==2">
+					<div class="comment-right-body-title">
+						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center">
+				<a href="#" style="width:100%;">
+				<div ng-repeat="img in newsdto.img_list" class="comment-list-item-img-response2" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%;"
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+			<div ng-if="newsdto.img_list.length==3">
+					<div class="comment-right-body-title">
+						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
+					</div>
+			<div class="text-center" >
+				<a href="#" style="width:100%;">
+				<div ng-repeat="img in newsdto.img_list" class="comment-list-item-img-response3" style="position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%" 
+					ng-src="{{img.img_address||newsdto.news.img_address||newsInit.img_address}}" >
+					<div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
+				</div>
+				</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType"  ng-bind="newsdto.news.type||newsInit.type"></span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span   ng-bind="newsdto.news.time | dateDiff"></span>
+					</div>
+				</div>
+			</div>
+			</div>
+	<!-- 百度广告 -->
+			<div ng-if="$index==3 || $index=9" class="baidu-advertise">
+				<script type="text/javascript">
+		    /*信息流*/
+		    var cpro_id = "u2951435";
+		</script>
+		<script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/cm.js"></script>
+			</div>
+		<!-- 百度广告 end -->
+		</div>
+		<!-- 根据时间加载 end-->
 		
 		
 		</div>
 		</div>
 		<!-- 底部end -->
-		<div class="comment-bottom">Copyright 2015 itcast Inc,All rights reserved.</div>
+		<div class="comment-bottom" ng-if="noMore">Copyright 2015 itcast Inc,All rights reserved.</div>
 		<!--  底部end -->
 		</div>
 		</div>
@@ -575,7 +667,7 @@
 
 					});}
 					//同类型的
-					$.ajax({  
+					/* $.ajax({  
     		          type : "get",  
     		          url : "/news/dto/list?pageNum=1&pageSize=1&type="+$scope.news.type,  
     		          async : false,  
@@ -583,7 +675,7 @@
     		        	  $scope.newsTypeList=data; 
     		        	  myUtils.myPrevToast("加载完成", null, "remove");
     		          }  
-    		          });
+    		          }); */
   		        	
     				//热门置顶
   		        	/* $.ajax({  
@@ -596,7 +688,7 @@
       		          }  
       		          });  */
     				//推荐
-    				 $.ajax({  
+    				 /* $.ajax({  
       		          type : "get",  
       		          url : "/news/dto/list/random/isRecommend?pageSize="+isRecommendSize,  
       		          async : false,  
@@ -604,7 +696,7 @@
       		        	  $scope.isRecommendList=data; 
       		        	  myUtils.myPrevToast("加载完成", null, "remove");
       		          }  
-      		          });  
+      		          }); */  
       		           
   		         
   		          }  
@@ -614,7 +706,7 @@
     		}
     		initData(myUtils.GetQueryString("news_id"),1,1);
       		//相同标题的
-      		function initSampleTilteData(a){
+      		/* function initSampleTilteData(a){
     			$.ajax({  
     		          type : "get",  
     		          url : "/news/dto/list/title?pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&title="+a.title+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
@@ -637,20 +729,102 @@
     		        	  myUtils.myPrevToast("加载完成", null, "remove");
     		          }  
     		          });  
-    		}
-    		var newsSearch="美女";
+    		} */
+    		/* var newsSearch="美女";
     		if(localStorage.getItem("newsSearch")){
     		newsSearch=localStorage.getItem("newsSearch");
-    		}
+    		} */
     		//搜索过了的显示
-    		initSampleTilteData({
+    		/* initSampleTilteData({
     			pageNum:1,
     			pageSize:1,
     			title:newsSearch,
     			orderName:"time",
     			orderWay:"desc"
+    			}); */
+    			
+    			//列表
+      			function initListData(a){
+    			$.ajax({  
+    		          type : "get",  
+    		          url : "/news/dto/list?pageNum="+a.pageNum+"&pageSize="+a.pageSize+"&type="+a.type+"&orderName="+a.orderName+"&orderWay="+a.orderWay+"",  
+    		          async : false,  
+    		          success : function(data){
+    		          if(data.length<=0){
+    		          $(".loadAnimation").hide();
+    		          	return;
+    		          }
+    		        	  if(a.pageNum>1){
+    		        		  for (var int = 0; int < data.length; int++) {
+    		        			$scope.newsList.push(data[int]); 
+							}
+    		        	  }else{
+    		        	  $scope.newsList=data; 
+    		        		  
+    		        	  } 
+    		        	  myUtils.myPrevToast("加载完成", null, "remove");
+    		          }  
+    		          });  
+    		}
+      		$scope.noMore=false;//false还有，true没有更多
+    		$scope.pageNum=1;//第多少个
+    		$scope.pageSize=10;//每页个数
+    		$scope.type="首页";//初始化类别，所有
+      			initListData({
+    			pageNum:$scope.pageNum,
+    			pageSize:$scope.pageSize,
+    			type:$scope.type,
+    			orderName:"time",
+    			orderWay:"desc"
     			});
-      		
+    			
+    					//滚动刷新
+    		function onReachBottom(){
+    			$scope.pageNum=$scope.pageNum+$scope.pageSize;
+    			$scope.pageSize=$scope.pageSize;
+    			myUtils.myFootLoadingToast("relative",null,function(){
+    			var gurl="/news/dto/list?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize+"&type="+$scope.type+"&orderName=time&orderWay=desc";
+    			if($scope.type=='推荐'){
+    			gurl="/news/dto/list/isRecommend?pageNum="+$scope.pageNum+"&pageSize="+$scope.pageSize;
+    			}
+    			$.ajax({  
+  		          type : "get",
+  		          timeout: 3000,
+  		          async : false,
+  		          url : gurl,  
+  		          complete: function (xhr) {
+                  myUtils.myFootLoadingToast("relative",null,null,"remove");
+  				if(xhr.responseJSON&&xhr.responseJSON.code==40000){
+                  myUtils.myLoadingToast("请求失败！请检查！");
+                	return ;
+         		 }
+  				},
+  		          success : function(data){
+  		      		     myUtils.myFootLoadingToast("relative",null,null,"remove");
+  		        	 if(data.length<=0){
+  		        	 $scope.noMore=true;
+  		        	 $scope.$apply();
+  		        	      return;
+  		        	    }
+  		        	    	$scope.noMore=false;
+  		      		        $scope.newsList=$scope.newsList.concat(data);
+  		      		        $scope.$apply();
+  		      		         myUtils.myPrevToast("加载完成", null, "remove");
+  		          }  
+  		          });
+    			},"add");
+  		}
+    		$(window).scroll(function(){
+        		console.log($scope.noMore);
+        		if(!navigator.onLine){
+        		myUtils.myLoadingToast("请检查网络！");
+        		return;
+        		}
+        		if(navigator.onLine && $scope.noMore==false && myUtils.isScrollBottom(document)){
+        			onReachBottom();
+        		}
+        			
+        		});
     		//返回首页
     		$scope.indexType=["视频","历史","奇闻","图片","段子","八卦"];
     		$scope.goBackIndex=function(){

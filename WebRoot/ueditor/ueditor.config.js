@@ -32,8 +32,8 @@
         UEDITOR_HOME_URL: URL
 
         // 服务器统一请求接口路径
-        , serverUrl: URL + "jsp/controller.jsp?uploaderPath=/home"//服务器配置
-        //, serverUrl: URL + "jsp/controller.jsp?uploaderPath=c:/"//本地测试配置
+        //, serverUrl: URL + "jsp/controller.jsp?uploaderPath=/home"//服务器配置
+        , serverUrl: URL + "jsp/controller.jsp?uploaderPath=c:/"//本地测试配置
 
         //工具栏上的所有的功能按钮和下拉框，可以在new编辑器的实例时选择自己需要的重新定义
         , toolbars: [[
@@ -373,6 +373,9 @@
 			article: [],
 			aside:  [],
 			audio:  ['autoplay', 'controls', 'loop', 'preload', 'src', 'class', 'style'],
+			// source: ['src', 'type'],
+			// embed: ['type', 'class', 'pluginspage', 'src', 'width', 'height', 'align', 'style', 'wmode', 'play', 'autoplay','loop', 'menu', 'allowscriptaccess', 'allowfullscreen', 'controls', 'preload'],
+			// iframe: ['src', 'class', 'height', 'width', 'max-width', 'max-height', 'align', 'frameborder', 'allowfullscreen'],
 			b:      ['class', 'style'],
 			bdi:    ['dir'],
 			bdo:    ['dir'],
@@ -403,7 +406,7 @@
 			header: [],
 			hr:     [],
 			i:      ['class', 'style'],
-			img:    ['src', 'alt', 'title', 'width', 'height', 'id', '_src', 'loadingclass', 'class'],
+			img:    ['src', 'alt', 'title', 'width', 'height', 'id', '_src','_url', 'loadingclass', 'class'],
 			ins:    ['datetime'],
 			li:     ['class', 'style'],
 			mark:   [],
