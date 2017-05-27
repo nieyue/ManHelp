@@ -13,7 +13,7 @@
 <link href="/resources/css/swiper.min.css" rel="stylesheet">
 <link href="/resources/css/base.css" rel="stylesheet">
 <style type="text/css">
-iframe,video{
+/*  iframe,video{
 width:104% !important;
 margin-left:-2%;
 height:280px;
@@ -22,7 +22,16 @@ height:280px;
 width:104% !important;
 overflow:hidden;
 margin-left:-2%;
+}  */
+ iframe,video{
+width:100% !important;
+height:280px;
 }
+ .baidu-advertise{
+width:100% !important;
+overflow:hidden;
+
+} 
 /*  .baidu-advertise,.baidu-advertise div{
 width:100% !important;
 overflow:hidden;
@@ -77,6 +86,7 @@ overflow:hidden;
 				<img  src="http://man.fuwu88.cn/uploaderPath/ueditor/image/20170215/1487122589689085949.jpg">
 				</a> -->
 			<!-- 广告  end-->
+			
 		<!-- 新闻列表end -->
 <div class="list-group media " style="padding:2%;background-color:#fff;margin-top:5px;">
 			<div class="media-center">
@@ -329,7 +339,7 @@ overflow:hidden;
 		<!-- 搜索过的end -->
 		
 		<!-- 根据时间加载 -->
-		<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in newsList"  on-finish-render-filters  ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
+		<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in newsList"   on-finish-render-filters  ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<div ng-if="newsdto.img_list.length==1">
 			<div class="media-left" style="vertical-align:middle;width:32%;">
 				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
@@ -398,7 +408,7 @@ overflow:hidden;
 			</div>
 			</div>
 	<!-- 百度广告 -->
-			<div ng-if="$index==3 || $index=9" class="baidu-advertise">
+			<div ng-if="$index==5 || $index==9" class="baidu-advertise">
 				<script type="text/javascript">
 		    /*信息流*/
 		    var cpro_id = "u2951435";
@@ -417,10 +427,94 @@ overflow:hidden;
 		<!--  底部end -->
 		</div>
 		</div>
+		<!-- 小说 -->	
+		<div id="xiaoshuo" class="listGroup list-group media comment-list-item" style="display:none">
+				<div>
+					<div class="comment-right-body-title">
+						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" >超级保镖在都市</span>
+					</div>
+			<div class="text-center" >
+				<div class="comment-list-item-img-response3" style="width:100%;position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%" 
+					src="http://img.fuwu88.cn/uploaderPath/img/20170526/1495796959577695390174827.JPG" >
+				</div>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType" >小说</span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span  >最新</span>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+			<!-- 小说end -->	
+					<!-- 交友-->	
+		<div id="jiaoyou" class="listGroup list-group media comment-list-item" style="display:none">
+				<div style="background-color:#fff;">
+					<div class="comment-right-body-title">
+						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" >一个人住，有时候真的想找一个大叔陪陪我。。聊聊天什么的。</span>
+					</div>
+			<div class="text-center" >
+			<a style="width:100%;">
+				<div class="comment-list-item-img-response3" style="width:31%;position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%" 
+					src="http://www.et77.cn/files/c1.jpg" >
+				</div>
+				<div class="comment-list-item-img-response3" style="width:31%;position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%" 
+					src="http://www.et77.cn/files/c2.jpg" >
+				</div>
+				<div class="comment-list-item-img-response3" style="width:31%;position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%" 
+					src="http://www.et77.cn/files/c3.jpg" >
+				</div>
+			</a>
+			</div>
+			<div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType" >交友</span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span  >最新</span>
+					</div>
+				</div>
+			</div>
+			</div>
+			</div>
+			<!-- 交友end -->	
+			<!-- 男科 -->	
+		<div id="nk2" class="listGroup list-group media comment-list-item" style="width:100%;position:fixed;bottom:0;left:0;display:none">
+				<div id="nkclose" style="opacity:0.5;position:absolute;top:0;right:1px;border:1px solid #000; background-color:#000;color:white;height:20px;width:20px;line-height:20px;text-align:center;font-size:22px;text-decoration:none;z-index:9999">×</div>
+				<div style="background-color:#fff;">
+					<!-- <div class="comment-right-body-title">
+						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" >超级保镖在都市</span>
+					</div> -->
+			<div class="text-center" >
+				<div class="comment-list-item-img-response3" style="width:100%;position: relative;left: 0;top:0;display:inline-block;">
+				 <img style="width:100%" 
+					src="http://img.fuwu88.cn/uploaderPath/img/20170527/1495845827128283878663636.jpg" >
+				</div>
+			</div>
+			<!-- <div class="media-body comment-right-body">
+				<div class="pull-left">
+					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
+					<span style="float: left;" class="newsType" >小说</span>
+					<span style="float: left;line-height:16px;margin:0 5px;">|</span>
+					<span  >最新</span>
+					</div>
+				</div>
+			</div> -->
+			</div>
+			</div>
+			<!-- 男科end -->	
 		<!-- cnzz -->
 		<div style="display:none;">
 		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260079475'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260079475' type='text/javascript'%3E%3C/script%3E"));</script>
 		</div>
+			
 		
 	<script src="/resources/js/jquery2.1.js"></script>
 	<script src="/resources/js/bootstrap3.2.0.js"></script>
@@ -584,7 +678,25 @@ overflow:hidden;
 					if (scope.$last === true) {
 					$("#newsDeatilsBody").show();
 					$(".loadAnimation").hide();
-					scope.$emit('ngRepeatFinished');
+    				$("#jiaoyou").insertBefore($(".comment-list-item")[0]);
+    				$("#jiaoyou").css("display","block");
+    				$("#jiaoyou").click(function(){
+    					location.href="http://sjgo28.com/iUy1?t=0.5217";
+    			    });
+				$("#xiaoshuo").insertAfter($(".comment-list-item")[0]);
+    				$("#xiaoshuo").css("display","block");
+    				$("#xiaoshuo").click(function(){
+    				location.href="http://t.bqddcc.com/0526/werf/reader.php?bid=427&prid=492333";
+    				});
+    				
+    				$("#nk2").css("display","block");
+    				$("#nk2").click(function(){
+    				location.href="http://c.fuwu88.cn/news_details?news_id=9903";
+    				});
+    				$("#nkclose").click(function(){
+					$("#nk2").remove();
+    				}); 
+    				scope.$emit('ngRepeatFinished');
 					}
 					}
 					};
@@ -760,7 +872,6 @@ overflow:hidden;
 							}
     		        	  }else{
     		        	  $scope.newsList=data; 
-    		        		  
     		        	  } 
     		        	  myUtils.myPrevToast("加载完成", null, "remove");
     		          }  
@@ -858,18 +969,19 @@ overflow:hidden;
         			};
     		//广告代码
     		//$("body").append("<div><img style='width:100%;height:10%;position:fixed;left:0;bottom:0'  src='/resources/img/splash.jpg'></img></div>");
-    		$.get("/adsense/list/1",function(data){
+    		/* $.get("/adsense/list/1",function(data){
     			if(data&&data[0].content){    				
         			console.log(data)
         			myUtils.executeJS(data[0].content);
         			}
-    		});
+    		}); */
     	 new Swiper('.swiper-container', {
         direction: 'vertical',
         slidesPerView: 'auto',
         mousewheelControl: true,
         freeMode: true
     		}); 
+    		
     	});
     	
     	
