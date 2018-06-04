@@ -77,6 +77,24 @@ public class HttpClientUtil {
 	               
 	                return content;
 	  }
+	  public static String doGet(String url,String encode) throws Exception {
+		  //创建默认的httpClient实例
+		  CloseableHttpClient httpClient = HttpClients.createDefault();
+		  //用get方法发送http请求
+		  HttpGet get = new HttpGet(url);
+		  CloseableHttpResponse httpResponse = null;
+		  //发送get请求
+		  httpResponse = httpClient.execute(get);
+		  //response实体
+		  HttpEntity entity = httpResponse.getEntity();
+		  String content="";
+		  if (null != entity){
+			  content=EntityUtils.toString(entity,encode);
+			  return content;
+		  }
+		  
+		  return content;
+	  }
 
 	  /**
 	   * post请求json

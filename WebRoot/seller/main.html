@@ -95,10 +95,11 @@
                    		function getParams(a){
                    			return "{'link':'"+a.link+"','title':'"+a.title+"','time':'"+a.time+"','type':'"+a.type+"','img_address':'"+a.img_address+"','content':'"+a.content+"'}";
                    		}
-                    	$scope.link=".clearfix a";
-                    	$scope.title=".clearfix h3";
-                    	$scope.time=".news_info span:first-child";
-                    	$scope.type=".clearfix .item_info>span:last-child";
+                    	$scope.link=".content .list_info li > a:first-child";
+                    	//$scope.title=".content .news_title";
+                    	$scope.title=".content .list_info .clearfix a h3";
+                    	$scope.time=".content .news_info span:first-child";
+                    	$scope.type="nav .content ul .highlight a";
                     	$scope.img_address=".show_content img";
                     	$scope.content=".show_content";
                     	
@@ -108,26 +109,26 @@
                    		var thirdHot;
                    		var fourthHot;
                    		var fifthHot;
-                   		$scope.firstHot="http://t.kejixun.com/list/6";
-                   		$scope.secondHot="http://t.kejixun.com/list/7";
-                   		$scope.thirdHot="http://t.kejixun.com/list/8";
-                   		$scope.fourthHot="http://t.kejixun.com/list/9";
-                   		$scope.fifthHot="http://t.kejixun.com/list/10";
+                   		$scope.firstHot="http://m.kejixun.com/cat/9.html";
+                   		$scope.secondHot="http://m.kejixun.com/cat/23.html";
+                   		$scope.thirdHot="http://m.kejixun.com/cat/11.html";
+                   		$scope.fourthHot="http://m.kejixun.com/cat/123.html";
+                   		$scope.fifthHot="http://m.kejixun.com/cat/157.html";
                     	function jkParams(param){
                     	$scope.$watch(param,function(){
-                    		params=getParams({
+                    		params=encodeURIComponent(getParams({
                        			link:$scope.link,
                        			title:$scope.title,
                        			time:$scope.time,
                        			type:$scope.type,
                        			img_address:$scope.img_address,
                        			content:$scope.content
-                       		});
-                    	 firstHot=location.protocol+"//"+location.hostname+"/news/grab?url="+$scope.firstHot+"&params="+params;  
-                    	 secondHot=location.protocol+"//"+location.hostname+"/news/grab?url="+$scope.secondHot+"&params="+params;  
-                    	 thirdHot=location.protocol+"//"+location.hostname+"/news/grab?url="+$scope.thirdHot+"&params="+params;  
-                    	 fourthHot=location.protocol+"//"+location.hostname+"/news/grab?url="+$scope.fourthHot+"&params="+params;  
-                    	 fifthHot=location.protocol+"//"+location.hostname+"/news/grab?url="+$scope.fifthHot+"&params="+params;  
+                       		}));
+                    	 firstHot=location.protocol+"//"+location.host+"/news/grab?url="+encodeURIComponent($scope.firstHot)+"&params="+params;  
+                    	 secondHot=location.protocol+"//"+location.host+"/news/grab?url="+encodeURIComponent($scope.secondHot)+"&params="+params;  
+                    	 thirdHot=location.protocol+"//"+location.host+"/news/grab?url="+encodeURIComponent($scope.thirdHot)+"&params="+params;  
+                    	 fourthHot=location.protocol+"//"+location.host+"/news/grab?url="+encodeURIComponent($scope.fourthHot)+"&params="+params;  
+                    	 fifthHot=location.protocol+"//"+location.host+"/news/grab?url="+encodeURIComponent($scope.fifthHot)+"&params="+params;  
                     	});
                     	}
                     	jkParams("link");
@@ -204,7 +205,7 @@
                            			content:$scope.content
                            		});
                         			function getUrl(link,params){
-                            			return location.protocol+"//"+location.hostname+"/news/grab?url="+link+"&params="+params;
+                            			return location.protocol+"//"+location.host+"/news/grab?url="+link+"&params="+params;
                             		}
                             		url=getUrl($scope.urls[num],params);
                             		console.log(url)
@@ -242,7 +243,7 @@
                          	
                          	function jkParams(p){
                              	$scope.$watch(p,function(){
-                         	$scope.firstDF=location.protocol+"//"+location.hostname+"/news/dfgrab?url="+$scope.link+"&content="+$scope.content;  
+                         	$scope.firstDF=location.protocol+"//"+location.host+"/news/dfgrab?url="+$scope.link+"&content="+$scope.content;  
                              	});
                              	}
                          	jkParams("link");

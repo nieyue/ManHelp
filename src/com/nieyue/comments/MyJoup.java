@@ -42,24 +42,23 @@ public class MyJoup {
 		Document doc;
 	try {
 		//doc = Jsoup.connect(url).get();
-		doc=Jsoup.parse(HttpClientUtil.doGet(url));
+		doc=Jsoup.parse(HttpClientUtil.doGet(url,"gbk"));
 		System.out.println(doc);
+		System.err.println(doc.select(link));
 		for (int i = 0; i < doc.select(title).size(); i++) {
 			News news=new News();
 			news.setTitle(doc.select(title).get(i).text());//设置标题
 			//news.setTime(DateUtil.parseSimpleDate(doc.select(time).get(i).text()));//设置时间
 			if(!Pattern.compile("[\\u4E00-\\u9FBF]+").matcher(type.trim()).find()){
-				news.setType(doc.select(type).get(i).text());//设置类型
+				//news.setType(doc.select(type).get(i).text());//设置类型
+				news.setType(doc.select(type).text());//设置类型
 			}else{
 				news.setType(type);//设置类型
 			}
-			/*if(!doc.select(imgAddress).get(i).equals(new Elements().get(i))){
-				news.setImgAddress(doc.select(imgAddress).get(i).attr("src"));
-			}*/
 			
 			String url2 = doc.select(link).get(i).attr("href");//获取链接
 			//Document doc2 = Jsoup.connect(url2).get();
-			Document doc2=Jsoup.parse(HttpClientUtil.doGet(url2));
+			Document doc2=Jsoup.parse(HttpClientUtil.doGet(url2,"gbk"));
 			if(!doc2.select(imgAddress).equals(new Elements())){
 				if(doc2.select(imgAddress).first().attr("data-pic")!=null&&!doc2.select(imgAddress).first().attr("data-pic").isEmpty()){
 					news.setImgAddress(doc2.select(imgAddress).first().attr("data-pic"));
@@ -68,7 +67,9 @@ public class MyJoup {
 					news.setImgAddress(doc2.select(imgAddress).first().attr("data-src"));
 					
 				}else{
-				news.setImgAddress(doc2.select(imgAddress).first().attr("src"));
+					String aaa=doc2.select(imgAddress).first().attr("src");
+				news.setImgAddress(aaa);
+				//news.setImgAddress(doc2.select(imgAddress).attr("src"));
 				}
 			}
 			 String t = doc2.select(time).text();

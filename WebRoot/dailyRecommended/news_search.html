@@ -43,7 +43,7 @@
 		</div> 
 		<!-- 无结果end -->
 			<!-- 列表 -->
-		<div ng-if="searchResult==1">
+		<div ng-if="searchResult<=1">
 		<div class="listGroup list-group media comment-list-item" ng-repeat="newsdto in newsList" on-finish-render-filters ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<!-- 一张图片列表 -->
 			<div ng-if="newsdto.img_list.length==1">

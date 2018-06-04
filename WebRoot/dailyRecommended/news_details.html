@@ -340,7 +340,7 @@ overflow:hidden;
 		
 		<!-- 根据时间加载 -->
 		<div class="listGroup list-group media comment-list-item" style="border-top:1px solid #f8f8f8" ng-repeat="newsdto in newsList"   on-finish-render-filters  ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
-			<div ng-if="newsdto.img_list.length==1">
+			<div ng-if="newsdto.img_list.length<=1">
 			<div class="media-left" style="vertical-align:middle;width:32%;">
 				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
 				 <img class="comment-list-item-img"
@@ -428,7 +428,7 @@ overflow:hidden;
 		</div>
 		</div>
 		<!-- 小说 -->	
-		<div id="xiaoshuo" class="listGroup list-group media comment-list-item" style="display:none">
+	<!-- 	<div id="xiaoshuo" class="listGroup list-group media comment-list-item" style="display:none">
 				<div>
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" >超级保镖在都市</span>
@@ -449,10 +449,10 @@ overflow:hidden;
 				</div>
 			</div>
 			</div>
-		</div>
+		</div> -->
 			<!-- 小说end -->	
 					<!-- 交友-->	
-		<div id="jiaoyou" class="listGroup list-group media comment-list-item" style="display:none">
+	<!-- 	<div id="jiaoyou" class="listGroup list-group media comment-list-item" style="display:none">
 				<div style="background-color:#fff;">
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" >一个人住，有时候真的想找一个大叔陪陪我。。聊聊天什么的。</span>
@@ -483,22 +483,22 @@ overflow:hidden;
 				</div>
 			</div>
 			</div>
-			</div>
+			</div> -->
 			<!-- 交友end -->	
 			<!-- 男科 -->	
-		<div id="nk2" class="listGroup list-group media comment-list-item" style="width:100%;position:fixed;bottom:0;left:0;display:none">
+		<!-- <div id="nk2" class="listGroup list-group media comment-list-item" style="width:100%;position:fixed;bottom:0;left:0;display:none">
 				<div id="nkclose" style="opacity:0.5;position:absolute;top:0;right:1px;border:1px solid #000; background-color:#000;color:white;height:20px;width:20px;line-height:20px;text-align:center;font-size:22px;text-decoration:none;z-index:9999">×</div>
 				<div style="background-color:#fff;">
-					<!-- <div class="comment-right-body-title">
+					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" >超级保镖在都市</span>
-					</div> -->
+					</div>
 			<div class="text-center" >
 				<div class="comment-list-item-img-response3" style="width:100%;position: relative;left: 0;top:0;display:inline-block;">
 				 <img style="width:100%" 
 					src="http://img.fuwu88.cn/uploaderPath/img/20170527/1495845827128283878663636.jpg" >
 				</div>
 			</div>
-			<!-- <div class="media-body comment-right-body">
+			<div class="media-body comment-right-body">
 				<div class="pull-left">
 					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
 					<span style="float: left;" class="newsType" >小说</span>
@@ -506,9 +506,9 @@ overflow:hidden;
 					<span  >最新</span>
 					</div>
 				</div>
+			</div>
+			</div>
 			</div> -->
-			</div>
-			</div>
 			<!-- 男科end -->	
 		<!-- cnzz -->
 		<div style="display:none;">

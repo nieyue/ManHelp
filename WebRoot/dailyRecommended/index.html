@@ -41,27 +41,24 @@
 		<div class="comment-top-fixed" style="background-color:#fff;top:50px !important;height:30px;line-height: 30px;font-size: 16px;" id="topNav">
 			<div class="swiper-container  swiper-container1">
         <div class="swiper-wrapper">
-			<a class="nav-list-a swiper-slide"  ng-click="list('推荐')">
+			 <a class="nav-list-a swiper-slide"  ng-click="list('推荐')">
 				推荐
-			</a>
-			<a class="nav-list-a swiper-slide"  ng-click="list('视频')">
-				视频
-			</a>
-			<a class="nav-list-a swiper-slide"  ng-click="list('历史')">
-				历史
-			</a>
-			<a class="nav-list-a swiper-slide"  ng-click="list('奇闻')">
-				奇闻
-			</a>
-			<a class="nav-list-a swiper-slide"  ng-click="list('图片 ')">
-				图片
-			</a>
-			 <a class="nav-list-a swiper-slide"  ng-click="list('段子 ')">
-				段子
-			</a>
-			<a class="nav-list-a swiper-slide"   ng-click="list('八卦')">
-				八卦
 			</a> 
+			<a class="nav-list-a swiper-slide"  ng-click="list('新闻')">
+				新闻
+			</a>
+			<a class="nav-list-a swiper-slide"  ng-click="list('手机')">
+				手机
+			</a>
+			<a class="nav-list-a swiper-slide"  ng-click="list('游戏')">
+				游戏
+			</a>
+			<a class="nav-list-a swiper-slide"  ng-click="list('猎奇 ')">
+				猎奇
+			</a>
+			 <a class="nav-list-a swiper-slide"  ng-click="list('文娱 ')">
+				文娱
+			</a>
 			<a class="nav-list-a swiper-slide"   href="#">
 			</a> 
 			</div>
@@ -80,7 +77,7 @@
 		<div class="listGroup swiper-slide" style="height:100%;" ng-repeat="newsdto in newsList" ng-if="$index==0 || $index==1" ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<div class="media-center" style="position: relative;left: 0;top:0;height:100%;">
 						<img class="comment-list-item-img-response1 " 
-					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}" >
+					ng-src="{{newsdto.news.img_address||newsdto.img_list[0].img_address||newsInit.img_address}}"  style="height:288px">
 				   <div ng-if="newsdto.news.type=='视频'" class="video-radius"><div class="triangle-right"></div></div>
 				<span ng-style="bottomShaow" style="text-indent:0.5rem;font-size:0.9rem;z-index:99;position:absolute;left:0;bottom:3px;color:#fff;overflow: hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;text-overflow:ellipsis;" ng-bind="newsdto.news.title||newsInit.title"></span>
 				<div style="z-index:9;background-color: #000;opacity: 0.5;height:30px;width:100%;position:absolute;left:0;bottom:0;"></div >
@@ -95,7 +92,7 @@
 		<!-- 第二列表 -->
 		<div class="listGroup list-group media comment-list-item" ng-repeat="newsdto in newsList" on-finish-render-filters ng-if="$index!=0 && $index!=1" ng-click="newsDetails(newsdto.news.type,newsdto.news.news_id)">
 			<!-- 一张图片列表 -->
-			<div ng-if="newsdto.img_list.length==1">
+			<div ng-if="newsdto.img_list.length<=1">
 			<div class="media-left" style="vertical-align:middle;width:32%;">
 				<a href="#" style="padding:5px 0 !important;position: relative;left: 0;top:0;display:inline-block;width:100%;">
 				 <img class="comment-list-item-img"
@@ -180,7 +177,7 @@
 	</div>
 		<!-- cnzz -->
 		<!-- 小说 -->	
-		<div id="xiaoshuo"  class="listGroup list-group media comment-list-item" style="display:none">
+	<!-- 	<div id="xiaoshuo"  class="listGroup list-group media comment-list-item" style="display:none">
 				<div style="background-color:#fff;">
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" >超级保镖在都市</span>
@@ -201,10 +198,10 @@
 				</div>
 			</div>
 			</div>
-			</div>
+			</div> -->
 			<!-- 小说end -->	
 		<!-- 交友-->	
-		<div id="jiaoyou" class="listGroup list-group media comment-list-item" style="display:none">
+	<!-- 	<div id="jiaoyou" class="listGroup list-group media comment-list-item" style="display:none">
 				<div style="background-color:#fff;">
 					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" >一个人住，有时候真的想找一个大叔陪陪我。。聊聊天什么的。</span>
@@ -235,22 +232,22 @@
 				</div>
 			</div>
 			</div>
-			</div>
+			</div> -->
 			<!-- 交友end -->
 		<!-- 男科 -->	
-		<div id="nk1"  class="listGroup list-group media comment-list-item" style="position:fixed;bottom:0;left:0;display:none;width:100%;">
+	<!-- 	<div id="nk1"  class="listGroup list-group media comment-list-item" style="position:fixed;bottom:0;left:0;display:none;width:100%;">
 				<div id="nkclose" style="opacity:0.5;position:absolute;top:0;right:1px;border:1px solid #000; background-color:#000;color:white;height:20px;width:20px;line-height:20px;text-align:center;font-size:22px;text-decoration:none;z-index:9999">×</div>
 				<div style="background-color:#fff;">
-					<!-- <div class="comment-right-body-title">
+					<div class="comment-right-body-title">
 						<span style="font-size:0.85rem;overflow: hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-overflow:ellipsis;" >超级保镖在都市</span>
-					</div> -->
+					</div>
 			<div class="text-center" >
 				<div class="comment-list-item-img-response3" style="width:100%;position: relative;left: 0;top:0;display:inline-block;">
 				 <img style="width:100%" 
 					src="http://img.fuwu88.cn/uploaderPath/img/20170527/14958458277318727436833619.jpg" >
 				</div>
 			</div>
-			<!-- <div class="media-body comment-right-body">
+			<div class="media-body comment-right-body">
 				<div class="pull-left">
 					<div class="text-muted" style="color:#bfbebe;font-size:14px;">
 					<span style="float: left;" class="newsType" >小说</span>
@@ -258,9 +255,9 @@
 					<span  >最新</span>
 					</div>
 				</div>
+			</div>
+			</div>
 			</div> -->
-			</div>
-			</div>
 			<!-- 男科end -->	
 		<div style="display:none;">
 		<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260079475'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260079475' type='text/javascript'%3E%3C/script%3E"));</script>
