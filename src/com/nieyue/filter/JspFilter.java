@@ -84,9 +84,9 @@ public class JspFilter implements Filter{
         Map<String,String[]> mm = new HashMap<String,String[]>(ParameterUpdateUtil.UpdateParameterNames(request.getParameterMap()));  
         request = new ParameterRequestWrapper((HttpServletRequest)request, mm);    
         
-        if(rpath.startsWith("/resources")&&new File(strServletUrl+rpath).exists()){
+        /*if(rpath.startsWith("/resources")&&new File(strServletUrl+rpath).exists()){
 			servletRequest.getRequestDispatcher(rpath).forward(request, response);
-		}else if(new File(strServletUrl+rpath+".html").exists()){
+		}else */if(new File(strServletUrl+rpath+".html").exists()){
 				servletRequest.getRequestDispatcher(rpath+".html").forward(request,response);
 		}else if(path.equals("/")){//综合门户
 			if(urlpath4.indexOf("woman")>-1){
